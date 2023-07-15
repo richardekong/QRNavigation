@@ -28,6 +28,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'com.google.zxing:zxing-parent:3.5.1'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    developmentOnly'com.h2database:h2'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
