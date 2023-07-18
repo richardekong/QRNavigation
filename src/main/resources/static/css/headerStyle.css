@@ -1,0 +1,80 @@
+/* THIS SECTION FOR THE HEADER USER FRAGMENT #CREATED BY FAISAL# */
+.userHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #30344C;
+}
+
+.userHeader-top-section {
+    display: flex;
+    align-items: center;
+}
+
+.userHeader-logo-container {
+    display: inline-block;
+}
+
+.userHeader-logo {
+    width: 50px;
+    height: 50px;
+}
+
+.userHeader-org-name-container {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.userHeader-org-name-link{
+    text-decoration: none;
+}
+
+.userHeader-org-name {
+    font-size: 24px;
+    margin: 0;
+    color: white;
+    font-family: 'Merriweather';
+}
+
+.userHeader-bottom-section {
+    margin-top: 5px;
+    margin-right: 20px;
+}
+
+.userHeader-scan-me-container {
+    width: 100%;
+    cursor: pointer;
+}
+
+.userHeader-scan-me-box {
+    border: 4px solid white;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.userHeader-scan-me-text {
+    font-size: 16px;
+    margin: 0;
+    color: white; font-family: 'Merriweather';
+    text-align: center;
+}
+
+.userHeader-QR-Icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+/* THIS THE END OF THE SECTION FOR THE HEADER USER FRAGMENT #CREATED BY FAISAL# */
+
+
+
+
+
+
+
+
+
+
