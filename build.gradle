@@ -32,6 +32,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'com.google.zxing:zxing-parent:3.5.1'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
     developmentOnly'com.h2database:h2'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     compileOnly 'org.projectlombok:lombok'
