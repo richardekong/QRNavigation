@@ -1,0 +1,29 @@
+<!--THIS HEADER FRAGMENT WILL APPEAR IN THE LAST USER PAGES AS STICKY HEADER -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header class="userHeader" id="userHeader" th:fragment = "userHeader">
+            <div class="userHeader-top-section">
+                <div class="userHeader-logo-container">
+                    <a th:href="@{/home}"><img class="userHeader-logo" th:src="@{/images/cardiff_uni_logo.png}" src="/static/images/cardiff_uni_logo.png" alt="Organization Logo"></a>
+                </div>
+                <div class="userHeader-org-name-container">
+                    <a class="userHeader-org-name-link" th:href="@{/home}"><p class="userHeader-org-name">Cardiff Univeristy</p></a>
+                </div>
+            </div>
+            <div class="userHeader-bottom-section">
+                <div class="userHeader-scan-me-container" onclick="openCamera()">
+                    <div class="userHeader-scan-me-box">
+                        <p class="userHeader-scan-me-text">SCAN ME <img class="userHeader-QR-Icon" th:src="@{/images/qrCode.png}" src="/static/images/qrCode.png" alt="QR CODE"></p>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </body>
+</html>
+
+
