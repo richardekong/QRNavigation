@@ -31,7 +31,7 @@ public class Event {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name="org_id")
+    @JoinColumn(name="organizer")
     private Organization organizer;
 
     @Column(value = "space_id")

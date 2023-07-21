@@ -19,6 +19,7 @@ import static com.example.qrnavigationproject.model.Constant.WEBSITE_URL_REGEX;
 @AllArgsConstructor
 @Data
 @Entity
+@Table(name="Organization")
 public class Organization {
 
     @Id
@@ -45,7 +46,7 @@ public class Organization {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "organization")
     private List<Space> spaces;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "organizer")
     private List<Event> events;
 
     public void add(Space space){
