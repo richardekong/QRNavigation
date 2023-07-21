@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <title>Title</title>
+    <style>
+        :root {
+            --shadows: 4px 4px 8px #888;
+            --radius: 5px;
+            --margin: 10px;
+            --padding: 5px;
+            --padding-main: 20px;
+            --header-height: 15%;
+            --footer-height: 15%;
+        }
+
+        header {
+            border: 1px solid black;
+            width: 99%;
+            height: var(--header-height);
+            background-color: #38344c;
+        }
+
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 100%;
+            height: fit-content;
+            margin-top: calc(var(--margin)*5 + var(--header-height));
+            margin-bottom: calc(var(--margin)*5 + var(--header-height));
+            overflow-x: hidden;
+        }
+
+        select {
+            border-radius: var(--radius);
+            box-shadow: var(--shadows);
+            margin: var(--margin);
+            padding: var(--padding);
+        }
+
+        #map {
+            height: 500px;
+            border: 1px solid black;
+            box-shadow: var(--shadows);
+            margin: var(--margin);
+            padding: var(--padding);
+        }
+
+        #see-more {
+            background-color: #2596be;
+            color: white;
+            text-align: center;
+            border: 1px solid white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadows);
+            margin: var(--margin);
+            padding: var(--padding);
+        }
+
+        footer {
+            border: 1px solid black;
+            margin-top: var(--margin);
+            height: 100px;
+            width: 99%;
+            background-color: #38344c;
+        }
+
+        .sticky-footer {
+            position: fixed;
+            top: calc(100% - var(--footer-height));
+            left: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<header class="sticky-header col-xs-12 col-sm-12 col-md-12"></header>
+<main class="col-xs-12 col-sm-12 col-md-12">
+    <label for="space_list"></label>
+    <select id="space_list">
+        <option selected>Pick a space</option>
+        <option>Abacws</option>
+        <option>Student Union</option>
+        <option>Queens Building</option>
+        <option>Spark Building</option>
+    </select>
+    <div id="map">
+    </div>
+    <label for="sub_space_list"></label>
+    <select id="sub_space_list">
+        <option selected>Pick a sub space</option>
+        <option>Abacws / 1.45</option>
+        <option>Abacws / 2.45</option>
+        <option>Abacws / 3.45</option>
+    </select>
+    <button class="col-xs-12 col-sm-12 col-md-12" id="see-more">See More</button>
+</main>
+<footer class="col-xs-12 col-sm-12 col-md-12 sticky-footer"></footer>
+<script src="/static/script/map.js"></script>
+</body>
+</html>

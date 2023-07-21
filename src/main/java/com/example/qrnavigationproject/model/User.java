@@ -48,10 +48,10 @@ public class User implements UserDetails, Serializable {
 
     @Column("org_id")
     private int organizationId;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "User")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Role> roles;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "User")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<UserType> userTypes;
 
     @Column("type_id")
