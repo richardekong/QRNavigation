@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Website Title</title>
-<!--LINK TO HEADER STYLE SHEET-->
-<link rel="stylesheet" th:href="@{/css/headerStyle.css}" />
-<!--LINK TO HEADER SCRIPT FILE-->
-<script th:src="@{/script/headerScript.js}"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website Title</title>
+    <!--LINK TO HEADER STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <!--LINK TO FOOTER STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <!--LINK TO HEADER SCRIPT FILE-->
+    <script th:src="@{/script/scanner.js}"></script>
+</head>
 <body style="overflow-y: scroll;">
 <!-- HERE THE HEADER FRAGMENT INSERTED-->
 <header th:insert="userHeader::userHeader"></header>
@@ -15,6 +19,7 @@
     <div style="padding-top: 130px;height: 400px;"><h1>Welcome to QR Navigation Project</h1></div>
     <div style="padding-top: 130px;height: 400px;"><h1>Welcome to QR Navigation Project</h1></div>
 </main>
+<footer th:insert="userFooter::userFooter"></footer>
 </body>
 </html>
 

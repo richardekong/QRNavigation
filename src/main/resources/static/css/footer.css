@@ -1,0 +1,82 @@
+/* THIS SECTION FOR THE footer USER FRAGMENT #CREATED BY FAISAL# */
+.userFooter {
+    position: fixed;
+    bottom : 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #30344C;
+    z-index: 1;
+}
+
+.userFooter-top-section {
+    display: flex;
+    align-items: center;
+}
+
+.userFooter-logo-container {
+    display: inline-block;
+}
+
+.userFooter-logo {
+    width: 50px;
+    height: 50px;
+}
+
+.userFooter-org-name-container {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.userFooter-org-name-link{
+    text-decoration: none;
+}
+
+.userFooter-org-name {
+    font-size: 24px;
+    margin: 0;
+    color: white;
+    font-family: 'Merriweather';
+}
+
+.userFooter-bottom-section {
+    display: flex;
+    align-items: center;
+
+}
+
+.userFooter-website-icon-container {
+    display: inline-block;
+}
+
+.userFooter-icon{
+    width: 50px;
+    height: 50px;
+}
+
+.userFooter-org-website-container {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.userFooter-org-website-link{
+    text-decoration: none;
+}
+
+.userFooter-website-name {
+    font-size: 24px;
+    margin: 0;
+    color: white;
+    font-family: 'Merriweather';
+}
+/* THIS THE END OF THE SECTION FOR THE footer USER FRAGMENT #CREATED BY FAISAL# */
+
+
+
+
+
+
+
+
+
+

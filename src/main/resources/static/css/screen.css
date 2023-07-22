@@ -1,0 +1,31 @@
+
+/*phones in portrait mode eg iphone SE, XR*/
+@media (max-width: 320px) and (min-width: 281px) {
+    main {
+        padding-top: 35%;
+        padding-bottom: 5%;
+    }
+}
+
+/*Larger phones and small tablets*/
+@media (max-width: 768px) and (min-width: 319px){
+    main {
+        padding-top: 35%;
+        padding-bottom: 5%;
+    }
+}
+
+/*Medium sized-tablets eg. ipad, ipad air, ipad mini, surface pros and duo*/
+@media (max-width: 1024px) and (min-width: 769px) {
+    main {
+        padding-top: 15%;
+        padding-bottom: 5%;
+    }
+}
+/*larger tablets and desktops */
+@media (max-width: 1280px) and (min-width: 1025px){
+    main {
+        padding-top: 10%;
+        padding-bottom: 5%;
+    }
+}
