@@ -1,0 +1,30 @@
+<!--THIS footer FRAGMENT WILL APPEAR IN THE LAST USER PAGES AS STICKY footer -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<footer class="userFooter" id="userFooter" th:fragment = "userFooter">
+    <div class="userFooter-top-section">
+        <div class="userFooter-logo-container">
+            <a th:href="@{/home}"><img class="userFooter-logo" th:src="@{/images/cardiff_uni_logo.png}" src="/static/images/cardiff_uni_logo.png" alt="Organization Logo"></a>
+        </div>
+        <div class="userFooter-org-name-container">
+            <a class="userFooter-org-name-link" th:href="@{/home}"><p class="userFooter-org-name">Cardiff Univeristy</p></a>
+        </div>
+    </div>
+    <div class="userFooter-bottom-section">
+        <div class="userFooter-website-icon-container">
+            <a href="https://www.cardiff.ac.uk/"><img class="userFooter-icon" th:src="@{/images/website-icon.svg}" src="/static/images/website-icon.svg" alt="Organization website"></a>
+        </div>
+        <div class="userFooter-org-website-container">
+            <a class="userFooter-org-website-link" href="https://www.cardiff.ac.uk/"><p class="userFooter-website-name">Website</p></a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
+

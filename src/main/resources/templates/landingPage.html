@@ -18,6 +18,16 @@
             crossorigin="anonymous">
     </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <!--LINK TO HEADER STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/header.css}"/>
+    <!--LINK TO FOOTER STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/footer.css}"/>
+    <!-- style sheets for various screen resolutions of phones and tablets   -->
+    <link rel="stylesheet" th:href="@{/css/screen.css}">
+    <!--LINK TO HEADER SCRIPT FILE-->
+    <script th:src="@{/script/scanner.js}"></script>
+    <!--google maps api integration    -->
+    <script src="/static/script/map.js" th:src="@{/script/map.js}"></script>
     <title>Title</title>
     <style>
         :root {
@@ -30,28 +40,12 @@
             --footer-height: 15%;
         }
 
-        header {
-            border: 1px solid black;
-            width: 99%;
-            height: var(--header-height);
-            background-color: #38344c;
-        }
-
-        .sticky-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
         main {
             display: flex;
             flex-direction: column;
             justify-content: space-around;
             width: 100%;
             height: fit-content;
-            margin-top: calc(var(--margin)*5 + var(--header-height));
-            margin-bottom: calc(var(--margin)*5 + var(--header-height));
             overflow-x: hidden;
         }
 
@@ -63,7 +57,7 @@
         }
 
         #map {
-            height: 500px;
+            height: 320px;
             border: 1px solid black;
             box-shadow: var(--shadows);
             margin: var(--margin);
@@ -82,23 +76,13 @@
         }
 
         footer {
-            border: 1px solid black;
-            margin-top: var(--margin);
-            height: 100px;
-            width: 99%;
-            background-color: #38344c;
+            min-height: 100px;
         }
 
-        .sticky-footer {
-            position: fixed;
-            top: calc(100% - var(--footer-height));
-            left: 0;
-            z-index: 1;
-        }
     </style>
 </head>
 <body>
-<header class="sticky-header col-xs-12 col-sm-12 col-md-12"></header>
+<header th:insert="userHeader::userHeader"></header>
 <main class="col-xs-12 col-sm-12 col-md-12">
     <label for="space_list"></label>
     <select id="space_list">
@@ -119,7 +103,6 @@
     </select>
     <button class="col-xs-12 col-sm-12 col-md-12" id="see-more">See More</button>
 </main>
-<footer class="col-xs-12 col-sm-12 col-md-12 sticky-footer"></footer>
-<script src="/static/script/map.js"></script>
+<footer th:insert="userFooter::userFooter"></footer>
 </body>
 </html>

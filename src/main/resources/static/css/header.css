@@ -6,6 +6,7 @@
     width: 100%;
     padding: 10px;
     background-color: #30344C;
+    z-index: 1;
 }
 
 .userHeader-top-section {
