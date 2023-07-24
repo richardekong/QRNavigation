@@ -5,33 +5,39 @@
     <title>Spring Boot Thymeleaf with Bootstrap 5</title>
     <!-- Link Bootstrap CSS -->
     <link th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- Link Bootstrap and jQuery JavaScript -->
+    <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/axios/1.4.0/dist/axios.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <!--LINK TO HEADER STYLE SHEET-->
     <link rel="stylesheet" th:href="@{/css/header.css}"/>
+    <!--LINK TO FOOTER STYLE SHEET-->
     <link rel="stylesheet" th:href="@{/css/footer.css}"/>
+    <!-- style sheets for various screen resolutions of phones and tablets   -->
+    <link rel="stylesheet" th:href="@{/css/screen.css}">
+<!--    &lt;!&ndash; Link to your CSS Grid file &ndash;&gt;-->
+<!--    <link rel="stylesheet" th:href="@{/css/content_page.css}"/>-->
+
 </head>
 <body style="display: flex; flex-direction: column; min-height: 100vh;">
 <!-- HERE THE HEADER FRAGMENT INSERTED-->
 <header th:insert="userHeader::userHeader"></header>
-<main class="container my-4 flex-grow-1"> <!-- Use flex-grow-1 to make it take all available space -->
-    <div class="row">
+
+<main class="container my-2 me-auto ms-auto flex-grow-1"> <!-- Use flex-grow-1 to make it take all available space -->
+    <div class="row me-auto ms-auto">
         <!-- Card Header -->
         <div class="card-header vw-100 mt-3">
             <div class="border border-1 p-3 text-center fw-bold">
-                <h5 class="card-title">Abacws</h5>
+                <h5 id="event-name" class="card-title">Abacws</h5>
             </div>
         </div>
-        <div class="card">
+        <div class="card shadow">
             <!-- Card Images with Carousel -->
             <div class="card-body">
                 <!-- Image Carousel -->
-                <div id="imageCarousel" class="carousel slide rounded" data-bs-ride="carousel">
+                <div id="imageCarousel" class="carousel slide rounded shadow" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="https://placehold.co/300x200/EEE/31343C" class="d-block w-100" alt="Image 1">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="https://placehold.co/300x200/EEE/green" class="d-block w-100" alt="Image 2">
-                        </div>
-                        <!-- Add more carousel items with images -->
+
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
                             data-bs-slide="prev">
@@ -45,58 +51,59 @@
                     </button>
                 </div>
 
-                <div id="card-description" class="mt-3 mb-3">
+                <div id="card-description" class="mt-3 mb-3 shadow">
                     <!-- Description Content -->
-                    <div class="border border-1 p-1 text-center fw-bold">
+                    <div class="border border-1 p-1 text-center fw-bold shadow">
                         <p class="mt-3">Description</p>
                     </div>
                     <div class="border border-1 p-2 mt-2">
-                        Description content goes here
+                        <p id="event-description"></p>
                     </div>
 
-                    <div class="border border-1 p-2 mt-2">
+                    <div class="border border-1 p-2 mt-2 shadow">
                         <!-- Address Details -->
-                        <p>Address: Address line 1 goes here</p>
-                        <p>Postal Code: Address line 2 goes here</p>
+                        <p>Address: <span id="event-address"></span></p>
+                        <p>Postal <span id="event-postal-code"></span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row me-auto ms-auto">
         <!-- Card Header -->
-        <div class="card-header vw-100 mt-3">
+        <div class="card-header vw-100 mt-3 shadow">
             <div class="border border-1 p-3 text-center fw-bold">
                 <h5 class="card-title">Open Day</h5>
             </div>
         </div>
-        <div class="card">
+        <div class="card shadow">
             <!-- Card Images with Carousel -->
             <div class="card-body">
-                <div id="card-open-day" class="mt-3 mb-3">
+                <div id="card-open-day" class="mt-3 mb-3 shadow">
                     <!-- Description Content -->
                     <div class="border border-1 p-1 text-center fw-bold">
                         <p class="mt-3">Description</p>
                     </div>
                     <div class="border border-1 p-2 mt-2">
-                        Open Day Description content goes here
+                        <p id="open-day-description"></p>
                     </div>
 
-                    <div class="border border-1 p-2 mt-2">
+                    <div class="border border-1 p-2 mt-2 shadow">
                         <!-- Open Day Details -->
                         <p>Start Time: Wed, 26 Jul 2023 9:30</p>
                         <p>End Time: Wed, 26 Jul 2023 9:30</p>
                         <p>Duration: 4.5 hours</p>
+
                     </div>
                 </div>
 
-                <div id="card-venues" class="mt-3 mb-3">
+                <div id="card-venues" class="mt-3 mb-3 shadow">
                     <!-- Description Content -->
                     <div class="border border-1 p-1 text-center fw-bold">
                         <p class="mt-3">Venues</p>
                     </div>
-                    <div class="border border-1 p-2 mt-2">
+                    <div id="card-venues-values" class="border border-1 p-2 mt-2">
                         <!-- Venues Details -->
                         <p>Abacws / 3.65</p>
                         <p>Abacws / 4.35</p>
@@ -108,7 +115,12 @@
     </div>
 </main>
 <footer th:insert="userFooter::userFooter"></footer>
-<!-- Link Bootstrap and jQuery JavaScript -->
-<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
+<script th:inline="javascript">
+    createCarouselItems([
+        /*[[ @{/images/Abcwas3.png} ]]*/
+    ]);
+</script>
 </body>
 </html>
+
+

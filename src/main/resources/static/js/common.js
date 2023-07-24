@@ -48,10 +48,11 @@ function createCarouselItems(imagesArray) {
     imagesArray.forEach((imageUrl, index) => {
         const carouselItem = document.createElement("div");
         carouselItem.classList.add("carousel-item");
+        carouselItem.style.maxHeight = '25%';
 
         const image = document.createElement("img");
         image.src = imageUrl;
-        image.classList.add("d-block", "w-100");
+        image.classList.add("d-block", "w-100", "h-25");
         image.alt = `Image ${index + 1}`;
 
         // Set the first item as active
