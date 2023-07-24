@@ -75,6 +75,11 @@
             padding: var(--padding);
         }
 
+        #see-more a{
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
         footer {
             min-height: 100px;
         }
@@ -101,7 +106,7 @@
         <option>Abacws / 2.45</option>
         <option>Abacws / 3.45</option>
     </select>
-    <button class="col-xs-12 col-sm-12 col-md-12" id="see-more">See More</button>
+    <button class="col-xs-12 col-sm-12 col-md-12" id="see-more"><a th:href ="@{/content}">See More</a></button>
 </main>
 <footer th:insert="userFooter::userFooter"></footer>
 </body>
