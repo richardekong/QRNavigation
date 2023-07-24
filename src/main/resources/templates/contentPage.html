@@ -21,6 +21,8 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}"/>
     <!-- style sheets for various screen resolutions of phones and tablets   -->
     <link rel="stylesheet" th:href="@{/css/screen.css}">
+    <!--LINK TO HEADER SCRIPT FILE-->
+    <script th:src="@{/script/scanner.js}"></script>
 <!--    &lt;!&ndash; Link to your CSS Grid file &ndash;&gt;-->
 <!--    <link rel="stylesheet" th:href="@{/css/content_page.css}"/>-->
 
@@ -57,9 +59,9 @@
                     </button>
                 </div>
 
-                <div id="card-description" class="mt-3 mb-3 shadow">
+                <div id="card-description" class="mt-3 mb-3 ">
                     <!-- Description Content -->
-                    <div class="border border-1 p-1 text-center fw-bold shadow">
+                    <div class="border border-1 p-1 text-center fw-bold " style="border-radius:5px;">
                         <p class="mt-3">Description</p>
                     </div>
                     <div class="border border-1 p-2 mt-2">
@@ -67,7 +69,7 @@
                         Description content goes here
                     </div>
 
-                    <div class="border border-1 p-2 mt-2 shadow">
+                    <div class="border border-1 p-2 mt-2">
                         <!-- Address Details -->
                         <p>Address: <span id="event-address"></span></p>
                         <p>Postal <span id="event-postal-code"></span></p>
@@ -87,16 +89,16 @@
         <div class="card shadow">
             <!-- Card Images with Carousel -->
             <div class="card-body">
-                <div id="card-open-day" class="mt-3 mb-3 shadow">
+                <div id="card-open-day" class="mt-3 mb-3">
                     <!-- Description Content -->
-                    <div class="border border-1 p-1 text-center fw-bold">
+                    <div class="border border-1 p-1 text-center fw-bold" style = "border-radius: 0 0 5px 5px;">
                         <p class="mt-3">Description</p>
                     </div>
                     <div class="border border-1 p-2 mt-2">
                         <p> open day description</p>
                     </div>
 
-                    <div class="border border-1 p-2 mt-2 shadow">
+                    <div class="border border-1 p-2 mt-2" style = "border-radius:5px;">
                         <!-- Open Day Details -->
                         <p>Start Time: Wed, 26 Jul 2023 9:30</p>
                         <p>End Time: Wed, 26 Jul 2023 9:30</p>
@@ -105,12 +107,12 @@
                     </div>
                 </div>
 
-                <div id="card-venues" class="mt-3 mb-3 shadow">
+                <div id="card-venues" class="mt-3 mb-3">
                     <!-- Description Content -->
-                    <div class="border border-1 p-1 text-center fw-bold">
+                    <div class="border border-1 p-1 text-center fw-bold" style = "border-radius:5px;">
                         <p class="mt-3">Venues</p>
                     </div>
-                    <div id="card-venues-values" class="border border-1 p-2 mt-2">
+                    <div id="card-venues-values" class="border border-1 p-2 mt-2" style = "border-radius: 0 0 5px 5px;">
                         <!-- Venues Details -->
                         <p>Abacws / 3.65</p>
                         <p>Abacws / 4.35</p>
@@ -121,7 +123,7 @@
         </div>
     </div>
 </main>
-<footer th:insert="userFooter::userFooter"></footer>
+<footer th:insert="userFooter::userFooter" style="margin-top: 30%;"></footer>
 <script th:inline="javascript">
     createCarouselItems([
         /*[[ @{/images/Abcwas3.png} ]]*/
