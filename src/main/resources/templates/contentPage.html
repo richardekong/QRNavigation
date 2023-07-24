@@ -31,15 +31,15 @@
 <!-- HERE THE HEADER FRAGMENT INSERTED-->
 <header th:insert="userHeader::userHeader"></header>
 
-<main class="container my-2 me-auto ms-auto flex-grow-1"> <!-- Use flex-grow-1 to make it take all available space -->
+<main class="container my-2 me-auto ms-auto flex-grow-1" > <!-- Use flex-grow-1 to make it take all available space -->
     <div class="row me-auto ms-auto">
         <!-- Card Header -->
         <div class="card-header vw-500 mt-3">
-            <div class="border border-1 p-3 text-center fw-bold">
+            <div class="border border-1 p-3 text-center fw-bold" style="border-radius: 5px 5px 0 0;">
                 <h5 id="event-name" class="card-title">Abacws</h5>
             </div>
         </div>
-        <div class="card shadow">
+        <div class="card shadow" style="border-radius: 0 0 5px 5px;">
             <!-- Card Images with Carousel -->
             <div class="card-body">
                 <!-- Image Carousel -->
@@ -61,15 +61,15 @@
 
                 <div id="card-description" class="mt-3 mb-3 ">
                     <!-- Description Content -->
-                    <div class="border border-1 p-1 text-center fw-bold " style="border-radius:5px;">
+                    <div class="border border-1 p-1 text-center fw-bold " style="border-radius: 5px 5px 0 0;">
                         <p class="mt-3">Description</p>
                     </div>
-                    <div class="border border-1 p-2 mt-2">
+                    <div class="border border-1 p-2" style="border-radius: 0 0 5px 5px;">
                         <p id="event-description"></p>
                         Description content goes here
                     </div>
 
-                    <div class="border border-1 p-2 mt-2">
+                    <div class="border border-1 p-2 mt-2" style="border-radius: 5px;">
                         <!-- Address Details -->
                         <p>Address: <span id="event-address"></span></p>
                         <p>Postal <span id="event-postal-code"></span></p>
@@ -82,19 +82,19 @@
     <div class="row me-auto ms-auto">
         <!-- Card Header -->
         <div class="card-header vw-100 mt-3 shadow">
-            <div class="border border-1 p-3 text-center fw-bold">
+            <div class="border border-1 p-3 text-center fw-bold" style="border-radius: 5px 5px 0 0;">
                 <h5 class="card-title">Open Day</h5>
             </div>
         </div>
-        <div class="card shadow">
+        <div class="card shadow" style="border-radius: 0 0 5px 5px;">
             <!-- Card Images with Carousel -->
             <div class="card-body">
                 <div id="card-open-day" class="mt-3 mb-3">
                     <!-- Description Content -->
-                    <div class="border border-1 p-1 text-center fw-bold" style = "border-radius: 0 0 5px 5px;">
+                    <div class="border border-1 p-1 text-center fw-bold" style = "border-radius: 5px 5px 0 0;">
                         <p class="mt-3">Description</p>
                     </div>
-                    <div class="border border-1 p-2 mt-2">
+                    <div class="border border-1 p-2" style = "border-radius: 0 0 5px 5px;">
                         <p> open day description</p>
                     </div>
 
@@ -109,10 +109,10 @@
 
                 <div id="card-venues" class="mt-3 mb-3">
                     <!-- Description Content -->
-                    <div class="border border-1 p-1 text-center fw-bold" style = "border-radius:5px;">
+                    <div class="border border-1 p-1 text-center fw-bold" style = "border-radius:5px 5px 0 0;">
                         <p class="mt-3">Venues</p>
                     </div>
-                    <div id="card-venues-values" class="border border-1 p-2 mt-2" style = "border-radius: 0 0 5px 5px;">
+                    <div id="card-venues-values" class="border border-1 p-2" style = "border-radius: 0 0 5px 5px;">
                         <!-- Venues Details -->
                         <p>Abacws / 3.65</p>
                         <p>Abacws / 4.35</p>
