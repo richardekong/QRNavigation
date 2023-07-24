@@ -31,6 +31,8 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'com.google.zxing:zxing-parent:3.5.1'
+    implementation 'org.webjars:bootstrap:5.3.0'
+    implementation 'org.webjars.npm:axios:1.4.0'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
     developmentOnly'com.h2database:h2'

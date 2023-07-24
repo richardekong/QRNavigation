@@ -10,4 +10,9 @@ public class HomeController {
     public String showHomePage() {
         return "landingPage";
     }
+
+    @GetMapping("/content")
+    public String ViewContentPage() {
+        return "contentPage";
+    }
 }
