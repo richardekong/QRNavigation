@@ -15,4 +15,8 @@ public class HomeController {
     public String ViewContentPage() {
         return "contentPage";
     }
+    @GetMapping("/adminMainPage")
+    public String ViewAdminPage() {
+        return "adminMainPage";
+    }
 }
