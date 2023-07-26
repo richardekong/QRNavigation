@@ -1,0 +1,38 @@
+<!--THIS HEADER FRAGMENT WILL APPEAR IN THE ADMIN PAGES AS STICKY HEADER -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header class="adminHeader" id="adminHeader" th:fragment = "adminHeader">
+    <div class="adminHeader-top-section" >
+        <div class="col-9 col-md-9">
+            <div class="adminHeader-logo-container">
+                <a th:href="@{/adminMainPage}"><img class="adminHeader-logo" th:src="@{/images/cardiff_uni_logo.png}" src="/static/images/cardiff_uni_logo.png" alt="Organization Logo"></a>
+            </div>
+            <div class="adminHeader-org-name-container">
+                <a class="adminHeader-org-name-link" th:href="@{/adminMainPage}"><p class="adminHeader-org-name">Cardiff Univeristy</p></a>
+            </div>
+        </div>
+        <div class="col-3 col-md-3">
+            <div class="adminHeader-org-profile-container">
+                <a class="adminHeader-org-profile-link" th:href="@{/adminMainPage}">
+                    <p class="adminHeader-org-profile">Profile</p>
+                    <img class="adminHeader-profile-icon" th:src="@{/images/profile-icon.svg}" src="/static/images/profile-icon.svg" alt="profile icon">
+                </a>
+            </div>
+            <div class="adminHeader-org-logout-container">
+                <a class="adminHeader-org-logout-link" th:href="@{/adminMainPage}">
+                    <p class="adminHeader-org-logout">Logout</p>
+                    <img class="adminHeader-logout-icon" th:src="@{/images/logout-icon.svg}" src="/static/images/logout-icon.svg" alt="logout icon">
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+</body>
+</html>
+
+
