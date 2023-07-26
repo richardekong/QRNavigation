@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Website Title</title>
+  <!--LINK TO user HEADER STYLE SHEET-->
+  <link rel="stylesheet" th:href="@{/css/header.css}" />
+  <!--LINK TO FOOTER STYLE SHEET-->
+  <link rel="stylesheet" th:href="@{/css/adminFooter.css}" />
+  <!--LINK TO HEADER SCRIPT FILE-->
+  <script th:src="@{/script/scanner.js}"></script>
+</head>
+<body style="overflow-y: scroll;">
+<!-- HERE THE user HEADER FRAGMENT INSERTED-->
+<header th:insert="userHeader::userHeader"></header>
+<main style="background-color: #F2F2F2;   width: 100%;">
+  <div style="padding-top: 130px;height: 400px;"><h1>Welcome to QR Navigation Project</h1></div>
+  <div style="padding-top: 130px;height: 400px;"><h1>Welcome to QR Navigation Project</h1></div>
+  <div style="padding-top: 130px;height: 400px;"><h1>Welcome to QR Navigation Project</h1></div>
+</main>
+<footer th:insert="adminFooter::adminFooter"></footer>
+</body>
+</html>
