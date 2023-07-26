@@ -1,0 +1,36 @@
+<!--THIS footer FRAGMENT WILL APPEAR IN THE ADMIN PAGES AS STICKY footer -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<footer class="adminFooter" id="adminFooter" th:fragment = "adminFooter">
+    <div class="adminFooter-top-section">
+        <div class="adminFooter-logo-container">
+            <a th:href="@{/adminMainPage}"><img class="adminFooter-logo" th:src="@{/images/cardiff_uni_logo.png}" src="/static/images/cardiff_uni_logo.png" alt="Organization Logo"></a>
+        </div>
+        <div class="adminFooter-org-name-container">
+            <a class="adminFooter-org-name-link" th:href="@{/adminMainPage}"><p class="adminFooter-org-name">Cardiff Univeristy</p></a>
+        </div>
+    </div>
+    <div class="adminFooter-bottom-section">
+        <div class="adminFooter-website-icon-container">
+            <a href="https://www.cardiff.ac.uk/"><img class="adminFooter-icon" th:src="@{/images/website-icon.svg}" src="/static/images/website-icon.svg" alt="Organization website"></a>
+        </div>
+        <div class="adminFooter-org-website-container">
+            <a class="adminFooter-org-website-link" href="https://www.cardiff.ac.uk/"><p class="adminFooter-website-name">Website</p></a>
+        </div>
+        <div class="adminFooter-copy-right-icon-container">
+            <img class="adminFooter-copy-right-icon" th:src="@{/images/copy-right-icon.png}" src="/static/images/copy-right-icon.png" alt="copy right icon">
+        </div>
+        <div class="adminFooter-copy-right-container">
+            <p class="adminFooter-copy-right-name">All Right Reserved</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
+
