@@ -1,0 +1,102 @@
+/* THIS SECTION FOR THE footer ADMIN FRAGMENT #CREATED BY FAISAL# */
+.adminFooter {
+    position: fixed;
+    bottom : 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #30344C;
+    z-index: 1;
+}
+
+.adminFooter-top-section {
+    display: flex;
+    align-items: center;
+}
+
+.adminFooter-logo-container {
+    display: inline-block;
+}
+
+.adminFooter-logo {
+    width: 30px;
+    height: 30px;
+}
+
+.adminFooter-org-name-container {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.adminFooter-org-name-link{
+    text-decoration: none;
+}
+
+.adminFooter-org-name {
+    font-size: 14px;
+    margin: 0;
+    color: white;
+    font-family: 'Merriweather';
+}
+
+.adminFooter-bottom-section {
+    display: flex;
+    align-items: center;
+
+}
+
+.adminFooter-website-icon-container {
+    display: inline-block;
+}
+
+.adminFooter-icon{
+    width: 30px;
+    height: 30px;
+}
+
+.adminFooter-org-website-container {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.adminFooter-org-website-link{
+    text-decoration: none;
+}
+
+.adminFooter-website-name {
+    font-size: 14px;
+    margin: 0;
+    color: white;
+    font-family: 'Merriweather';
+}
+
+.adminFooter-copy-right-icon-container {
+    display: inline-block;
+    margin-left: 80%;
+}
+
+.adminFooter-copy-right-icon{
+    width: 15px;
+    height: 12px;
+}
+
+.adminFooter-copy-right-container {
+    display: inline-block;
+}
+
+.adminFooter-copy-right-name {
+    font-size: 12px;
+    color: white;
+    font-family: 'Merriweather';
+}
+/* THIS THE END OF THE SECTION FOR THE ADMIN FOOTER FRAGMENT #CREATED BY FAISAL# */
+
+
+
+
+
+
+
+
+
+

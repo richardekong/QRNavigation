@@ -1,0 +1,93 @@
+/* THIS SECTION FOR THE HEADER ADMIN FRAGMENT #CREATED BY FAISAL# */
+.adminHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #30344C;
+    z-index: 1;
+}
+
+.adminHeader-top-section {
+    display: flex;
+    align-items: center;
+}
+
+.adminHeader-logo-container {
+    display: inline-block;
+}
+
+.adminHeader-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.adminHeader-org-name-container {
+    display: inline-block;
+}
+
+.adminHeader-org-name-link{
+    text-decoration: none;
+}
+
+.adminHeader-org-name {
+    font-size: 18px;
+    margin: 0;
+    color: white;
+    font-family: 'Merriweather';
+}
+
+.adminHeader-org-profile-container {
+    display: inline-block;
+    margin-left: 40%;
+}
+
+.adminHeader-org-profile-link{
+    text-decoration: none;
+    display: inline-block;
+}
+
+.adminHeader-org-profile {
+    display: inline-block;
+    font-size: 18px;
+    color: white;
+    font-family: 'Merriweather';
+}
+
+.adminHeader-profile-icon {
+    width: 17px;
+    height: 17px;
+    vertical-align: middle;
+}
+.adminHeader-org-logout-container {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.adminHeader-org-logout-link{
+    text-decoration: none;
+}
+
+.adminHeader-org-logout {
+    display: inline-block;
+    font-size: 18px;
+    color: white;
+    font-family: 'Merriweather';
+}
+
+.adminHeader-logout-icon {
+    width: 18px;
+    height: 18px;
+}
+/* THIS THE END OF THE SECTION FOR THE ADMIN HEADER FRAGMENT #CREATED BY FAISAL# */
+
+
+
+
+
+
+
+
+
+

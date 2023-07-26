@@ -19,9 +19,9 @@
     </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <!--LINK TO HEADER STYLE SHEET-->
-    <link rel="stylesheet" th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" th:href="@{/css/userHeader.css}"/>
     <!--LINK TO FOOTER STYLE SHEET-->
-    <link rel="stylesheet" th:href="@{/css/footer.css}"/>
+    <link rel="stylesheet" th:href="@{/css/userFooter.css}"/>
     <!-- style sheets for various screen resolutions of phones and tablets   -->
     <link rel="stylesheet" th:href="@{/css/screen.css}">
     <!--LINK TO HEADER SCRIPT FILE-->
@@ -75,6 +75,11 @@
             padding: var(--padding);
         }
 
+        #see-more a{
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
         footer {
             min-height: 100px;
         }
@@ -101,7 +106,7 @@
         <option>Abacws / 2.45</option>
         <option>Abacws / 3.45</option>
     </select>
-    <button class="col-xs-12 col-sm-12 col-md-12" id="see-more">See More</button>
+    <button class="col-xs-12 col-sm-12 col-md-12" id="see-more"><a th:href ="@{/content}">See More</a></button>
 </main>
 <footer th:insert="userFooter::userFooter"></footer>
 </body>
