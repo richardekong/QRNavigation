@@ -15,4 +15,5 @@ public class HomeController {
     public String ViewContentPage() {
         return "contentPage";
     }
+
 }
