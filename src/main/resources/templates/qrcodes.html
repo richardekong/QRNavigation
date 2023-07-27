@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>QR codes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="/static/css/adminHeader.css" th:href="@{/css/adminHeader.css}">
+    <link rel="stylesheet" href="/static/css/adminFooter.css" th:href="@{/css/adminFooter.css}">
+    <style>
+        body,
+        main {
+            background-color: #F2F2F2;
+            margin: 10% 5% 10% 5%;
+        }
+
+        #top-section div {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #top-section div img {
+            width: 5%;
+            height: 5%;
+        }
+
+        #top-section div a {
+            height: 10%;
+        }
+
+        #top-section a,
+        #top-section h4 {
+            margin-left: auto;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        table,
+        tr,
+        th,
+        td {
+            border: 1px solid #888;
+        }
+    </style>
+</head>
+
+<body>
+<header th:insert="adminHeader::adminHeader"></header>
+<main class="container">
+    <section id="top-section" class="card row shadow p-1">
+        <div>
+            <img src="/static/images/qr_code_icon.svg" th:src="@{/images/qr_code_icon.svg}" alt="QR code icon image">
+            <h4>Manage your QR codes</h4>
+            <a href="" class="btn btn-success shadow" style="background-color: #3cc494; border: 1px solid #3cc494;">
+                <i class="fas fa-plus"></i>&nbsp;&nbsp;&nbsp;Create QR Code
+            </a>
+        </div>
+    </section>
+    <section class="card row p-3 shadow mt-3">
+        <table
+                class="table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-responsive-xxl">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Assigned Space</th>
+                <th scope="col">Assigned Content ID</th>
+                <th scope="col">Make Decision</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>Abacws / 3.65</td>
+                <td>11</td>
+                <td>
+                    <button class="btn btn-primary shadow m-1 w-25">View</button>
+                    <button class="btn btn-danger shadow m-1 w-25">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Abacws / 5.48</td>
+                <td>12</td>
+                <td>
+                    <button class="btn btn-primary shadow m-1 w-25">View</button>
+                    <button class="btn btn-danger shadow m-1 w-25">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Abacws / 4.88</td>
+                <td>13</td>
+                <td>
+                    <button class="btn btn-primary shadow m-1 w-25">View</button>
+                    <button class="btn btn-danger shadow m-1 w-25">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<footer th:insert="adminFooter::adminFooter"></footer>
+</body>
+
+</html>

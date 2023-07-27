@@ -12,8 +12,13 @@ public class HomeController {
     }
 
     @GetMapping("/content")
-    public String ViewContentPage() {
+    public String viewContentPage() {
         return "contentPage";
+    }
+
+    @GetMapping("/admin/qrcodes")
+    public String viewQRCodes(){
+        return "qrcodes";
     }
 
 }
