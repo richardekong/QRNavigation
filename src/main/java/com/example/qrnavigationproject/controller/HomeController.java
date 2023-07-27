@@ -21,4 +21,13 @@ public class HomeController {
         return "qrcodes";
     }
 
+    @GetMapping("/admin/qrcodes/generate")
+    public String viewQRCodeGenerationPage(){
+        return "qrcodeGeneration";
+    }
+
+    @GetMapping("/admin/qrcodes/update")
+    public String viewQRCodeUpdatePage(){
+        return "qrcodeUpdate";
+    }
 }
