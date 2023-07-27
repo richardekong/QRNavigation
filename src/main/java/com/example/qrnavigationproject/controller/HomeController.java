@@ -16,4 +16,9 @@ public class HomeController {
         return "contentPage";
     }
 
+    @GetMapping("/eventManagement")
+    public String ViewEventManagementPage() {
+        return "eventManagementPage";
+    }
+
 }
