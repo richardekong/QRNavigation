@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Register Organization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous">
+    </script>
+    <!--webjars dependencies for bootstrap.ja and bootstrap.css    -->
+    <link th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
+
+    <!--admin header and footer stylesheets    -->
+    <link rel="stylesheet" href="/static/css/adminHeader.css" th:href="@{/css/adminHeader.css}">
+    <link rel="stylesheet" href="/static/css/adminFooter.css" th:href="@{/css/adminFooter.css}">
+    <style>
+        body,
+        main {
+            background-color: #F2F2F2;
+            margin-left: 10%;
+        }
+
+        .alternate-btn {
+            background-color: #1E98D7;
+            border: 1px solid #1E98D7;
+        }
+
+        .border-solid {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+<header th:insert="adminHeader::adminHeader"></header>
+<main class="mb-5 mt-5">
+    <section class="container row m-auto p-5">
+        <section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h3 class="text-center">Register your Organization's Details</h3>
+        </section>
+        <section class="row m-auto">
+            <form action="" class="card shadow form col-xs-12 col-sm-12 col-md-5 col-lg-6 p-5 m-1">
+                <div class="row shadow p-3 mb-3 rounded border-solid">
+                    <label for="name" class="col-md-4 col-lg-4">Name:</label>
+                    <input id="name" class="col-md-8 col-md-8 mb-3" name="name" type="text"
+                           placeholder="Enter Organization's name">
+                    <label for="email" class="col-md-4 col-lg-4">Email:</label>
+                    <input id="email" class="col-md-8 col-md-8" name="email" type="email"
+                           placeholder="Enter Organization's Email">
+                </div>
+                <div class="row shadow p-3 mb-3 rounded border-solid">
+                    <label for="postcode" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Postcode:</label>
+                    <input id="postcode" name="postcode" type="text" placeholder="Enter Organization's postcode"
+                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
+                    <label for="addresses" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Addresses:</label>
+                    <select id="addresses" name="address" class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
+                        <option value="">select an address</option>
+                    </select>
+                </div>
+                <div class="shadow row p-3 mb-3 rounded border-solid">
+                    <label for="logo" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Logo:</label>
+                    <input id="logo" name="name" type="text" placeholder="Enter Organization's Logo URL"
+                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
+                    <label for="website" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Website:</label>
+                    <input id="website" name="name" type="text" placeholder="Enter Organization's website URL"
+                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
+                </div>
+                <div class="shadow row p-3 mb-3 rounded border-solid">
+                    <label for="header-theme" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Header Theme:</label>
+                    <input id="header-theme" name="header-theme" type="color"
+                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
+                    <label for="footer-theme" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Footer Theme:</label>
+                    <input id="footer-theme" name="footer-theme" type="color"
+                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
+                </div>
+                <div class="row p-3 mb-3 justify-content-end">
+                    <button class="btn btn-primary w-25 alternate-btn shadow">Register</button>
+                </div>
+            </form>
+            <div class="card shadow col-xs-12 col-sm-12 col-md-5 col-lg-5 m-1 p-3 text-center">
+                <img class="w-50 h-50 m-auto" src="/static/images/skyscraper_icon.svg"
+                     th:src="@{/images/skyscraper_icon.svg}" alt="sky scraper">
+            </div>
+        </section>
+    </section>
+</main>
+<footer th:insert="adminFooter::adminFooter"></footer>
+</body>
+
+</html>
