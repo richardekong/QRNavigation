@@ -21,4 +21,9 @@ public class HomeController {
         return "eventManagementPage";
     }
 
+    @GetMapping("/CreateEvent")
+    public String ViewCreateEventPage() {
+        return "CreateEventPage";
+    }
+
 }
