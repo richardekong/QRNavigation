@@ -25,10 +25,11 @@
     <style>
         body, main{
             background-color: #F2F2F2;
+            font-family: 'Merriweather',serif;
         }
 
         main{
-            margin: 10% 20% 5% 20%;
+            margin: 7% 20% 5% 20%;
         }
         .card a {
             color: black;
@@ -38,18 +39,18 @@
 <body>
 <header th:insert="adminHeader::adminHeader"></header>
 <main>
-    <div class="container row">
-        <div id="welcome-note" class="card col-xs-12 col-sm-12 col-md-10 col-lg-10 ms-4 shadow">
-            <span style="font-size: large; font-weight: bold; padding: 5%;">Welcome [organization_name] to QR Navigation System</span>
+    <div class="row">
+        <div id="welcome-note" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ms-0">
+            <span style="font-size: 28px; padding: 5%;">Welcome [organization_name] to QR Navigation System</span>
         </div>
-        <div id="menu" class="container row">
-            <div class="card col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lx-4 m-5 p-3 shadow">
+        <div id="menu" class="container row ms-5 mt-3">
+            <div class="card col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lx-4 me-5 p-3 shadow">
                 <img class="w-50 h-50 mb-3" src="/static/images/qrCode.png" th:src="@{/images/qrCode.png}" alt="sample qr image">
                 <a href="" th:href="@{/admin/qrcodes}">Manage QR codes</a>
                 <br>
                 <a href="" th:href="@{/admin/spaces}">Manage Places</a>
             </div>
-            <div class="card col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lx-4 m-5 p-3 shadow">
+            <div class="card col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lx-4 ms-5 p-3 shadow">
                 <img class="w-50 h-50 mb-3" src="/static/images/calendar_icon.png" th:src="@{/images/calendar_icon.png}" alt="sample calendar image">
                 <a href="" th:href="@{/admin/events}">Manage Events</a>
                 <br>
