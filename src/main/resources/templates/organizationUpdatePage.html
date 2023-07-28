@@ -22,6 +22,9 @@
     <!--admin header and footer stylesheets    -->
     <link rel="stylesheet" href="/static/css/adminHeader.css" th:href="@{/css/adminHeader.css}">
     <link rel="stylesheet" href="/static/css/adminFooter.css" th:href="@{/css/adminFooter.css}">
+    <!--admin navigation side bar -->
+    <link rel="stylesheet" th:href="@{/css/adminNavBar.css}">
+
     <style>
         body,
         main {
@@ -42,6 +45,7 @@
 
 <body>
 <header th:insert="adminHeader::adminHeader"></header>
+<nav th:insert="adminNavBar::adminNavBar"></nav>
 <main class="mb-5 mt-5">
     <section class="container row m-auto p-5">
         <section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
