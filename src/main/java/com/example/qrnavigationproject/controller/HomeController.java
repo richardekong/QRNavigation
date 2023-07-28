@@ -16,12 +16,12 @@ public class HomeController {
         return "contentPage";
     }
 
-    @GetMapping("/eventManagement")
+    @GetMapping("/admin/eventManagement")
     public String ViewEventManagementPage() {
         return "eventManagementPage";
     }
 
-    @GetMapping("/CreateEvent")
+    @GetMapping("/admin/CreateEvent")
     public String ViewCreateEventPage() {
         return "CreateEventPage";
     }
