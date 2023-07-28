@@ -21,8 +21,9 @@
     <style>
         body,
         main {
+            font-family: 'Merriweather', serif;
             background-color: #F2F2F2;
-            margin: 10% 5% 10% 5%;
+            margin: 5% 5% 10% 5%;
         }
 
         #top-section div {
@@ -39,18 +40,18 @@
             height: 10%;
         }
 
-        #top-section a,
-        #top-section h4 {
+        #top-section a{
             margin-left: auto;
             margin-top: auto;
             margin-bottom: auto;
         }
-
-        table,
-        tr,
+        .custom-btn{
+            background-color: #1E98D7;
+            border: 1px solid #1E98D7;
+        }
         th,
         td {
-            border: 1px solid #888;
+            text-align: center;
         }
     </style>
 </head>
@@ -58,11 +59,11 @@
 <body>
 <header th:insert="adminHeader::adminHeader"></header>
 <main class="container">
-    <section id="top-section" class="card row shadow p-1">
-        <div>
-            <img src="/static/images/qr_code_icon.svg" th:src="@{/images/qr_code_icon.svg}" alt="QR code icon image">
-            <h4>Manage your QR codes</h4>
-            <a th:href="@{/admin/qrcodes/generate}" class="btn btn-success shadow"
+    <section id="top-section" class="p-1">
+        <div class="row">
+            <img class="col-xs-12 col-sm-12 col-md-3 col-lg-3" src="/static/images/qr_code_icon.svg" th:src="@{/images/qr_code_icon.svg}" alt="QR code icon image">
+            <h4 class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Manage your QR codes</h4>
+            <a class="col-xs-12 col-sm-12 col-md-3 col-lg-3 btn btn-success shadow" th:href="@{/admin/qrcodes/generate}"
                style="background-color: #3cc494; border: 1px solid #3cc494;">
                 <i class="fas fa-plus"></i>&nbsp;&nbsp;&nbsp;Create QR Code
             </a>
@@ -70,8 +71,8 @@
     </section>
     <section class="card row p-3 shadow mt-3">
         <table
-                class="table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-responsive-xxl">
-            <thead>
+                class="table table-hover table-bordered table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-responsive-xxl">
+            <thead class="table-light">
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Assigned Space</th>
@@ -85,7 +86,7 @@
                 <td>Abacws / 3.65</td>
                 <td>11</td>
                 <td>
-                    <a class="btn btn-primary shadow m-1 w-25" th:href="@{/admin/qrcodes/update}">View</a>
+                    <a class="btn btn-primary custom-btn shadow m-1 w-25" th:href="@{/admin/qrcodes/update}">View</a>
                     <button class="btn btn-danger shadow m-1 w-25">Delete</button>
                 </td>
             </tr>
@@ -94,7 +95,7 @@
                 <td>Abacws / 5.48</td>
                 <td>12</td>
                 <td>
-                    <a class="btn btn-primary shadow m-1 w-25" th:href="@{/admin/qrcodes/update}">View</a>
+                    <a class="btn btn-primary custom-btn shadow m-1 w-25" th:href="@{/admin/qrcodes/update}">View</a>
                     <button class="btn btn-danger shadow m-1 w-25">Delete</button>
                 </td>
             </tr>
@@ -103,7 +104,7 @@
                 <td>Abacws / 4.88</td>
                 <td>13</td>
                 <td>
-                    <a class="btn btn-primary shadow m-1 w-25" th:href="@{/admin/qrcodes/update}">View</a>
+                    <a class="btn btn-primary custom-btn shadow m-1 w-25" th:href="@{/admin/qrcodes/update}">View</a>
                     <button class="btn btn-danger shadow m-1 w-25">Delete</button>
                 </td>
             </tr>
