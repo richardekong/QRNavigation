@@ -25,6 +25,11 @@ public class DemoController {
         return "CreateEventPage";
     }
 
+    @GetMapping("/admin/events/updateEvent")
+    public String ViewUpdateEventPage() {
+        return "eventUpdate";
+    }
+
     @GetMapping("/admin/main")
     public String viewAdminMainPage(){
         return "adminMainPage";

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Event</title>
+    <!-- Link Bootstrap CSS -->
+    <link th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!--LINK TO ADMIN HEADER STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/adminHeader.css}" />
+    <!--LINK TO ADMIN FOOTER STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/adminFooter.css}" />
+    <!--LINK TO CREATE EVENT  PAGE STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/CreateEventPage.css}" />
+    <!-- Link to Bootstrap JS (required for some Bootstrap components) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!--LINK TO NAV BAR STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/adminNavBar.css}">
+</head>
+<body style="overflow-y: scroll; background-color: #F2F2F2; font-family: 'Merriweather';">
+<!-- HERE THE ADMIN HEADER FRAGMENT INSERTED-->
+<header th:insert="adminHeader::adminHeader"></header>
+<!--HERE THE NAV BAR FRAGMENT INSERTED-->
+<nav th:insert="adminNavBar::adminNavBar"></nav>
+<main style="margin-bottom: 5%; margin-left: 20%; ">
+    <div class="container mt-5" style="padding-top: 3%;">
+        <div class="row">
+            <!-- Left section for the dialogue form -->
+            <div class="col-md-6 shadow" style="background-color: #FFFFFF; border-radius: 4px; margin-bottom: 10%; padding-bottom: 20px;">
+                <h3>Edit Event</h3>
+                <form>
+                    <!-- First row -->
+                    <div class="row mb-1">
+                        <div class="col-md-5">
+                            <label for="venue">Chose event:</label>
+                            <select class="form-select" id="venue" required>
+                                <option value="" selected>Select a event</option>
+                                <option value="venue1">Open day</option>
+                                <option value="venue2">Open day</option>
+                                <!-- Add more venues as needed -->
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="eventFromDate">From:</label>
+                            <input type="date" class="form-control" id="eventFromDate" required>
+                        </div>
+                        <div class="col-md-3 mt-3 mt-md-0">
+                            <label for="eventFromTime">Time:</label>
+                            <div class="input-group">
+                                <input type="time" class="form-control" id="eventFromTime" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Second row -->
+                    <div class="row mb-1">
+                        <div class="col-md-5">
+                            <label for="eventName">Event Name:</label>
+                            <input type="text" class="form-control" id="eventName" placeholder="Write the new name"  required size="28">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="eventToDate">To:</label>
+                            <input type="date" class="form-control" id="eventToDate" required>
+                        </div>
+                        <div class="col-md-3 mt-3 mt-md-0">
+                            <label for="eventToTime">Time:</label>
+                            <div class="input-group">
+                                <input type="time" class="form-control" id="eventToTime" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Third row -->
+                    <div class="row mb-1">
+                        <div class="col-md-5">
+                            <label for="venue">Venues:</label>
+                            <select class="form-select" id="venue" required>
+                                <option value="" selected>Select a venue</option>
+                                <option value="venue1">Venue 1</option>
+                                <option value="venue2">Venue 2</option>
+                                <!-- Add more venues as needed -->
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Fourth row -->
+                    <div class="mb-1">
+                        <label for="eventDescription">Event Description:</label>
+                        <textarea class="form-control h-50" id="eventDescription" rows="3" placeholder="Enter event description" ></textarea>
+                    </div>
+                    <!-- Create Button -->
+                    <a th:href="@{/admin/events}">
+                        <button type="submit" class="btn btn-primary" style="background-color: #1E98D7; margin-left: 40%">Edit</button>
+                    </a>
+                </form>
+            </div>
+
+            <!-- Right section for the event icon -->
+            <div class="col-md-6" >
+                <!-- Replace 'black-event-icon.svg' with the actual image URL for the event icon -->
+                <img th:src="@{/images/black-event-icon.svg}" src="/static/images/black-event-icon.svg" alt="Event Icon" class="img-fluid" style="height: 400px; width: 400px; margin-left: 20%;" >
+            </div>
+        </div>
+    </div>
+
+</main>
+<!-- HERE THE ADMIN FOOTER FRAGMENT INSERTED-->
+<footer th:insert="adminFooter::adminFooter"></footer>
+</body>
+</html>

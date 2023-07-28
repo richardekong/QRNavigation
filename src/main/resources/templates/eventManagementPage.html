@@ -12,11 +12,16 @@
             <link rel="stylesheet" th:href="@{/css/adminFooter.css}" />
             <!--LINK TO EVENT MANAGEMENT PAGEE STYLE SHEET-->
             <link rel="stylesheet" th:href="@{/css/eventManagementPage.css}" />
+            <!--LINK TO NAV BAR STYLE SHEET-->
+            <link rel="stylesheet" th:href="@{/css/adminNavBar.css}">
+
         </head>
         <body style="overflow-y: scroll; background-color: #FFFFFF; font-family: 'Merriweather';">
             <!-- HERE THE ADMIN HEADER FRAGMENT INSERTED-->
             <header th:insert="adminHeader::adminHeader"></header>
-            <main style="margin-bottom: 10%;">
+            <!--HERE THE NAV BAR FRAGMENT INSERTED-->
+            <nav th:insert="adminNavBar::adminNavBar"></nav>
+            <main style="margin-bottom: 10%; margin-left: 20%;margin-right: 5%;">
                 <div class="container-md" style="padding-top: 80px;">
                     <div class="row">
                         <div class="col" style="display: inline-block;padding-bottom: 0px;">
@@ -24,15 +29,15 @@
                             <h3 style="display: inline-block; font-family: 'Merriweather'; padding-bottom: 0px;">Manage your events</h3>
                         </div>
                         <div class="col">
-                            <a th:href="@{/admin/CreateEvent}">
-                                <button type="button" class="create-new-event-button" style="background-color: #1ABE7E;">
+                            <a th:href="@{/admin/events/CreateEvent}">
+                                <button type="button" class="create-new-event-button" style="background-color: #3CC494; border: 1px solid #3CC494; ">
                                     <img style="display: inline-block;" class="plus-icon" th:src="@{/images/plus-icon.svg}" src="/static/images/plus-icon.svg" alt="plus icon">
                                      Create Event
                                 </button>
                             </a>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row card shadow p-3" >
                         <table class="table  table-hover table-bordered table-responsive" style="border-radius: 4px;">
                             <thead class="table-light">
                                 <tr>
@@ -71,28 +76,9 @@
                                         <p style="text-align: center; ">8/7/2023</p>
                                     </td>
                                     <td class="centered-buttons">
-                                            <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:2px;">View</button>
-                                            <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: center; ">Open day</p>
-                                    </td>
-                                    <td>
-                                        <select class="form-select" id="exampleDropdown">
-                                            <option style="text-align: center; ">Abacws 3.65</option>
-                                            <option style="text-align: center; ">Abacws 3.65</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <p style="text-align: center; ">7/7/2023</p>
-                                    </td>
-                                    <td>
-                                        <p style="text-align: center; ">8/7/2023</p>
-                                    </td>
-                                    <td class="centered-buttons">
-                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:2px;">View</button>
+                                        <a th:href="@{/admin/events/updateEvent}">
+                                            <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
+                                        </a>
                                         <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
                                     </td>
                                 </tr>
@@ -113,7 +99,7 @@
                                         <p style="text-align: center; ">8/7/2023</p>
                                     </td>
                                     <td class="centered-buttons">
-                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:2px;">View</button>
+                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
                                         <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
                                     </td>
                                 </tr>
@@ -134,7 +120,7 @@
                                         <p style="text-align: center; ">8/7/2023</p>
                                     </td>
                                     <td class="centered-buttons">
-                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:2px;">View</button>
+                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
                                         <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
                                     </td>
                                 </tr>
@@ -155,7 +141,7 @@
                                         <p style="text-align: center; ">8/7/2023</p>
                                     </td>
                                     <td class="centered-buttons">
-                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:2px;">View</button>
+                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
                                         <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
                                     </td>
                                 </tr>
@@ -176,7 +162,7 @@
                                         <p style="text-align: center; ">8/7/2023</p>
                                     </td>
                                     <td class="centered-buttons">
-                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:2px;">View</button>
+                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
                                         <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
                                     </td>
                                 </tr>
@@ -197,7 +183,28 @@
                                         <p style="text-align: center; ">8/7/2023</p>
                                     </td>
                                     <td class="centered-buttons">
-                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:2px;">View</button>
+                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
+                                        <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p style="text-align: center; ">Open day</p>
+                                    </td>
+                                    <td>
+                                        <select class="form-select" id="exampleDropdown">
+                                            <option style="text-align: center; ">Abacws 3.65</option>
+                                            <option style="text-align: center; ">Abacws 3.65</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <p style="text-align: center; ">7/7/2023</p>
+                                    </td>
+                                    <td>
+                                        <p style="text-align: center; ">8/7/2023</p>
+                                    </td>
+                                    <td class="centered-buttons">
+                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
                                         <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
                                     </td>
                                 </tr>
