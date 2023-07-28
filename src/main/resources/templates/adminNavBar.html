@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+<nav th:fragment="adminNavBar">
+    <section id="top">
+        <img src="/static/images/qr_code_white_icon.svg" th:src="@{/images/qr_code_white_icon.svg}" alt="qr code sample">
+    </section>
+    <section id="nav-menu">
+        <a th:href="@{/admin/main/places}" class="nav-menu-item">
+            <img src="/static/images/place_white_icon.svg" class="nav-menu-icon" th:src="@{/images/place_white_icon.svg}" alt="space icon">
+            <span class="nav-menu-text">Spaces</span>
+        </a>
+        <a th:href="@{/admin/main/events}" class="nav-menu-item">
+            <img src="/static/images/calendar_white_icon.svg" class="nav-menu-icon" th:src="@{/images/calendar_white_icon.svg}" alt="calendar icon">
+            <span class="nav-menu-text">Events</span>
+        </a>
+        <a th:href="@{/admin/main/contents}" class="nav-menu-item">
+            <img src="/static/images/content_white_icon.svg" class="nav-menu-icon" th:src="@{/images/content_white_icon.svg}" alt="content icon">
+            <span class="nav-menu-text">Contents</span>
+        </a>
+        <a th:href="@{/admin/main/qrcodes}" class="nav-menu-item">
+            <img class="nav-menu-icon" th:src="@{/images/qr_code_white_icon.svg}" alt="qr code icon" src="/static/images/qr_code_white_icon.svg">
+            <span class="nav-menu-text">QR Codes</span>
+        </a>
+    </section>
+</nav>
+</body>
+</html>
