@@ -2,10 +2,9 @@ package com.example.qrnavigationproject.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-public class HomeController {
+public class DemoController {
     @RequestMapping("/home")
     public String showHomePage() {
         return "landingPage";
@@ -16,14 +15,19 @@ public class HomeController {
         return "contentPage";
     }
 
-    @GetMapping("/admin/eventManagement")
+    @GetMapping("/admin/events")
     public String ViewEventManagementPage() {
         return "eventManagementPage";
     }
 
-    @GetMapping("/admin/CreateEvent")
+    @GetMapping("/admin/events/CreateEvent")
     public String ViewCreateEventPage() {
         return "CreateEventPage";
+    }
+
+    @GetMapping("/admin/main")
+    public String viewAdminMainPage(){
+        return "adminMainPage";
     }
 
 }
