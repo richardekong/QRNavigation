@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <title>QR codes</title>
@@ -18,12 +18,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     <link rel="stylesheet" href="/static/css/adminHeader.css" th:href="@{/css/adminHeader.css}">
     <link rel="stylesheet" href="/static/css/adminFooter.css" th:href="@{/css/adminFooter.css}">
+    <link rel="stylesheet" href="/static/css/adminNavBar.css" th:href="@{/css/adminNavBar.css}">
     <style>
         body,
         main {
             font-family: 'Merriweather', serif;
             background-color: #F2F2F2;
-            margin: 5% 5% 10% 5%;
+            margin: 5% 5% 10% 20%;
         }
 
         #top-section div {
@@ -32,8 +33,8 @@
         }
 
         #top-section div img {
-            width: 5%;
-            height: 5%;
+            width: 10%;
+            height: 10%;
         }
 
         #top-section div a {
@@ -58,11 +59,12 @@
 
 <body>
 <header th:insert="adminHeader::adminHeader"></header>
+<nav th:insert="adminNavBar::adminNavBar"></nav>
 <main class="container">
     <section id="top-section" class="p-1">
         <div class="row">
             <img class="col-xs-12 col-sm-12 col-md-3 col-lg-3" src="/static/images/qr_code_icon.svg" th:src="@{/images/qr_code_icon.svg}" alt="QR code icon image">
-            <h4 class="col-xs-12 col-sm-12 col-md-6 col-lg-6">Manage your QR codes</h4>
+            <h4 class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-4">Manage your QR codes</h4>
             <a class="col-xs-12 col-sm-12 col-md-3 col-lg-3 btn btn-success shadow" th:href="@{/admin/qrcodes/generate}"
                style="background-color: #3cc494; border: 1px solid #3cc494;">
                 <i class="fas fa-plus"></i>&nbsp;&nbsp;&nbsp;Create QR Code
