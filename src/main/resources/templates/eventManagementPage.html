@@ -24,10 +24,12 @@
                             <h3 style="display: inline-block; font-family: 'Merriweather'; padding-bottom: 0px;">Manage your events</h3>
                         </div>
                         <div class="col">
-                            <button type="button" class="create-new-event-button">
-                                <img style="display: inline-block;" class="plus-icon" th:src="@{/images/plus-icon.svg}" src="/static/images/plus-icon.svg" alt="plus icon">
-                                Create Event
-                            </button>
+                            <a th:href="@{/admin/CreateEvent}">
+                                <button type="button" class="create-new-event-button" style="background-color: #1ABE7E;">
+                                    <img style="display: inline-block;" class="plus-icon" th:src="@{/images/plus-icon.svg}" src="/static/images/plus-icon.svg" alt="plus icon">
+                                     Create Event
+                                </button>
+                            </a>
                         </div>
                     </div>
                     <div class="row">
