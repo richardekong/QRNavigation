@@ -20,11 +20,11 @@ import java.util.regex.Pattern;
 import static com.example.qrnavigationproject.model.Constant.*;
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OrganizationUpdatePageFunctionalTest {
+public class OrganizationRegistrationPageFunctionalTest {
 
     @Value("${local.server.port}")
     private int port;
@@ -38,7 +38,7 @@ public class OrganizationUpdatePageFunctionalTest {
 
     @BeforeEach
     void setupTest() {
-        final String pageURL = format("http://localhost:%d/admin/organization/update", port);
+        final String pageURL = format("http://localhost:%d/admin/organization/register", port);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--headless");
@@ -57,7 +57,7 @@ public class OrganizationUpdatePageFunctionalTest {
     public void verifyPageSectionHeader() {
         String h3Text;
         h3Text = driver.findElement(By.tagName("H3")).getText();
-        assertEquals(h3Text, "Edit your Organization's Details");
+        assertEquals(h3Text, "Register your Organization's Details");
     }
 
     @Test
@@ -70,7 +70,7 @@ public class OrganizationUpdatePageFunctionalTest {
         assertNotNull(driver.findElement(By.name("website")));
         assertNotNull(driver.findElement(By.name("header-theme")));
         assertNotNull(driver.findElement(By.name("footer-theme")));
-        assertEquals(driver.findElement(By.tagName("button")).getText(), "Edit");
+        assertEquals(driver.findElement(By.tagName("button")).getText(),"Register");
     }
 
     @Test
@@ -110,22 +110,14 @@ public class OrganizationUpdatePageFunctionalTest {
         //verify logo url validation functionality
         logoInput.sendKeys("https://www.cardiffuni.org/logo.png");
         assertTrue(logoPattern.matcher(logoInput.getAttribute("value")).matches());
-        logoInput.sendKeys("cardiffuni.org/logo");
+        logoInput.sendKeys("etc.cardiffuni.org/logo");
         assertFalse(logoPattern.matcher(logoInput.getAttribute("value")).matches());
 
         //verify website url  validation functionality
         websiteInput.sendKeys("https://www.cardiffuni.org");
         assertTrue(websitePattern.matcher(websiteInput.getAttribute("value")).matches());
-        websiteInput.sendKeys("http://example.c");
+        websiteInput.sendKeys("btc.cardiffuni.org/logo");
         assertFalse(websitePattern.matcher(websiteInput.getAttribute("value")).matches());
     }
-
-    @Test
-    public void verifyProfileHeaderIconLink() {
-        driver.findElement(By.xpath("//a[@href='/admin/organization/update']")).click();
-        assertEquals(driver.getCurrentUrl(), format("http://localhost:%d/admin/organization/update", port));
-        assertEquals(driver.getTitle(), "Edit Organization");
-    }
-
 
 }
