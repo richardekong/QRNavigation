@@ -20,4 +20,22 @@ public class DemoController {
         return "adminMainPage";
     }
 
+    @GetMapping("/managePlaces")
+    public String viewManagePlacePage() {
+        return "managePlaces";
+    }
+
+    @GetMapping("/editTextManagePlaces")
+    public String viewEditPlacesPage() {return "editTextManagePlaces";
+    }
+    @GetMapping("/createSubPlace")
+    public String viewCreatePlacesPage() {
+        return "createSubPlace";
+    }
+
+    @GetMapping("/createMainPlace")
+    public String viewCreateMainPlacePage() {
+        return "createMainPlace";
+    }
+
 }

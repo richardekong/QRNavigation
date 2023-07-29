@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Place Page</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/adminHeader.css" th:href="@{/css/adminHeader.css}">
+    <link rel="stylesheet" href="/static/css/adminFooter.css" th:href="@{/css/adminFooter.css}">
+
+    <style>
+        .bg-clr {
+            background-color: #f2f2f2;
+        }
+        .btn-blue {
+            background-color: #1d99d7;
+        }
+    </style>
+</head>
+<header th:insert="adminHeader::adminHeader"></header>
+
+<body class="bg-clr">
+    <div class="container d-flex align-items-center justify-content-center my-5">
+        <div class="col-md-8">
+            <div class="card shadow py-5 mt-5">
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="place" class="form-label fw-bold">Create new main place:</label>
+                            <input type="place" class="form-control border border-dark rounded-0" id=" "
+                                placeholder="  Write the name of the new main place here">
+                        </div>
+                        <div class="mb-3">
+                            <label for="postcode" class="form-label fw-bold">Postcode:</label>
+                            <input type="postcode" class="form-control border border-dark rounded-0" id=""
+                                placeholder="write the postcode">
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="/createSubPlace">
+                                <button type="button" class="btn btn-primary btn-blue px-4 mt-3 shadow">Create</button>
+
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+<footer th:insert="adminFooter::adminFooter"></footer>
+</html>
