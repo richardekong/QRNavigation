@@ -116,7 +116,7 @@ public class OrganizationRegistrationPageFunctionalTest {
         //verify website url  validation functionality
         websiteInput.sendKeys("https://www.cardiffuni.org");
         assertTrue(websitePattern.matcher(websiteInput.getAttribute("value")).matches());
-        websiteInput.sendKeys("btc.cardiffuni.org/logo");
+        websiteInput.sendKeys("**/cardiffuni.org/logo");
         assertFalse(websitePattern.matcher(websiteInput.getAttribute("value")).matches());
     }
 
