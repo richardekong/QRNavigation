@@ -9,12 +9,23 @@ public class DemoController {
     public String showHomePage() {
         return "landingPage";
     }
-
     @GetMapping("/content")
-    public String ViewContentPage() {
+    public String viewContentPage() {
         return "contentPage";
     }
 
+    @GetMapping("/admin/qrcodes")
+    public String viewQRCodes(){
+        return "qrcodes";
+    }
+    @GetMapping("/admin/qrcodes/generate")
+    public String viewQRCodeGenerationPage(){
+        return "qrcodeGeneration";
+    }
+    @GetMapping("/admin/qrcodes/update")
+    public String viewQRCodeUpdatePage(){
+        return "qrcodeUpdate";
+    }
     @GetMapping("/admin/main")
     public String viewAdminMainPage(){
         return "adminMainPage";
@@ -36,6 +47,21 @@ public class DemoController {
     @GetMapping("admin/places/createPlace")
     public String viewCreateMainPlacePage() {
         return "createMainPlace";
+    }
+
+    @GetMapping("/admin/events")
+    public String ViewEventManagementPage() {
+        return "eventManagementPage";
+    }
+
+    @GetMapping("/admin/events/createEvent")
+    public String ViewCreateEventPage() {
+        return "createEventPage";
+    }
+
+    @GetMapping("/admin/events/updateEvent")
+    public String ViewUpdateEventPage() {
+        return "eventUpdate";
     }
 
 }
