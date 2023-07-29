@@ -14,6 +14,15 @@ public class DemoController {
         return "contentPage";
     }
 
+    @GetMapping("/admin/organization/register")
+    public String ViewOrganizationRegistrationPage() {
+        return "organizationRegistrationPage";
+    }
+    @GetMapping("/admin/organization/update")
+    public String ViewOrganizationUpdatePage() {
+        return "organizationUpdatePage";
+    }
+
     @GetMapping("/admin/qrcodes")
     public String viewQRCodes(){
         return "qrcodes";
@@ -25,10 +34,12 @@ public class DemoController {
     @GetMapping("/admin/qrcodes/update")
     public String viewQRCodeUpdatePage(){
         return "qrcodeUpdate";
+
     }
     @GetMapping("/admin/main")
     public String viewAdminMainPage(){
         return "adminMainPage";
+
     }
 
     @GetMapping("admin/places")
