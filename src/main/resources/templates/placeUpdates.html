@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Place Page</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/adminHeader.css" th:href="@{/css/adminHeader.css}">
+    <link rel="stylesheet" href="/static/css/adminFooter.css" th:href="@{/css/adminFooter.css}">
+    <link rel="stylesheet" th:href="@{/css/adminNavBar.css}">
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <style>
+        .bg-clr {
+            background-color: #f2f2f2;
+        }
+
+        .btn-blue {
+            background-color: #1d99d7;
+        }
+    </style>
+</head>
+
+<body class="bg-clr">
+<header th:insert="adminHeader::adminHeader"></header>
+<nav th:insert="adminNavBar::adminNavBar"></nav>
+
+<div class="container d-flex align-items-center justify-content-center my-5">
+    <div class="col-md-8 mt-5">
+        <div class="card shadow py-5">
+            <div class="card-body">
+                <form>
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <label for="mainPlace" class="col-form-label fw-bold text-end">Choose main
+                                place:</label>
+                        </div>
+                        <div class="col-sm-9 mb-3">
+                            <select class="form-select border border-dark rounded-2" id="mainPlace"
+                                    style="border-radius: 5px;">
+                                <option value="Option 1">abacws</option>
+                                <option value="Option 2">queens</option>
+                                <option value="Option 3">abacws</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label for="mainPlace" class="col-form-label fw-bold text-end"></label>
+                        </div>
+                        <div class="col-sm-9">
+                                <textarea class="form-control border border-dark rounded-2 h-50" id="subPlace" rows="5"
+                                          placeholder="Enter your new place"></textarea>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <a href="/admin/manage/places">
+                            <button type="button" class="btn btn-primary btn-blue px-4 mt-3 shadow">Edit</button>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<footer th:insert="adminFooter::adminFooter"></footer>
+</html>
