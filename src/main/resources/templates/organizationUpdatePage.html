@@ -40,6 +40,9 @@
         .border-solid {
             border: 1px solid #ccc;
         }
+        .hex{
+            color: #ff0044; font-size: x-small;
+        }
     </style>
 </head>
 
@@ -56,15 +59,15 @@
                 <div class="row shadow p-3 mb-3 rounded border-solid">
                     <label for="name" class="col-md-4 col-lg-4">Name:</label>
                     <input id="name" class="col-md-8 col-md-8 mb-3" name="name" type="text"
-                           placeholder="Enter Organization's name">
-                    <label for="email" class="col-md-4 col-lg-4">Email:</label>
-                    <input id="email" class="col-md-8 col-md-8" name="email" type="email"
-                           placeholder="Enter Organization's Email">
+                           placeholder="Enter Organization's name" required pattern="[a-zA-Z-' ]{2,50}">
+                    <label for="phone" class="col-md-4 col-lg-4">Email:</label>
+                    <input id="phone" class="col-md-8 col-md-8" name="phone" type="tel"
+                           placeholder="Enter Organization's Phone" required pattern="^[0-9+\-() ]*$">
                 </div>
                 <div class="row shadow p-3 mb-3 rounded border-solid">
                     <label for="postcode" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Postcode:</label>
                     <input id="postcode" name="postcode" type="text" placeholder="Enter Organization's postcode"
-                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
+                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2" required pattern="^[A-Z]{1,2}\d[A-Z]?\d[A-Z]{2}$">
                     <label for="addresses" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Addresses:</label>
                     <select id="addresses" name="address" class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
                         <option value="">select an address</option>
@@ -72,22 +75,22 @@
                 </div>
                 <div class="shadow row p-3 mb-3 rounded border-solid">
                     <label for="logo" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Logo:</label>
-                    <input id="logo" name="name" type="text" placeholder="Enter Organization's Logo URL"
-                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
+                    <input id="logo" name="logo" type="text" placeholder="Enter Organization's Logo URL"
+                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2" required pattern="^(https?:\/\/)?[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$">
                     <label for="website" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Website:</label>
-                    <input id="website" name="name" type="text" placeholder="Enter Organization's website URL"
-                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
+                    <input id="website" name="website" type="text" placeholder="Enter Organization's website URL"
+                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2" required pattern="^(https?:\/\/)?[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$">
                 </div>
                 <div class="shadow row p-3 mb-3 rounded border-solid">
-                    <label for="header-theme" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Header Theme:</label>
+                    <label for="header-theme" class="col-xs-12 col-sm-12 col-md-10 col-lg-10">Header Theme <span class="hex">(# HEX)</span>:</label>
                     <input id="header-theme" name="header-theme" type="color"
-                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
-                    <label for="footer-theme" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Footer Theme:</label>
-                    <input id="footer-theme" name="footer-theme" type="color"
-                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
+                           class="col-xs-12 col-sm-12 col-md-2 col-lg-2 form-control-color mb-2" value="#1E98D7">
+                    <label for="footer-theme" class="col-xs-12 col-sm-12 col-md-10 col-lg-10">Footer Theme <span class="hex">(# HEX)</span>:</label>
+                    <input id="footer-theme" name="footer-theme" type="color" value="#1E98D7"
+                           class="col-xs-12 col-sm-12 col-md-2 col-lg-2 form-control-color mb-2">
                 </div>
                 <div class="row p-3 mb-3 justify-content-end">
-                    <button class="btn btn-primary w-25 alternate-btn shadow">Edit</button>
+                    <button class="btn btn-primary w-25 alternate-btn shadow" type="submit">Edit</button>
                 </div>
             </form>
             <div class="card shadow col-xs-12 col-sm-12 col-md-5 col-lg-5 m-1 p-3 text-center">
