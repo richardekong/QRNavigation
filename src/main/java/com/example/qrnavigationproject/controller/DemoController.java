@@ -20,7 +20,7 @@ public class DemoController {
         return "adminMainPage";
     }
 
-    @GetMapping("admin/manage/places")
+    @GetMapping("admin/places")
     public String viewManagePlacePage() {
         return "managePlaces";
     }
