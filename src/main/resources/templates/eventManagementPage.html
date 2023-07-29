@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org">
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
             <link rel="stylesheet" th:href="@{/css/adminNavBar.css}">
 
         </head>
-        <body style="overflow-y: scroll; background-color: #FFFFFF; font-family: 'Merriweather';">
+        <body style="overflow-y: scroll; background-color: #FFFFFF; font-family: 'Merriweather','serif';">
             <!-- HERE THE ADMIN HEADER FRAGMENT INSERTED-->
             <header th:insert="adminHeader::adminHeader"></header>
             <!--HERE THE NAV BAR FRAGMENT INSERTED-->
@@ -24,9 +24,9 @@
             <main style="margin-bottom: 10%; margin-left: 20%;margin-right: 5%;">
                 <div class="container-md" style="padding-top: 80px;">
                     <div class="row">
-                        <div class="col" style="display: inline-block;padding-bottom: 0px;">
+                        <div class="col" style="display: inline-block;padding-bottom: 0;">
                             <img style="display: inline-block;" class="event-icon" th:src="@{/images/event-icon.svg}" src="/static/images/event-icon.svg" alt="event icon">
-                            <h3 style="display: inline-block; font-family: 'Merriweather'; padding-bottom: 0px;">Manage your events</h3>
+                            <h3 style="display: inline-block; font-family: 'Merriweather', 'serif'; padding-bottom: 0;">Manage your events</h3>
                         </div>
                         <div class="col">
                             <a th:href="@{/admin/events/CreateEvent}">
@@ -64,7 +64,8 @@
                                         <p style="text-align: center; ">Open day</p>
                                     </td>
                                     <td>
-                                        <select class="form-select" id="exampleDropdown">
+                                        <label for="subPlace"></label>
+                                        <select id="subPlace" class="form-select">
                                             <option style="text-align: center; ">Abacws 3.65</option>
                                             <option style="text-align: center; ">Abacws 3.65</option>
                                         </select>
@@ -87,7 +88,8 @@
                                         <p style="text-align: center; ">Open day</p>
                                     </td>
                                     <td>
-                                        <select class="form-select" id="exampleDropdown">
+
+                                        <select class="form-select">
                                             <option style="text-align: center; ">Abacws 3.65</option>
                                             <option style="text-align: center; ">Abacws 3.65</option>
                                         </select>
@@ -108,7 +110,7 @@
                                         <p style="text-align: center; ">Open day</p>
                                     </td>
                                     <td>
-                                        <select class="form-select" id="exampleDropdown">
+                                        <select class="form-select">
                                             <option style="text-align: center; ">Abacws 3.65</option>
                                             <option style="text-align: center; ">Abacws 3.65</option>
                                         </select>
@@ -129,7 +131,7 @@
                                         <p style="text-align: center; ">Open day</p>
                                     </td>
                                     <td>
-                                        <select class="form-select" id="exampleDropdown">
+                                        <select class="form-select">
                                             <option style="text-align: center; ">Abacws 3.65</option>
                                             <option style="text-align: center; ">Abacws 3.65</option>
                                         </select>
@@ -148,7 +150,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
                 </div>
             </main>
             <!-- HERE THE ADMIN FOOTER FRAGMENT INSERTED-->

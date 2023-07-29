@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Generate QR code</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <!-- Link Bootstrap CSS and js libraries from webjars-->
+    <link th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.min.js}"></script>
+
+    <!--    header and footer stylesheet-->
+    <link rel="stylesheet" href="/static/css/adminHeader.css" th:href="@{/css/adminHeader.css}">
+    <link rel="stylesheet" href="/static/css/adminFooter.css" th:href="@{/css/adminFooter.css}">
+    <!--Stylesheet for admin navigation sidebar    -->
+    <link rel="stylesheet" href="/static/css/adminNavBar.css" th:href="@{/css/adminNavBar.css}">
+    <style>
+        body, main {
+            background-color: #F2F2F2;
+            margin-left: 10%;
+            font-family: 'Merriweather',serif;
+        }
+
+        .alternate-btn {
+            background-color: #1E98D7;
+            border: 1px solid #1E98D7;
+        }
+
+    </style>
+</head>
+<body>
+<header th:insert="adminHeader::adminHeader"></header>
+<nav th:insert="adminNavBar::adminNavBar"></nav>
+<main class="mt-5 mb-5">
+    <section class="container row p-5 m-auto">
+        <div class="card col-xs-12 col-sm-12 col-md-6 col-lg-6 shadow p-5">
+            <form class="row">
+                <label class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mb-1" for="main-space">Link to main space:</label>
+                <select class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mb-1 rounded" name="main-space" id="main-space">
+                    <option>Abacws</option>
+                    <option>Student Union</option>
+                    <option>Queens Building</option>
+                    <option>Spark Building</option>
+                </select>
+                <label class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mb-1" for="sub-space">Link to subspace:</label>
+                <select id="sub-space" class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mb-3 rounded" name="main-space">
+                    <option>3.45</option>
+                    <option>4.45</option>
+                    <option>5.45</option>
+                    <option>6.12</option>
+                </select>
+                <label for="description"></label>
+                <textarea id="description" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-1 ms-1 h-50 rounded"
+                          name="description" cols="30" rows="6" placeholder="Enter description"></textarea>
+                <button class="w-50 btn btn-primary alternate-btn shadow mt-4 m-auto">Generate QR code</button>
+            </form>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                <img class="w-50 h-50 mt-2" src="/static/images/qr_code_icon.svg" th:src="@{/images/qr_code_icon.svg}"
+                     alt="qr code">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                <button class="btn btn-primary w-25 alternate-btn shadow">Download</button>
+            </div>
+        </div>
+    </section>
+</main>
+<footer th:insert="adminFooter::adminFooter"></footer>
+</body>
+</html>

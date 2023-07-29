@@ -19,7 +19,7 @@
     <!--LINK TO NAV BAR STYLE SHEET-->
     <link rel="stylesheet" th:href="@{/css/adminNavBar.css}">
 </head>
-<body style="overflow-y: scroll; background-color: #F2F2F2; font-family: 'Merriweather';">
+<body style="overflow-y: scroll; background-color: #F2F2F2; font-family: 'Merriweather' ">
 <!-- HERE THE ADMIN HEADER FRAGMENT INSERTED-->
 <header th:insert="adminHeader::adminHeader"></header>
 <!--HERE THE NAV BAR FRAGMENT INSERTED-->
@@ -34,8 +34,8 @@
                     <!-- First row -->
                     <div class="row mb-1">
                         <div class="col-md-5">
-                            <label for="venue">Chose event:</label>
-                            <select class="form-select" id="venue" required>
+                            <label for="venue1">Chose event:</label>
+                            <select class="form-select" id="venue1" required>
                                 <option value="" selected>Select a event</option>
                                 <option value="venue1">Open day</option>
                                 <option value="venue2">Open day</option>
@@ -73,8 +73,8 @@
                     <!-- Third row -->
                     <div class="row mb-1">
                         <div class="col-md-5">
-                            <label for="venue">Venues:</label>
-                            <select class="form-select" id="venue" required>
+                            <label for="venue2">Venues:</label>
+                            <select class="form-select" id="venue2" required>
                                 <option value="" selected>Select a venue</option>
                                 <option value="venue1">Venue 1</option>
                                 <option value="venue2">Venue 2</option>
