@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Management</title>
+    <!-- Link Bootstrap CSS -->
+    <link th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!--LINK TO ADMIN HEADER STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/adminHeader.css}" />
+    <!--LINK TO ADMIN FOOTER STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/adminFooter.css}" />
+    <!--LINK TO CONTENT MANAGEMENT PAGE STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/contentManagementPage.css}" />
+    <!--LINK TO NAV BAR STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/adminNavBar.css}">
+</head>
+<body style="overflow-y: scroll; background-color: #FFFFFF; font-family: 'Merriweather','serif';">
+<!-- HERE THE ADMIN HEADER FRAGMENT INSERTED-->
+<header th:insert="adminHeader::adminHeader"></header>
+<!--HERE THE NAV BAR FRAGMENT INSERTED-->
+<nav th:insert="adminNavBar::adminNavBar"></nav>
+<main style="margin-bottom: 10%; margin-left: 20%;margin-right: 5%;">
+    <div class="container-md" style="padding-top: 80px;">
+        <div class="row">
+            <div class="col" style="display: inline-block;padding-bottom: 0;">
+                <img style="display: inline-block;" class="content-icon" th:src="@{/images/content-icon.svg}" src="/static/images/content-icon.svg" alt="content icon">
+                <h3 style="display: inline-block; font-family: 'Merriweather', 'serif'; padding-bottom: 0;">Manage your contents</h3>
+            </div>
+            <div class="col">
+                <a th:href="@{/admin/contents/createContent}">
+                    <button type="button" class="create-new-content-button" style="background-color: #3CC494; border: 1px solid #3CC494; ">
+                        <img style="display: inline-block;" class="plus-icon" th:src="@{/images/plus-icon.svg}" src="/static/images/plus-icon.svg" alt="plus icon">
+                        Create Content
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="row card shadow p-3" >
+            <table class="table  table-hover table-bordered table-responsive" style="border-radius: 4px;">
+                <thead class="table-light">
+                <tr>
+                    <td>
+                        <h5 style="text-align: center; ">Event name</h5>
+                    </td>
+                    <td>
+                        <h5 style="text-align: center; ">Venues</h5>
+                    </td>
+                    <td>
+                        <h5 style="text-align: center; ">Start Date</h5>
+                    </td>
+                    <td>
+                        <h5 style="text-align: center; ">End Date</h5>
+                    </td>
+                    <td>
+                        <h5 style="text-align: center; ">Make Decision</h5>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <p style="text-align: center; ">Open day</p>
+                    </td>
+                    <td>
+                        <select class="form-select">
+                            <option style="text-align: center; ">Abacws 3.65</option>
+                            <option style="text-align: center; ">Abacws 3.65</option>
+                        </select>
+                    </td>
+                    <td>
+                        <p style="text-align: center; ">7/7/2023</p>
+                    </td>
+                    <td>
+                        <p style="text-align: center; ">8/7/2023</p>
+                    </td>
+                    <td class="centered-buttons">
+                        <a th:href="@{/admin/contents/updateContent}">
+                            <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
+                        </a>
+                        <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="text-align: center; ">Open day</p>
+                    </td>
+                    <td>
+                        <select class="form-select">
+                            <option style="text-align: center; ">Abacws 3.65</option>
+                            <option style="text-align: center; ">Abacws 3.65</option>
+                        </select>
+                    </td>
+                    <td>
+                        <p style="text-align: center; ">7/7/2023</p>
+                    </td>
+                    <td>
+                        <p style="text-align: center; ">8/7/2023</p>
+                    </td>
+                    <td class="centered-buttons">
+                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
+                        <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="text-align: center; ">Open day</p>
+                    </td>
+                    <td>
+                        <select class="form-select">
+                            <option style="text-align: center; ">Abacws 3.65</option>
+                            <option style="text-align: center; ">Abacws 3.65</option>
+                        </select>
+                    </td>
+                    <td>
+                        <p style="text-align: center; ">7/7/2023</p>
+                    </td>
+                    <td>
+                        <p style="text-align: center; ">8/7/2023</p>
+                    </td>
+                    <td class="centered-buttons">
+                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
+                        <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<!-- HERE THE ADMIN FOOTER FRAGMENT INSERTED-->
+<footer th:insert="adminFooter::adminFooter"></footer>
+</body>
+</html>
+
