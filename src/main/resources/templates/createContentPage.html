@@ -1,10 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Content</title>
+    <!-- Link Bootstrap CSS -->
+    <link th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}" rel="stylesheet"/>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!--LINK TO ADMIN HEADER STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/adminHeader.css}" />
+    <!--LINK TO ADMIN FOOTER STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/adminFooter.css}" />
+    <!--LINK TO CREATE CONTENT  PAGE STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/CreateContentPage.css}" />
+    <!-- Link to Bootstrap JS (required for some Bootstrap components) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!--LINK TO NAV BAR STYLE SHEET-->
+    <link rel="stylesheet" th:href="@{/css/adminNavBar.css}">
 </head>
-<body>
-
+<body style="overflow-y: scroll; background-color: #F2F2F2; font-family: 'Merriweather';">
+<!-- HERE THE ADMIN HEADER FRAGMENT INSERTED-->
+<header th:insert="adminHeader::adminHeader"></header>
+<!--HERE THE NAV BAR FRAGMENT INSERTED-->
+<nav th:insert="adminNavBar::adminNavBar"></nav>
+<main style="margin-bottom: 5%; margin-left: 20%; ">
+    <div class="container mt-5" style="padding-top: 3%;">
+        <div class="row">
+            <!-- Left section for the dialogue form -->
+            <div class="col-md-6 shadow" style="background-color: #FFFFFF; border-radius: 4px; margin-bottom: 10%; padding-bottom: 20px;">
+                <h3>Create New Content</h3>
+                <form>
+                    <!-- First row -->
+                    <div class="row mb-1">
+                        <div class="col-md-12">
+                            <label for="contentName">Content Name:</label>
+                            <input type="text" class="form-control" id="contentName" placeholder="Write the name">
+                        </div>
+                    </div>
+                    <!-- Second row -->
+                    <div class="row mb-1">
+                        <div class="col-md-6">
+                            <label for="mainPlace">Choose main place :</label>
+                            <select class="form-select" id="mainPlace" required>
+                                <option value="" selected>Select main place</option>
+                                <option value="mainPlace1">Abacws</option>
+                                <option value="mainPlace2">Queen</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="subPlace">Choose sub place :</label>
+                            <select class="form-select" id="subPlace" required>
+                                <option value="" selected>Select sub place</option>
+                                <option value="subPlace1">3.65</option>
+                                <option value="subPlace2">5.48</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Third row -->
+                    <div class="row mb-1">
+                        <div class="col-md-12">
+                            <label for="event">Choose event :</label>
+                            <select class="form-select" id="event" required>
+                                <option value="" selected>Select event</option>
+                                <option value="event1">Open Day</option>
+                                <option value="event2">Placement</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Fourth row -->
+                    <div class="mb-1">
+                        <label for="contentDescription">Content Description:</label>
+                        <textarea class="form-control h-50" id="contentDescription" rows="3" placeholder="Enter content description" ></textarea>
+                    </div>
+                    <!-- Create Button -->
+                    <a th:href="@{/admin/main/contents}">
+                        <button type="submit" class="btn btn-primary" style="background-color: #1E98D7; margin-left: 40%">Create</button>
+                    </a>
+                </form>
+            </div>
+            <!-- Right section for the content icon -->
+            <div class="col-md-6" >
+                <img th:src="@{/images/content-icon.svg}" src="/static/images/content-icon.svg" alt="content Icon" class="img-fluid" style="height: 400px; width: 400px; margin-left: 20%;" >
+            </div>
+        </div>
+    </div>
+</main>
+<!-- HERE THE ADMIN FOOTER FRAGMENT INSERTED-->
+<footer th:insert="adminFooter::adminFooter"></footer>
 </body>
 </html>
