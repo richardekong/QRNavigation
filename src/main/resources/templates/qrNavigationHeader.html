@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+<header th:fragment="qrNavHeader">
+    <a id="app-home-link" th:href="@{/qrnavigation/}">
+        <img id="app-logo" src="/static/images/app_icon.png" th:src="@{/images/app_icon.png}" alt="Application logo">
+        <span id="app-name">QR NAVIGATION SYSTEM</span>
+    </a>
+    <!-- This anchor element/tag will be removed when spring security is fully implemented. For now, we will use for manual test and display.-->
+    <a class="auth-link" th:href="@{/qrnavigation/login}">
+        <span class="auth-text">Login</span>
+        <img class="auth-icon" src="/static/images/logout-icon.svg" th:src="@{/images/logout-icon.svg}" alt="Login Logout icon">
+    </a>
+    <!-- These will be effected when spring security is fully implemented. For now, they will not be visible till then.-->
+    <a sec:authorize="isAuthenticated()" class="auth-link" th:href="@{/qrnavigation/login}" style="display: none;">
+        <span class="auth-text">Login</span>
+        <img class="auth-icon" src="/static/images/logout-icon.svg" th:src="@{/images/logout-icon.svg}" alt="Login Logout icon">
+    </a>
+    <!-- These will be effected when spring security is fully implemented. For now, they will not be visible till then.-->
+    <a sec:authorize="isAnonymous()" class="auth-link" th:href="@{/qrnavigation/logout}" style="display: none;">
+        <span class="auth-text">Logout</span>
+        <img class="auth-icon" src="/static/images/logout-icon.svg" th:src="@{/images/logout-icon.svg}" alt="Login Logout icon">
+    </a>
+</header>
+</body>
+</html>

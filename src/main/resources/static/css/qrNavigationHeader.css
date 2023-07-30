@@ -1,0 +1,67 @@
+
+
+--root{
+    --font: 18px;
+    --text-shadow: 2px 2px 4px #000000;
+    --text-deco: none;
+    --link-color:#FFFFFF;
+}
+
+body{
+    font-family: 'Merriweather', serif;
+}
+
+header{
+    background-color: #30344C;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    position:fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    z-index: 1;
+}
+
+#app-home-link{
+    color: var( --link-color);
+    display: flex;
+    flex-direction:row;
+    align-self: flex-start;
+    justify-content: space-between;
+    text-decoration: var(--text-deco);
+}
+
+#app-logo{
+    width: 40px;
+    height: 40px;
+}
+
+#app-name{
+    text-align: center;
+    margin: auto auto auto 20px;
+    font-size: var(--font);
+    text-shadow: var(--text-shadow);
+}
+
+.auth-link{
+    color: var(--link-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: flex-end;
+    margin: auto auto auto 70%;
+    text-decoration: var(--text-deco);
+}
+
+.auth-text{
+    font-size: var(--font);
+    margin: auto auto auto auto;
+}
+
+.auth-icon{
+    width: 18px;
+    height: 18px;
+    margin: auto auto auto 5px;
+}
