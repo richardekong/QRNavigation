@@ -95,5 +95,9 @@ public class DemoController {
         return "qrNavigationFooterTest";
     }
 
+    @GetMapping("/qrnavigation/signup")
+    public String viewSignUpPage() {
+        return "signUpPage";
+    }
 
 }
