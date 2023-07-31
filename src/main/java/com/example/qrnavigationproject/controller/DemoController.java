@@ -91,14 +91,9 @@ public class DemoController {
     }
 
     @GetMapping("/qrnavigation")
-
-    public String ViewQRNavigationHeader() {
-        return "qrNavHeaderTest";
-    }
-
     public String ViewQRNavigationFooter() {
         return "qrNavigationFooterTest";
-
     }
+
 
 }
