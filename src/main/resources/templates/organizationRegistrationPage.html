@@ -22,6 +22,7 @@
     <!--admin header and footer stylesheets    -->
     <link rel="stylesheet" href="/static/css/adminHeader.css" th:href="@{/css/adminHeader.css}">
     <link rel="stylesheet" href="/static/css/adminFooter.css" th:href="@{/css/adminFooter.css}">
+    <link rel="stylesheet" href="/static/css/adminHeader.css" th:href="@{/css/qrNavigationHeader.css}">
     <style>
         body,
         main {
@@ -44,6 +45,7 @@
 </head>
 
 <body>
+<header th:insert="qrNavigationHeader::qrNavHeader"></header>
 <main class="mb-5 mt-5">
     <section class="container row m-auto p-5">
         <section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
