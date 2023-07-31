@@ -39,7 +39,6 @@ public class DemoController {
     @GetMapping("/admin/main")
     public String viewAdminMainPage(){
         return "adminMainPage";
-
     }
 
     @GetMapping("admin/places")
