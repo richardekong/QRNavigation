@@ -95,5 +95,10 @@ public class DemoController {
         return "qrNavigationFooterTest";
     }
 
+    @GetMapping("/qrnavigation/login")
+    public String viewLoginPage() {
+        return "loginpage";
+    }
+
 
 }
