@@ -90,4 +90,9 @@ public class DemoController {
         return "contentUpdate";
     }
 
+    @GetMapping("/qrnavigation")
+    public String ViewQRNavigationFooter() {
+        return "qrNavigationFooterTest";
+    }
+
 }
