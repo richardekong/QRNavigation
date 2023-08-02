@@ -47,6 +47,8 @@ create table Organization(
                              phone varchar(15),
                              logo_url text,
                              website_url text,
+                             header_background varchar(9) default '#FFFFFF',
+                             footer_background varchar(9) default '#FFFFFF',
                              foreign key(address_id) references Address(id)
 );
 

@@ -34,7 +34,7 @@ public class QRNavigationFooterFunctionalTest {
 
     @BeforeEach
     void setupTest() {
-        final String pageURL = format("http://localhost:%d/qrnavigation", port);
+        final String pageURL = format("http://localhost:%d/qrnavigation/footer", port);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--headless");

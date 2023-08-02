@@ -89,9 +89,14 @@ public class DemoController {
         return "contentUpdate";
     }
 
-    @GetMapping("/qrnavigation")
+    @GetMapping("/qrnavigation/footer")
     public String ViewQRNavigationFooter() {
         return "qrNavigationFooterTest";
+    }
+
+    @GetMapping("/qrnavigation/header")
+    public String ViewQRNavigationHeader() {
+        return "qrNavHeaderTest";
     }
 
 

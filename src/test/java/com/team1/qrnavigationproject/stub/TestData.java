@@ -1,6 +1,5 @@
 package com.team1.qrnavigationproject.stub;
 
-import com.example.qrnavigationproject.model.*;
 import com.team1.qrnavigationproject.model.*;
 
 import java.time.LocalDateTime;
@@ -29,7 +28,9 @@ public interface TestData {
                         "https://www.cardiffuni.com/logo.png",
                         "https://www.cardiffuni.com",
                         List.of(),
-                        List.of()
+                        List.of(),
+                        "#FFFFFF",
+                        "#FFFFFF"
                 ),
                 1,
                 LocalDateTime.of(2023, 7, 10, 0, 0),
@@ -54,7 +55,9 @@ public interface TestData {
                 "https://www.cardiffuni.com/logo.png",
                 "https://www.cardiffuni.com",
                 null,
-                null
+                null,
+                "#FFFFFF",
+                "#FFFFFF"
         );
     }
 
