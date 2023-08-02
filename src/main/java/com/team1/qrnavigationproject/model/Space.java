@@ -28,11 +28,12 @@ public class Space {
     @NotBlank(message = "Description of space must be provided")
     private String description;
 
-    @NotBlank(message = "Photo url must not be blank")
-    @Column(value = "photo_url")
-    @Pattern(regexp = Constant.IMAGE_URL_REGEX,
-            message = "Invalid photo path")
-    private String photoURL;
+//    @NotBlank(message = "Photo url must not be blank")
+//    @Column(value = "photo_url")
+//    @Pattern(regexp = Constant.IMAGE_URL_REGEX,
+//            message = "Invalid photo path")
+    @javax.persistence.Column(columnDefinition = "json")
+    private String photoURLs;
 
     @ManyToOne
     @JoinColumn(name = "org_id")
@@ -47,6 +48,10 @@ public class Space {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "space",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     List<SubSpace> subSpaces;
+
+    @ManyToOne
+    @JoinColumn(name="event_id")
+    private Event event;
 
     public void add(SubSpace subSpace) {
         if (subSpaces == null) {

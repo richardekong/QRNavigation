@@ -6,9 +6,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ContentUnitTest {
@@ -39,12 +36,7 @@ class ContentUnitTest {
         assertNotEquals(content.getDescription(), "Content pages for Open day");
     }
 
-    @Test
-    void getPageURL() {
-        String pageURL = "https:www.content.com";
-        assertEquals(content.getPageURL(), pageURL);
-        assertNotEquals(content.getPageURL(), "http:www.content.com");
-    }
+
 
     @Test
     void getEventId() {
@@ -83,13 +75,6 @@ class ContentUnitTest {
         assertNotEquals(content.getDescription(), "Content pages for Open day");
     }
 
-    @Test
-    void setPageURL() {
-        String pageURL = "https://www.openday.com";
-        content.setPageURL(pageURL);
-        assertEquals(content.getPageURL(), pageURL);
-        assertNotEquals(content.getPageURL(), "https:www.content.com");
-    }
 
     @Test
     void setEventId() {
@@ -119,8 +104,8 @@ class ContentUnitTest {
     void testEquals() {
         Content anotherContent = new Content(
                 content.getId(),
+                content.getName(),
                 content.getDescription(),
-                content.getPageURL(),
                 content.getEventId(),
                 content.getSpaceId(),
                 content.getSubSpaceId()
@@ -134,34 +119,21 @@ class ContentUnitTest {
 
     @Test
     void testHashCode() {
-        int hashcode = 1555340388;
+        int hashcode = 457222221;
         assertEquals(content.hashCode(), hashcode);
-        assertNotEquals(content.hashCode(), 1555360388);
-        System.out.println(content.toString());
+        assertNotEquals(content.hashCode(), 457222231);
     }
 
     @Test
     void testToString() {
-        String contentString = "Content(id=1, description=Content page for Open day," +
-                " pageURL=https:www.content.com, eventId=1, spaceId=1, subSpaceId=1)";
+        String contentString = "Content(id=1, name=open day content, description=Content page for Open day," +
+                " eventId=1, spaceId=1, subSpaceId=1)";
         assertEquals(content.toString(), contentString);
         content.setId(5);
-        assertNotEquals(content.toString(), "Content(id=1, description=Content page " +
-                "for Open day, pageURL=https:www.content.io, eventId=1, spaceId=1, subSpaceId=1)");
+        assertNotEquals(content.toString(), "Content(id=1, name=open day content, description=Content page " +
+                "for Open day, eventId=1, spaceId=1, subSpaceId=1)");
         assertNotNull(content.toString());
     }
 
-    @Test
-    void validateContentURL() {
-        String pageURL1 = "https://www.content.com",
-                pageURL2 = "https:www.content.com";
-        content.setPageURL(pageURL1);
-        Pattern pattern = Pattern.compile("^(https?|ftp)://[^\\s/$.?#].\\S*$");
-        Matcher matcher1 = pattern.matcher(content.getPageURL());
-        content.setPageURL(pageURL2);
-        Matcher matcher2 = pattern.matcher(content.getPageURL());
-        assertTrue(matcher1.matches());
-        assertFalse(matcher2.matches());
-    }
 
 }

@@ -2,6 +2,8 @@ package com.team1.qrnavigationproject.unittest;
 
 import com.team1.qrnavigationproject.model.Event;
 import com.team1.qrnavigationproject.model.Organization;
+import com.team1.qrnavigationproject.model.Space;
+import com.team1.qrnavigationproject.model.SubSpace;
 import com.team1.qrnavigationproject.stub.TestData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,16 +55,11 @@ class EventUnitTest {
 
     @Test
     void getOrganizer() {
-        Organization organization = event.getOrganizer();
+        Organization organization = TestData.createOrganization();
         Organization anotherOrganization = new Organization();
+        organization.add(event);
         assertEquals(event.getOrganizer(), organization);
         assertNotEquals(event.getOrganizer(), anotherOrganization);
-    }
-
-    @Test
-    void getSpaceId() {
-        assertEquals(event.getSpaceId(), 1);
-        assertNotEquals(event.getSpaceId(), 0);
     }
 
     @Test
@@ -121,12 +118,6 @@ class EventUnitTest {
 
     }
 
-    @Test
-    void setSpaceId() {
-        event.setSpaceId(2);
-        assertEquals(event.getSpaceId(), 2);
-        assertNotEquals(event.getSpaceId(), 1);
-    }
 
     @Test
     void setStart() {
@@ -161,6 +152,31 @@ class EventUnitTest {
     }
 
     @Test
+    void addSpaces(){
+        Space space = TestData.createSpace();
+        event.addSpace(space);
+        assertNotNull(event.getSpaces());
+        assertFalse(event.getSpaces().isEmpty());
+        assertEquals(event.getSpaces().get(0), space);
+        assertEquals(space.getEvent(), event);
+    }
+
+    @Test
+    void addSubSpaces(){
+        Space space = TestData.createSpace();
+        SubSpace subSpace = TestData.createSubSpace();
+        space.add(subSpace);
+        event.addSpace(space);
+        event.addSubSpace(subSpace);
+        assertNotNull(event.getSubSpaces());
+        assertFalse(event.getSubSpaces().isEmpty());
+        assertEquals(event.getSubSpaces().get(0), subSpace);
+        assertEquals(subSpace.getEvent(), event);
+    }
+
+
+
+    @Test
     void testEquals() {
         Event similarEvent = event;
         Event differentEvent = new Event(
@@ -168,9 +184,11 @@ class EventUnitTest {
                 event.getName(),
                 event.getDescription(),
                 event.getOrganizer(),
-                event.getSpaceId(),
+                event.getSpaces(),
+                event.getSubSpaces(),
                 event.getStart(),
-                event.getEnd()
+                event.getEnd(),
+                event.getImageUrls()
         );
         assertEquals(event, similarEvent);
         assertEquals(event.hashCode(), similarEvent.hashCode());

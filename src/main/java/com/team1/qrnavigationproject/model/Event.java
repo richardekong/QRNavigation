@@ -1,11 +1,16 @@
 package com.team1.qrnavigationproject.model;
 
-import lombok.*;
-import org.springframework.data.relational.core.mapping.Column;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
 
 import static com.team1.qrnavigationproject.model.Constant.DATE_TIME_REGEX;
 
@@ -34,8 +39,13 @@ public class Event {
     @JoinColumn(name="organizer")
     private Organization organizer;
 
-    @Column(value = "space_id")
-    private int spaceId;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    List<Space> spaces;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    List<SubSpace> subSpaces;
 
     @NotNull(message = "Please provide a start date and time")
     @Pattern(regexp = DATE_TIME_REGEX,
@@ -47,5 +57,29 @@ public class Event {
     @Pattern(regexp = DATE_TIME_REGEX,
             message = "Invalid datetime value")
     private LocalDateTime end;
+
+    @Column(columnDefinition = "json")
+    private String imageUrls;
+
+    public void addSpace(Space space){
+        if (spaces == null){
+            spaces = new ArrayList<>();
+        }
+        if (!spaces.contains(space)){
+            spaces.add(space);
+            space.setEvent(this);
+        }
+    }
+
+    public void addSubSpace(SubSpace subSpace){
+        if (subSpaces == null){
+            subSpaces = new ArrayList<>();
+        }
+
+        if (!subSpaces.contains(subSpace)){
+            subSpaces.add(subSpace);
+            subSpace.setEvent(this);
+        }
+    }
 
 }

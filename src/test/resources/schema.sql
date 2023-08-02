@@ -1,9 +1,9 @@
 
 drop table if exists QRCode;
 drop table if exists Content;
-drop table if exists Event;
 drop table if exists sub_space;
 drop table if exists Space;
+drop table if exists Event;
 drop table if exists Space_type;
 drop table if exists User_type;
 drop table if exists Role;
@@ -64,6 +64,17 @@ create table User_type(
                           foreign key(user_id) references `User`(id)
 );
 
+create table Event(
+                      id int auto_increment primary key,
+                      `name` varchar(30),
+                      `description` text,
+                      organizer int,
+                      `start` datetime,
+                      `end` datetime,
+                       image_urls json null,
+                      foreign key(organizer) references Organization(id)
+);
+
 -- Space_type presents the type of space which could be a Building, park, or country side trail
 create table Space_type(
                            id int auto_increment primary key,
@@ -74,13 +85,15 @@ create table Space(
                       id int auto_increment primary key,
                       `name` varchar(30) unique not null,
                       `description` text,
-                      photo_url text default null,
+                      photo_urls json null,
                       org_id int,
                       address_id int,
+                      event_id int,
                       `type` int,
                       foreign key(org_id) references Organization(id),
                       foreign key(address_id) references Address(id),
-                      foreign key(`type`) references Space_type(id)
+                      foreign key(`type`) references Space_type(id),
+                      foreign key (event_id) references Event(id)
 );
 
 create table sub_space(
@@ -90,26 +103,18 @@ create table sub_space(
                           photo_url text default null,
                           main_space int,
                           `type` int default null,
+                          event_id int,
+                          foreign key (event_id) references event(id),
                           foreign key(main_space) references Space(id),
                           foreign key(`type`) references Space_type(id)
 );
 
-create table Event(
-                      id int auto_increment primary key,
-                      `name` varchar(30),
-                      `description` text,
-                      organizer int,
-                      space_id int,
-                      `start` datetime,
-                      `end` datetime,
-                      foreign key(organizer) references Organization(id),
-                      foreign key(space_id) references Space(id)
-);
+
 
 create table Content(
                         id int auto_increment primary key,
+                        name varchar(50),
                         description text,
-                        page_url text,
                         event_id int,
                         space_id int,
                         sub_space_id int,
@@ -125,10 +130,8 @@ create table QRCode(
                        sub_space_id int,
                        `description` text,
                        image_url text,
-                       is_scanned bit,
-                       scanned_at datetime,
+                       page_url text,
                        created_at datetime,
                        foreign key(space_id) references Space(id),
                        foreign key (content_id) references Content(id)
 );
-

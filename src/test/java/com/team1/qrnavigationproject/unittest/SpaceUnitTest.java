@@ -1,8 +1,10 @@
 package com.team1.qrnavigationproject.unittest;
 
 import com.team1.qrnavigationproject.model.Constant;
+import com.team1.qrnavigationproject.model.Event;
 import com.team1.qrnavigationproject.model.Space;
 import com.team1.qrnavigationproject.model.SubSpace;
+import com.team1.qrnavigationproject.stub.TestData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ class SpaceUnitTest {
     private Space space;
 
     private void init(){
+        Event event = TestData.createEvent();
         space = new Space(
                 1,
                 "Abacws Building",
@@ -24,10 +27,11 @@ class SpaceUnitTest {
                 null,
                 1,
                 1,
-                null
+                null,
+                event
         );
         SubSpace subSpace = new SubSpace(
-                1, "Abacws / 3.45", "room in Abacws", "", null, 1
+                1, "Abacws / 3.45", "room in Abacws", "", null,event,  1
         );
         space.add(subSpace);
     }
@@ -71,12 +75,12 @@ class SpaceUnitTest {
     @Test
     void testPhotoURL() {
         String URLPattern = Constant.IMAGE_URL_REGEX;
-        Matcher URLMatcher = Pattern.compile(URLPattern).matcher(space.getPhotoURL());
-        assertEquals(space.getPhotoURL(), "https://www.spaces.io/images/abacws.png");
+        Matcher URLMatcher = Pattern.compile(URLPattern).matcher(space.getPhotoURLs());
+        assertEquals(space.getPhotoURLs(), "https://www.spaces.io/images/abacws.png");
         assertTrue(URLMatcher.matches());
-        space.setPhotoURL("www.cardiffuni.com/logo.png");
-        URLMatcher = Pattern.compile(URLPattern).matcher(space.getPhotoURL());
-        assertNotEquals(space.getPhotoURL(), "http://www.cardiffuni.com/logo.png");
+        space.setPhotoURLs("www.cardiffuni.com/logo.png");
+        URLMatcher = Pattern.compile(URLPattern).matcher(space.getPhotoURLs());
+        assertNotEquals(space.getPhotoURLs(), "http://www.cardiffuni.com/logo.png");
         assertFalse(URLMatcher.matches());
     }
 

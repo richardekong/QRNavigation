@@ -36,6 +36,10 @@ public class SubSpace {
     @JoinColumn(name = "main_space")
     private Space space;
 
+    @ManyToOne
+    @JoinColumn(name="event_id")
+    private Event event;
+
     @Column(name="type")
     private int typeId;
 }
