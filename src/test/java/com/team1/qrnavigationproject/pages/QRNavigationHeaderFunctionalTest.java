@@ -25,7 +25,6 @@ public class QRNavigationHeaderFunctionalTest {
     @Value("${local.server.port}")
     private int port;
     WebDriver driver;
-    private String pageURL;
     private static final String APP_NAME = "QR NAVIGATION SYSTEM";
 
     @BeforeAll
@@ -35,7 +34,7 @@ public class QRNavigationHeaderFunctionalTest {
 
     @BeforeEach
     void setupTest() {
-        pageURL = format("http://localhost:%d/qrnavigation", port);
+        String pageURL = format("http://localhost:%d/qrnavigation/header", port);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--headless");
@@ -77,8 +76,8 @@ public class QRNavigationHeaderFunctionalTest {
         final WebElement anchorElement = driver.findElements(By.className("auth-link")).get(0);
         final WebElement childSpanElement = anchorElement.findElement(By.tagName("span"));
         final WebElement childImgElement = anchorElement.findElement(By.tagName("img"));
-        final String loginURL = pageURL+"/login";
-        final String logoutURL = pageURL+"/logout";
+        final String loginURL = format("http://localhost:%d/qrnavigation/login",port);
+        final String logoutURL = format("http://localhost:%d/qrnavigation/logout",port);
         final String link = anchorElement.getAttribute("href");
         assertNotNull(anchorElement);
         assertNotNull(link);

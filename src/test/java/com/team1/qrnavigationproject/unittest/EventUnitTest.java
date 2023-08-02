@@ -110,7 +110,9 @@ class EventUnitTest {
                 "https://www.nhs.gov.uk/logo.png",
                 "https://www.nhs.gov.uk",
                 List.of(),
-                List.of()
+                List.of(),
+                "#ffffff",
+                "#fffff"
         );
         event.setOrganizer(organization);
         assertEquals(event.getOrganizer(), organization);

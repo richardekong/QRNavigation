@@ -195,7 +195,9 @@ class OrganizationUnitTest {
                 organization.getLogoURL(),
                 organization.getWebsiteURL(),
                 organization.getSpaces(),
-                organization.getEvents()
+                organization.getEvents(),
+                organization.getHeaderBackground(),
+                organization.getFooterBackground()
         );
         assertEquals(organization, similarOrganization);
         assertNotEquals(organization, new Organization());
@@ -212,7 +214,9 @@ class OrganizationUnitTest {
                 organization.getLogoURL(),
                 organization.getWebsiteURL(),
                 organization.getSpaces(),
-                organization.getEvents()
+                organization.getEvents(),
+                organization.getHeaderBackground(),
+                organization.getFooterBackground()
         );
         assertEquals(organization.hashCode(), similarOrganization.hashCode());
         assertNotEquals(organization.hashCode(), anotherOrganization.hashCode());

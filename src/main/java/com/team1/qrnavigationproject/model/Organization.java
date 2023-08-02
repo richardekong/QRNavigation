@@ -49,6 +49,12 @@ public class Organization {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "organizer")
     private List<Event> events;
 
+    @Column("header_background")
+    private String headerBackground;
+
+    @Column("footer_background")
+    private String footerBackground;
+
     public void add(Space space){
         if (spaces==null) {
             spaces = new LinkedList<>();
