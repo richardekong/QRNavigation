@@ -24,13 +24,10 @@ public class Content {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String name;
+
     @NotBlank(message = "Please provide content description")
     private String description;
-
-    @Column(value = "page_url")
-    @NotBlank(message = "Please provide content page url")
-    @Pattern(regexp = IMAGE_URL_REGEX, message = "Invalid URL")
-    private String pageURL;
 
     @Column(value = "event_id")
     private int eventId;

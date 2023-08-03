@@ -1,11 +1,14 @@
 package com.team1.qrnavigationproject.unittest;
 
 import com.team1.qrnavigationproject.model.QRCode;
+import com.team1.qrnavigationproject.stub.TestData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,17 +17,7 @@ class QRCodeUnitTest {
     private QRCode qrCode;
 
     private void init() {
-        qrCode = new QRCode(
-                1,
-                "QRCode for Abacws / 3.45",
-                1,
-                1,
-                1,
-                "https://www.cardiffuni.com/logo.png",
-                false,
-                LocalDateTime.of(2023, 7, 15, 14, 5, 0),
-                LocalDateTime.of(2023, 7, 15, 14, 5, 0)
-        );
+        qrCode = TestData.createQRCode();
     }
 
     @BeforeEach
@@ -79,21 +72,24 @@ class QRCodeUnitTest {
     }
 
     @Test
-    void testScanned() {
-        boolean isScanned = true;
-        qrCode.setScanned(isScanned);
-        assertTrue(qrCode.isScanned());
-        init();
-        assertFalse(qrCode.isScanned());
+    void setPageURL() {
+        String pageURL = "https://www.openday.com";
+        qrCode.setPageURL(pageURL);
+        assertEquals(qrCode.getPageURL(), pageURL);
+        assertNotEquals(qrCode.getPageURL(), "https:www.content.com");
     }
 
     @Test
-    void testScannedAt() {
-        LocalDateTime scannedAt = LocalDateTime.of(2023, 4, 4, 4, 0, 0);
-        qrCode.setScannedAt(scannedAt);
-        assertEquals(qrCode.getScannedAt(), scannedAt);
-        init();
-        assertNotEquals(qrCode.getScannedAt(), scannedAt);
+    void validateContentURL() {
+        String pageURL1 = "https://www.content.com",
+                pageURL2 = "https:www.content.com";
+        qrCode.setPageURL(pageURL1);
+        Pattern pattern = Pattern.compile("^(https?|ftp)://[^\\s/$.?#].\\S*$");
+        Matcher matcher1 = pattern.matcher(qrCode.getPageURL());
+        qrCode.setPageURL(pageURL2);
+        Matcher matcher2 = pattern.matcher(qrCode.getPageURL());
+        assertTrue(matcher1.matches());
+        assertFalse(matcher2.matches());
     }
 
     @Test
@@ -113,9 +109,8 @@ class QRCodeUnitTest {
                 qrCode.getContentId(),
                 qrCode.getSpaceId(),
                 qrCode.getSubSpaceId(),
+                qrCode.getPageURL(),
                 qrCode.getImageURL(),
-                qrCode.isScanned(),
-                qrCode.getScannedAt(),
                 qrCode.getCreatedAt()
         );
         assertEquals(qrCode, similarQRCode);
@@ -127,10 +122,13 @@ class QRCodeUnitTest {
 
     @Test
     void testToString() {
-        String qrcodeString = "QRCode(id=1, description=QRCode for Abacws / 3.45, contentId=1, " +
-                "spaceId=1, subSpaceId=1, imageURL=https://www.cardiffuni.com/logo.png, " +
-                "isScanned=false, scannedAt=2023-07-15T14:05," +
+
+        String qrcodeString = "QRCode(id=1, " +
+                "description=QRCode for Abacws / 3.45, contentId=1, " +
+                "spaceId=1, subSpaceId=1, pageURL=https://www.cardiffuni.com, " +
+                "imageURL=https://www.cardiffuni.com/qr.png," +
                 " createdAt=2023-07-15T14:05)";
+
         QRCode anotherQRCode = new QRCode();
         assertEquals(qrCode.toString(), qrcodeString);
         assertNotNull(qrCode.toString());

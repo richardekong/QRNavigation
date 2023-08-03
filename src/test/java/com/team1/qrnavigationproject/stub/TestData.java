@@ -4,7 +4,6 @@ import com.team1.qrnavigationproject.model.*;
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;
-import java.util.List;
 
 public interface TestData {
 
@@ -13,29 +12,22 @@ public interface TestData {
     }
 
     static Content createContent() {
-        return new Content(1, "Content page for Open day",
-                "https:www.content.com", 1, 1, 1);
+        return new Content(1, "open day content", "Content page for Open day"
+                , 1, 1, 1);
     }
 
     static Event createEvent() {
         return new Event(
-                1, "Open day", "An event for open day",
-                new Organization(
-                        1,
-                        "Cardiff University",
-                        1,
-                        "0809723723",
-                        "https://www.cardiffuni.com/logo.png",
-                        "https://www.cardiffuni.com",
-                        List.of(),
-                        List.of(),
-                        "#FFFFFF",
-                        "#FFFFFF"
-                ),
-                1,
-                LocalDateTime.of(2023, 7, 10, 0, 0),
-                LocalDateTime.of(2023, 7, 18, 0, 0)
-        );
+                 1,
+                 "Open day",
+                 "An event for open day",
+                null,
+                 null,
+                 null,
+                 LocalDateTime.of(2023, 7, 10, 0, 0),
+                 LocalDateTime.of(2023, 7, 18, 0, 0),
+                "event1/img1"
+         );
     }
 
     static Location createLocation() {
@@ -68,9 +60,8 @@ public interface TestData {
                 1,
                 1,
                 1,
-                "https://www.cardiffuni.com/logo.png",
-                false,
-                LocalDateTime.of(2023, 7, 15, 14, 5, 0),
+                "https://www.cardiffuni.com",
+                "https://www.cardiffuni.com/qr.png",
                 LocalDateTime.of(2023, 7, 15, 14, 5, 0)
         );
     }
@@ -136,21 +127,23 @@ public interface TestData {
     }
 
     static Space createSpace(){
-        return new Space(
+        Space space =  new Space(
                 1,
                 "Abacws Building",
                 "school of computer science and informatics",
                 "https://www.spaces.io/images/abacws.png",
-                null,
+               null,
                 1,
                 1,
-                null
+                null, null
         );
+        space.add(createSubSpace());
+        return space;
     }
 
     static SubSpace createSubSpace(){
         return  new SubSpace(
-                1, "Abacws / 3.45", "room in Abacws", "", null, 1
+                1, "Abacws / 3.45", "room in Abacws", "img/1", null, null,1
         );
     }
 

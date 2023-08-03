@@ -2,6 +2,7 @@ package com.team1.qrnavigationproject.unittest;
 
 import com.team1.qrnavigationproject.model.Space;
 import com.team1.qrnavigationproject.model.SubSpace;
+import com.team1.qrnavigationproject.stub.TestData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,25 +18,7 @@ class SubSpaceUnitTest {
     private SubSpace subSpace;
 
     private void init(){
-        subSpace = new SubSpace(
-                1,
-                "Abacws / 3.45",
-                "room in Abacws",
-                "",
-                null,
-                1
-        );
-        Space space = new Space(
-                1,
-                "Abacws Building",
-                "school of computer science and informatics",
-                "https://www.spaces.io/images/abacws.png",
-                null,
-                1,
-                1,
-                null
-        );
-        space.add(subSpace);
+        subSpace = TestData.createSubSpace();
     }
 
     @BeforeEach
@@ -90,11 +73,11 @@ class SubSpaceUnitTest {
 
     @Test
     void getSpace() {
-        Space space = subSpace.getSpace();
+        Space space = TestData.createSpace();
+        space.add(subSpace);
         subSpace.setSpace(new Space());
         assertNotNull(space);
-        assertEquals(subSpace, space.getSubSpaces().get(0));
-        assertNotEquals(subSpace.getSpace(), space);
+        assertTrue(space.getSubSpaces().contains(subSpace));
 
 
     }
@@ -115,6 +98,7 @@ class SubSpaceUnitTest {
                 subSpace.getDescription(),
                 subSpace.getPhotoURL(),
                 subSpace.getSpace(),
+                subSpace.getEvent(),
                 subSpace.getTypeId()
         );
         assertEquals(subSpace, similarSubspace);

@@ -44,6 +44,10 @@ values ('Adult', 3);
 insert into User_type(name, user_id)
 values ('Adult', 4);
 
+insert into Event(name, description, organizer, `start`, `end`,image_urls)
+values ('Open day', 'Event for new students', 1, '2023-07-16 10:00:00', '2023-07-16 13:00:00','["imagefile1","imagefile2","imagefile3"]');
+
+
 insert into Space_type(name)
 values ('Building');
 
@@ -53,20 +57,18 @@ values ('Park');
 insert into Space_type(name)
 values ('Countryside trail');
 
-insert into Space(name, description, photo_url, org_id, address_id, type)
-values ('Abacws Building', 'Building for school of computer science and informatics', null, 1, 1, 1);
+insert into Space(name, description, photo_urls, org_id, address_id, event_id, type)
+values ('Abacws Building', 'Building for school of computer science and informatics', '["imagefile1","imagefile2","imagefile3"]', 1, 1, 1,  1);
 
-insert into sub_space(name, description, photo_url, main_space)
-values ('Room 3.65', 'Bookable room containing tables, chairs and white board',null, 1);
+insert into sub_space(name, description, photo_url, main_space,event_id)
+values ('Room 3.65', 'Bookable room containing tables, chairs and white board',null, 1,1);
 
-insert into Event(name, description, organizer, space_id, `start`, `end`)
-values ('Open day', 'Event for new students', 1, 1, '2023-07-16 10:00:00', '2023-07-16 13:00:00');
 
-insert into Content(description, page_url, event_id)
-values ('Content for open day event', 'https://www.qrnavigation.com/content', 1);
+insert into Content(description, event_id)
+values ('Content for open day event', 1);
 
-insert into qrcode(content_id, space_id, sub_space_id, description, image_url, is_scanned, scanned_at, created_at)
-values (1, 1, 1, 'QR code for room 3.45 @ Abacws building', 'img_url', 0, '2023-07-16 8:00:00', '2023-05-16 10:00:00');
+insert into qrcode(content_id, space_id, sub_space_id, description, image_url,page_url, created_at)
+values (1, 1, 1, 'QR code for room 3.45 @ Abacws building', 'img_url', 'https://www.qrnavigation.com/content', '2023-05-16 10:00:00');
 
 select u.*,r.name as ROLE from `User` u right outer join Role r on u.id=r.id;
 

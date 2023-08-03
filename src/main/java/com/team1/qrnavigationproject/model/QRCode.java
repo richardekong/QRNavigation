@@ -12,8 +12,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
-import static com.team1.qrnavigationproject.model.Constant.DATE_TIME_REGEX;
-import static com.team1.qrnavigationproject.model.Constant.IMAGE_URL_REGEX;
+import static com.team1.qrnavigationproject.model.Constant.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,17 +37,16 @@ public class QRCode {
     @Column("sub_space_id")
     private int subSpaceId;
 
+    @Column(value = "page_url")
+    @NotBlank(message = "Please provide page url")
+    @Pattern(regexp = WEBSITE_URL_REGEX, message = "Invalid URL")
+    private String pageURL;
+
     @Column("image_URL")
     @NotBlank(message = "Image URL must be provided")
     @Pattern(regexp = IMAGE_URL_REGEX, message = "Invalid image URL")
     private String imageURL;
 
-    @Column("is_scanned")
-    private boolean isScanned;
-
-    @Column("scanned_at")
-    @Pattern(regexp = DATE_TIME_REGEX, message = "Invalid datetime value")
-    private LocalDateTime scannedAt;
 
     @Column("created_at")
     @Pattern(regexp = DATE_TIME_REGEX, message = "Invalid datetime value")
