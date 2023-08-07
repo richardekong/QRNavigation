@@ -21,15 +21,6 @@ public class DemoController {
         return "contentPage";
     }
 
-    @GetMapping("/admin/organization/register")
-    public String ViewOrganizationRegistrationPage() {
-        return "organizationRegistrationPage";
-    }
-    @GetMapping("/admin/organization/update")
-    public String ViewOrganizationUpdatePage() {
-        return "organizationUpdatePage";
-    }
-
     @GetMapping("/admin/qrcodes")
     public String viewQRCodes(){
         return "qrcodes";
