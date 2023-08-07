@@ -64,7 +64,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public Organization update(Organization organization) {
-        if (organizationRepo.existsById(organization.getId())){
+        if (!organizationRepo.existsById(organization.getId())){
             throw  new CustomException(
                     HttpStatus.NOT_FOUND.getReasonPhrase(),
                     HttpStatus.NOT_FOUND
