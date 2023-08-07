@@ -23,6 +23,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class OrganizationServiceTest {
@@ -168,13 +169,16 @@ public class OrganizationServiceTest {
     @Test
     void canBeUpdated(){
         String name = "Cardiff Met";
-        given(organizationRepo.save(organization)).willReturn(organization);
-        organization.setName(name);
-        Organization updatedOrg = organizationService.update(organization);
-        then(organizationRepo).should().save(organization);
-        assertThrows(CustomException.class, ()->organizationService.findById(-1));
-        assertThat(updatedOrg).isNotNull();
-        assertThat(updatedOrg.getName()).isEqualTo(name);
+        var existingOrg = organization;
+        //Mock the repository's behavior to determine if an organization exists
+        when(organizationRepo.existsById(1)).thenReturn(true);
+
+        //update the organization
+        existingOrg.setName(name);
+        organizationService.update(existingOrg);
+
+        verify(organizationRepo, times(1)).existsById(1);
+        verify(organizationRepo, times(1)).save(existingOrg);
 
     }
 
