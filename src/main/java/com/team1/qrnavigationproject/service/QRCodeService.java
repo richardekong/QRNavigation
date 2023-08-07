@@ -12,6 +12,8 @@ public interface QRCodeService {
 
     QRCode save(QRCode qrCode) throws WriterException, IOException;
 
+    QRCode update(QRCode qrCode) throws WriterException, IOException;
+
     InputStreamResource download(int id);
 
     QRCode findQRCodeById(int qrCode);

@@ -3,12 +3,12 @@ package com.team1.qrnavigationproject.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.team1.qrnavigationproject.response.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -29,17 +29,18 @@ public class S3ServiceImpl implements S3Service {
         this.amazonS3Client = amazonS3Client;
     }
 
-    @Async
     @Override
-    public CompletableFuture<S3ObjectInputStream> getS3Object(String fileName) {
-        return CompletableFuture.completedFuture(amazonS3Client.getObject(s3BucketName, fileName).getObjectContent());
+    public S3ObjectInputStream getS3Object(String fileName) {
+        return CompletableFuture
+                .supplyAsync(() -> amazonS3Client.getObject(s3BucketName, fileName))
+                .thenApply(S3Object::getObjectContent)
+                .join();
     }
 
-    @Async
     @Override
-    public CompletableFuture<String> putObjectInS3(File file) {
-        String fileName = file.getName();
+    public String putObjectInS3(File file) {
         return CompletableFuture.supplyAsync(() -> {
+            String fileName = file.getName();
             PutObjectRequest request = new PutObjectRequest(s3BucketName, fileName, file);
             amazonS3Client.putObject(request);
             try {
@@ -51,7 +52,6 @@ public class S3ServiceImpl implements S3Service {
                 );
             }
             return amazonS3Client.getUrl(s3BucketName, fileName).toString();
-        });
+        }).join();
     }
-
 }

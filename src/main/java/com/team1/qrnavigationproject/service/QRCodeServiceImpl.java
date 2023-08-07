@@ -1,5 +1,6 @@
 package com.team1.qrnavigationproject.service;
 
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.google.zxing.WriterException;
 import com.team1.qrnavigationproject.model.QRCode;
 import com.team1.qrnavigationproject.repository.QRCodeRepo;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 public class QRCodeServiceImpl implements QRCodeService {
@@ -40,49 +40,57 @@ public class QRCodeServiceImpl implements QRCodeService {
         this.s3Service = s3Service;
     }
 
-
     @Override
     public QRCode save(QRCode qrCode) throws WriterException, IOException {
         if (qrCodeRepo.existsById(qrCode.getId())) {
-            throw new CustomException(
-                    "This QRCode exists Already",
-                    HttpStatus.CONFLICT
-            );
+            throw new CustomException("This QRCode exists Already", HttpStatus.CONFLICT);
         }
         //generate an image file from the qrCode data
         String imageName = UUID.randomUUID().toString();
         File qrImageFile = qrImageService.makeQRImage(imageName, qrCode.getPageURL());
         //save the file to amazon s3 bucket and delete it locally, to avoid clustering the server with qrcode images
-        return s3Service.putObjectInS3(qrImageFile).thenApply(imageURL -> {
-            //set the image url of the qrcode to it's s3 location
+        String imageURL = s3Service.putObjectInS3(qrImageFile);
+        //set the image url of the qrcode to it's s3 location
+        qrCode.setImageURL(imageURL);
+        //save the qrCode to the database and return the response
+        return qrCodeRepo.save(qrCode);
+    }
+
+    @Override
+    public QRCode update(QRCode qrCode) throws WriterException, IOException {
+        //get the qr code to be updated
+        if (!qrCodeRepo.existsById(qrCode.getId())) {
+            throw new CustomException(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
+        }
+        QRCode qrTobeUpdated = qrCodeRepo.findQRCodeById(qrCode.getId());
+        //determine if there is a change in the space or subspace
+        boolean spaceOrSubSpaceIsTheSame = (qrCode.getSpaceId() == qrTobeUpdated.getSpaceId())
+                || (qrCode.getSubSpaceId() == qrTobeUpdated.getSubSpaceId());
+        //if the space or subspace is not the same, replace QRCode image, and encode with a new pageURL
+        if (!spaceOrSubSpaceIsTheSame) {
+            //generate and overwrite the qrCode in s3 bucket
+            String imageURL = qrTobeUpdated.getImageURL();
+            String imageFileName = imageURL.substring(imageURL.lastIndexOf("/"));
+            File qrImageFile = qrImageService.makeQRImage(imageFileName, qrCode.getPageURL());
+            //upload the generated qr code to s3 bucket
+            imageURL = s3Service.putObjectInS3(qrImageFile);
             qrCode.setImageURL(imageURL);
-            //save the qrCode to the database and return the response
-            return qrCodeRepo.save(qrCode);
-        }).handle((response, exception) -> { //handle exceptions
-            if (exception != null) {
-                throw new CustomException(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-            return response;
-        }).join();
+        }
+        return qrCodeRepo.save(qrCode);
     }
 
     @Override
     public InputStreamResource download(int id) {
         //get the qrcode information from the database
-        return CompletableFuture
-                .supplyAsync(() -> qrCodeRepo.findQRCodeById(id))
-                .thenApply(qrCode -> {
-                    String imageURL = qrCode.getImageURL();
-                    //get the filename from the image URL after the last slash character
-                    return imageURL.substring(imageURL.lastIndexOf("/"));
-                }).thenCompose(imageFileName -> s3Service.getS3Object(imageFileName))
-                .thenApply(InputStreamResource::new)
-                .handle((response, exception) -> { //handle exception
-                    if (exception != null) {
-                        throw new CustomException(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-                    }
-                    return response;
-                }).join();
+        QRCode qrToDownload = qrCodeRepo.findQRCodeById(id);
+        if (qrToDownload == null){
+            throw new CustomException(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
+        }
+        String imageURL = qrToDownload.getImageURL();
+        //get the filename from the image URL after the last slash character
+        String imageFileName =  imageURL.substring(imageURL.lastIndexOf("/"));
+        S3ObjectInputStream s3Stream = s3Service.getS3Object(imageFileName);
+        return new InputStreamResource(s3Stream);
     }
 
     @Override
@@ -120,5 +128,6 @@ public class QRCodeServiceImpl implements QRCodeService {
     public List<QRCode> findAllQRCodes() {
         return qrCodeRepo.findAllQRCodes();
     }
+
 }
 
