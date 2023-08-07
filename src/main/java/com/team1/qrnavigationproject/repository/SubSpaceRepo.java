@@ -1,13 +1,13 @@
 package com.team1.qrnavigationproject.repository;
 
-import com.team1.qrnavigationproject.model.Space;
+import com.team1.qrnavigationproject.model.SubSpace;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface SpaceRepo extends JpaRepository<Space, Integer> {
+public interface SubSpaceRepo extends JpaRepository<SubSpace, Integer>{
 
-    Optional<Space> findSpaceByName(String spaceName);
+    Optional<SubSpace> findSubSpaceByName(String subSpaceName);
 }
