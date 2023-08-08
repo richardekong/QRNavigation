@@ -81,20 +81,7 @@ public class DemoController {
         return "eventUpdate";
     }
 
-    @GetMapping("/admin/contents")
-    public String ViewContentManagementPage() {
-        return "contentManagementPage";
-    }
 
-    @GetMapping("/admin/contents/createContent")
-    public String ViewCreateContentPage() {
-        return "createContentPage";
-    }
-
-    @GetMapping("/admin/contents/updateContent")
-    public String ViewUpdateContentPage() {
-        return "contentUpdate";
-    }
 
     @GetMapping("/qrnavigation/footer")
     public String ViewQRNavigationFooter() {
