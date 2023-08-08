@@ -30,7 +30,7 @@ public class contentController {
     public String ShowContentManagementPage(Model model) {
         Optional<List<Content>> unConfirmedContents = Optional.of(contentService.findAll());
         unConfirmedContents.ifPresentOrElse(
-                events -> model.addAttribute("contents", contents),
+                contents -> model.addAttribute("contents", contents),
                 () -> {
                     HttpStatus status = HttpStatus.NO_CONTENT;
                     model.addAttribute("ContentsLoadErrorDisplay", new Response(status.value(), status.getReasonPhrase(), System.currentTimeMillis()));
