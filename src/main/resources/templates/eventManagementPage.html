@@ -32,7 +32,7 @@
                             <a th:href="@{/admin/events/createEvent}">
                                 <button type="button" class="create-new-event-button" style="background-color: #3CC494; border: 1px solid #3CC494; ">
                                     <img style="display: inline-block;" class="plus-icon" th:src="@{/images/plus-icon.svg}" src="/static/images/plus-icon.svg" alt="plus icon">
-                                     Create Event
+                                    Create Event
                                 </button>
                             </a>
                         </div>
@@ -40,113 +40,52 @@
                     <div class="row card shadow p-3" >
                         <table class="table  table-hover table-bordered table-responsive" style="border-radius: 4px;">
                             <thead class="table-light">
-                                <tr>
-                                    <td>
-                                        <h5 style="text-align: center; ">Event name</h5>
-                                    </td>
-                                    <td>
-                                        <h5 style="text-align: center; ">Venues</h5>
-                                    </td>
-                                    <td>
-                                        <h5 style="text-align: center; ">Start Date</h5>
-                                    </td>
-                                    <td>
-                                        <h5 style="text-align: center; ">End Date</h5>
-                                    </td>
-                                    <td>
-                                        <h5 style="text-align: center; ">Make Decision</h5>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    <h5 style="text-align: center; ">Event name</h5>
+                                </td>
+                                <td>
+                                    <h5 style="text-align: center; ">Venues</h5>
+                                </td>
+                                <td>
+                                    <h5 style="text-align: center; ">Start Date</h5>
+                                </td>
+                                <td>
+                                    <h5 style="text-align: center; ">End Date</h5>
+                                </td>
+                                <td>
+                                    <h5 style="text-align: center; ">Make Decision</h5>
+                                </td>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: center; ">Open day</p>
-                                    </td>
-                                    <td>
-                                        <label for="subPlace"></label>
-                                        <select id="subPlace" class="form-select">
-                                            <option style="text-align: center; ">Abacws 3.65</option>
-                                            <option style="text-align: center; ">Abacws 3.65</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <p style="text-align: center; ">7/7/2023</p>
-                                    </td>
-                                    <td>
-                                        <p style="text-align: center; ">8/7/2023</p>
-                                    </td>
-                                    <td class="centered-buttons">
-                                        <a th:href="@{/admin/events/updateEvent}">
-                                            <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
-                                        </a>
-                                        <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: center; ">Open day</p>
-                                    </td>
-                                    <td>
-
-                                        <select class="form-select">
-                                            <option style="text-align: center; ">Abacws 3.65</option>
-                                            <option style="text-align: center; ">Abacws 3.65</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <p style="text-align: center; ">7/7/2023</p>
-                                    </td>
-                                    <td>
-                                        <p style="text-align: center; ">8/7/2023</p>
-                                    </td>
-                                    <td class="centered-buttons">
-                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
-                                        <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: center; ">Open day</p>
-                                    </td>
-                                    <td>
-                                        <select class="form-select">
-                                            <option style="text-align: center; ">Abacws 3.65</option>
-                                            <option style="text-align: center; ">Abacws 3.65</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <p style="text-align: center; ">7/7/2023</p>
-                                    </td>
-                                    <td>
-                                        <p style="text-align: center; ">8/7/2023</p>
-                                    </td>
-                                    <td class="centered-buttons">
-                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
-                                        <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p style="text-align: center; ">Open day</p>
-                                    </td>
-                                    <td>
-                                        <select class="form-select">
-                                            <option style="text-align: center; ">Abacws 3.65</option>
-                                            <option style="text-align: center; ">Abacws 3.65</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <p style="text-align: center; ">7/7/2023</p>
-                                    </td>
-                                    <td>
-                                        <p style="text-align: center; ">8/7/2023</p>
-                                    </td>
-                                    <td class="centered-buttons">
-                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
-                                        <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
-                                    </td>
-                                </tr>
+                            <tr th:each="event:${events}">
+                                <td>
+                                    <p style="text-align: center; " th:text="${event.name}"></p>
+                                </td>
+                                <td>
+                                    <select class="form-select">
+                                        <option style="text-align: center; ">Abacws 3.65</option>
+                                        <option style="text-align: center; ">Abacws 3.65</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <p style="text-align: center; " th:text="${#temporals.format(event.start, 'dd/MM/yyyy')}"></p>
+                                </td>
+                                <td>
+                                    <p style="text-align: center; " th:text="${#temporals.format(event.end, 'dd/MM/yyyy')}"></p>
+                                </td>
+                                <td class="centered-buttons">
+                                    <form th:action="@{/admin/events/viewEvent}" th:method="POST">
+                                        <input type="hidden" name="eventId" th:value="${event.id}" />
+                                        <button type="submit" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
+                                    </form>
+                                    <form th:action="@{/admin/events/deleteEvent}" th:method="POST">
+                                        <input type="hidden" name="eventId" th:value="${event.id}" />
+                                        <button type="submit" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
