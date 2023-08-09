@@ -66,10 +66,10 @@ public class OrganizationRegistrationPageFunctionalTest {
         assertNotNull(driver.findElement(By.name("phone")));
         assertNotNull(driver.findElement(By.name("postcode")));
         assertNotNull(driver.findElement(By.name("address")));
-        assertNotNull(driver.findElement(By.name("logo")));
-        assertNotNull(driver.findElement(By.name("website")));
-        assertNotNull(driver.findElement(By.name("header-background")));
-        assertNotNull(driver.findElement(By.name("footer-background")));
+        assertNotNull(driver.findElement(By.name("logoURL")));
+        assertNotNull(driver.findElement(By.name("websiteURL")));
+        assertNotNull(driver.findElement(By.name("headerBackground")));
+        assertNotNull(driver.findElement(By.name("footerBackground")));
         assertEquals(driver.findElement(By.tagName("button")).getText(),"Register");
     }
 
@@ -79,8 +79,8 @@ public class OrganizationRegistrationPageFunctionalTest {
                 nameInput = driver.findElement(By.name("name")),
                 phoneInput = driver.findElement(By.name("phone")),
                 postcodeInput = driver.findElement(By.name("postcode")),
-                logoInput = driver.findElement(By.name("logo")),
-                websiteInput = driver.findElement(By.name("website"));
+                logoInput = driver.findElement(By.name("logoURL")),
+                websiteInput = driver.findElement(By.name("websiteURL"));
 
         Pattern
                 namePattern = Pattern.compile(NAME_REGEX),

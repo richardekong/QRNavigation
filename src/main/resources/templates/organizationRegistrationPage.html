@@ -52,42 +52,44 @@
             <h3 class="text-center">Register your Organization's Details</h3>
         </section>
         <section class="row m-auto">
-            <form action="" class="card shadow form col-xs-12 col-sm-12 col-md-5 col-lg-6 p-5 m-1">
+            <form th:action="@{/admin/organization/register/process}" th:method="POST" class="card shadow form col-xs-12 col-sm-12 col-md-5 col-lg-6 p-5 m-1">
                 <div class="row shadow p-3 mb-3 rounded border-solid">
                     <label for="name" class="col-md-4 col-lg-4">Name:</label>
                     <input id="name" class="col-md-8 col-md-8 mb-3" name="name" type="text"
                            placeholder="Enter Organization's name" required pattern="[a-zA-Z-' ]{2,50}">
-                    <label for="phone" class="col-md-4 col-lg-4">Email:</label>
+                    <label for="phone" class="col-md-4 col-lg-4">Phone:</label>
                     <input id="phone" class="col-md-8 col-md-8" name="phone" type="tel"
-                           placeholder="Enter Organization's Phone" required pattern="^[0-9+\-() ]*$">
+                           placeholder="Enter Organization's Phone" required pattern="^\+?[0-9]{1,3}-?[0-9]{3,14}$">
                 </div>
                 <div class="row shadow p-3 mb-3 rounded border-solid">
                     <label for="postcode" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Postcode:</label>
                     <input id="postcode" name="postcode" type="text" placeholder="Enter Organization's postcode"
-                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2" required pattern="^[A-Z]{1,2}\d[A-Z]?\d[A-Z]{2}$">
+                           class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2" required pattern="^[A-Z]{1,2}[0-9Rr][0-9A-Za-z]? ?[0-9][A-Za-z]{2}$">
                     <label for="addresses" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Addresses:</label>
                     <select id="addresses" name="address" class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2">
                         <option value="">select an address</option>
                     </select>
+                    <input id="latitude" type="hidden" name="latitude"></input>
+                    <input id="longitude" type="hidden" name="longitude"></input>
                 </div>
                 <div class="shadow row p-3 mb-3 rounded border-solid">
                     <label for="logo" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Logo:</label>
-                    <input id="logo" name="logo" type="text" placeholder="Enter Organization's Logo URL"
+                    <input id="logo" name="logoURL" type="url" placeholder="Enter Organization's Logo URL"
                            class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2" required pattern="^(https?:\/\/)?[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$">
                     <label for="website" class="col-xs-12 col-sm-12 col-md-4 col-lg-4">Website:</label>
-                    <input id="website" name="website" type="text" placeholder="Enter Organization's website URL"
+                    <input id="website" name="websiteURL" type="text" placeholder="Enter Organization's website URL"
                            class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mb-2" required pattern="^(https?:\/\/)?[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$">
                 </div>
                 <div class="shadow row p-3 mb-3 rounded border-solid">
                     <label for="header-background" class="col-xs-12 col-sm-12 col-md-10 col-lg-10">Header Background <span class="hex">(# HEX)</span>:</label>
-                    <input id="header-background" name="header-background" type="color"
+                    <input id="header-background" name="headerBackground" type="color"
                            class="col-xs-12 col-sm-12 col-md-2 col-lg-2 form-control-color mb-2" value="#1E98D7">
                     <label for="footer-background" class="col-xs-12 col-sm-12 col-md-10 col-lg-10">Footer Background <span class="hex">(# HEX)</span>:</label>
-                    <input id="footer-background" name="footer-background" type="color" value="#1E98D7"
+                    <input id="footer-background" name="footerBackground" type="color" value="#1E98D7"
                            class="col-xs-12 col-sm-12 col-md-2 col-lg-2 form-control-color mb-2">
                 </div>
                 <div class="row p-3 mb-3 justify-content-end">
-                    <button class="btn btn-primary w-25 alternate-btn shadow">Register</button>
+                    <button class="btn btn-primary w-25 alternate-btn shadow" type="submit">Register</button>
                 </div>
             </form>
             <div class="card shadow col-xs-12 col-sm-12 col-md-5 col-lg-5 m-1 p-3 text-center">
@@ -98,6 +100,7 @@
     </section>
 </main>
 <footer th:insert="qrNavigationFooter::qrNavFooter"></footer>
+<script th:src="@{/script/postcodeLookup.js}"></script>
 </body>
 
 </html>

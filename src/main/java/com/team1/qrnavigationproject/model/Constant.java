@@ -9,7 +9,7 @@ public class Constant {
     public static final String USERNAME_REGEX = "^[a-zA-Z\\d_!@#$%^&*()-]{3,30}$";
     public static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{7,}$";
 
-    public static final String PHONE_REGEX = "^\\+\\d{1,3}\\s?\\d{1,14}$";
+    public static final String PHONE_REGEX = "^\\+?[0-9]{1,3}-?[0-9]{3,14}$";
 
     public static final String NAME_REGEX = "^[a-zA-ZÀ-ÖØ-öø-ÿ-' ]+$";
 
