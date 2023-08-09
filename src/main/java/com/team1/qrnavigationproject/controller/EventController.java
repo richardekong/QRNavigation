@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -56,11 +57,12 @@ public class EventController {
     }
 
     @PostMapping("/admin/events/createNewEvent")
-    public String CreateNewEvent(@ModelAttribute Event event,
-                                 @RequestParam("event_start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate event_start_date,
-                                 @RequestParam("event_start_time") @DateTimeFormat(pattern = "HH:mm") LocalTime event_start_time,
-                                 @RequestParam("event_end_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate event_end_date,
-                                 @RequestParam("event_end_time") @DateTimeFormat(pattern = "HH:mm") LocalTime event_end_time){
+    public String CreateNewEvent(@ModelAttribute Event event, @RequestParam Map<String, String> requestParams) {
+
+        LocalDate event_start_date = LocalDate.parse(requestParams.get("event_start_date"));
+        LocalTime event_start_time = LocalTime.parse(requestParams.get("event_start_time"));
+        LocalDate event_end_date = LocalDate.parse(requestParams.get("event_end_date"));
+        LocalTime event_end_time = LocalTime.parse(requestParams.get("event_end_time"));
 
         // Combine date and time to create LocalDateTime
         LocalDateTime start = event_start_date.atTime(event_start_time);
@@ -73,6 +75,7 @@ public class EventController {
 
         return "redirect:/admin/events";
     }
+
 
     @PostMapping("/admin/events/deleteEvent")
     public String deleteEvent(@RequestParam("eventId") int eventId) {
@@ -88,11 +91,12 @@ public class EventController {
     }
 
     @PostMapping("/admin/events/updateEvent")
-    public String UpdateEvent(@ModelAttribute Event event,
-                              @RequestParam("event_start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate event_start_date,
-                              @RequestParam("event_start_time") @DateTimeFormat(pattern = "HH:mm") LocalTime event_start_time,
-                              @RequestParam("event_end_date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate event_end_date,
-                              @RequestParam("event_end_time") @DateTimeFormat(pattern = "HH:mm") LocalTime event_end_time){
+    public String UpdateEvent(@ModelAttribute Event event, @RequestParam Map<String, String> requestParams) {
+
+        LocalDate event_start_date = LocalDate.parse(requestParams.get("event_start_date"));
+        LocalTime event_start_time = LocalTime.parse(requestParams.get("event_start_time"));
+        LocalDate event_end_date = LocalDate.parse(requestParams.get("event_end_date"));
+        LocalTime event_end_time = LocalTime.parse(requestParams.get("event_end_time"));
 
         // Combine date and time to create LocalDateTime
         LocalDateTime start = event_start_date.atTime(event_start_time);
@@ -104,4 +108,5 @@ public class EventController {
         eventService.updateEvent(event);
         return "redirect:/admin/events";
     }
+
 }
