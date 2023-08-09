@@ -65,7 +65,7 @@ public class OrganizationRegistrationPageFunctionalTest {
         assertNotNull(driver.findElement(By.name("name")));
         assertNotNull(driver.findElement(By.name("phone")));
         assertNotNull(driver.findElement(By.name("postcode")));
-        assertNotNull(driver.findElement(By.name("address")));
+        assertNotNull(driver.findElement(By.name("description")));
         assertNotNull(driver.findElement(By.name("logoURL")));
         assertNotNull(driver.findElement(By.name("websiteURL")));
         assertNotNull(driver.findElement(By.name("headerBackground")));

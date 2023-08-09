@@ -29,7 +29,7 @@ public class OrganizationController {
     private LocationService locationService;
 
     //Todo: This will be resolved as soon as spring security is integrated
-    private static final int id = 13;
+    private static final int id = 15;
 
     private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
@@ -39,12 +39,12 @@ public class OrganizationController {
     }
 
     @Autowired
-    private void setLocationService(LocationService locationService){
+    private void setLocationService(LocationService locationService) {
         this.locationService = locationService;
     }
 
     @Autowired
-    private void setAddressService(AddressService addressService){
+    private void setAddressService(AddressService addressService) {
         this.addressService = addressService;
     }
 
@@ -72,6 +72,7 @@ public class OrganizationController {
         modelAndView.addObject("organization", currentOrganization);
         return modelAndView;
     }
+
     @PostMapping("/admin/organization/register/process")
     public ModelAndView processOrganizationRegistrationForm(
             @Valid @ModelAttribute Organization organization,
@@ -80,16 +81,21 @@ public class OrganizationController {
             ModelAndView modelAndView,
             BindingResult bindingResult) {
 
-        Organization savedOrganization = organizationService.save(organization);
-        if (address != null && location != null){ // add address and location data to database
-
-        }
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(error -> logger.log(Level.SEVERE, error.getDefaultMessage()));
             modelAndView.addObject("error", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
             return modelAndView;
         }
+        //first save location to the database
+        Location savedLocation = locationService.saveLocation(location);
+        //associate the address with  the saved location, then save the address
+        address.setLocation(savedLocation);
+        Address savedAddress = addressService.saveAddress(address);
+        //associate the organization with the saved address then save the organization
+        organization.setAddress(savedAddress);
+        Organization savedOrganization = organizationService.save(organization);
 
+        //pass the saved organization to the main admin page, and set the next page to main admin page after submitting the form
         modelAndView.addObject("organization", savedOrganization);
         modelAndView.addObject("success", "%s %s!".formatted(savedOrganization.getName(), HttpStatus.CREATED.getReasonPhrase()));
         modelAndView.setViewName("adminMainPage");
@@ -97,15 +103,32 @@ public class OrganizationController {
     }
 
     @PostMapping("/admin/organization/update/process")
-    public ModelAndView processUpdateForm(@Valid @ModelAttribute Organization orgFormData, ModelAndView modelAndView, BindingResult bindingResult) {
-        //Todo: This will be resolved as soon as spring security is integrated
-        Organization orgToUpdate = organizationService.findById(id);
-        orgFormData.setId(orgToUpdate.getId());
-        if (bindingResult.hasErrors()){
+    public ModelAndView processUpdateForm(
+            @Valid @ModelAttribute Organization orgFormData,
+            @ModelAttribute Address addressFormData,
+            @ModelAttribute Location locationFormData,
+            ModelAndView modelAndView, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(error -> logger.log(Level.SEVERE, error.getDefaultMessage()));
             modelAndView.addObject("error", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
         }
+
+        //updating organization detail
+        //Todo: This will be resolved as soon as spring security is integrated
+        Organization orgToUpdate = organizationService.findById(id);
+
+        //update the location data
+        Location updatedLocation = locationService.saveLocation(locationFormData);
+        //update the address
+        addressFormData.setLocation(updatedLocation);
+        Address updatedAddress = addressService.saveAddress(addressFormData);
+
+        //update the organization detail
+        orgFormData.setId(orgToUpdate.getId());
+        orgFormData.setAddress(updatedAddress);
         orgToUpdate = organizationService.update(orgFormData);
+
         modelAndView.addObject("organization", orgToUpdate);
         modelAndView.addObject("success", "Changes saved!");
         modelAndView.setViewName("adminMainPage");
