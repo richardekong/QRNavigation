@@ -4,6 +4,7 @@ import com.team1.qrnavigationproject.model.Content;
 import com.team1.qrnavigationproject.response.CustomException;
 import com.team1.qrnavigationproject.response.Response;
 import com.team1.qrnavigationproject.service.ContentService;
+import com.team1.qrnavigationproject.service.SpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -20,11 +21,15 @@ import java.util.Optional;
 public class contentController {
 
     private ContentService contentService;
+    private SpaceService spaceService;
 
     @Autowired
     public void setContentService(ContentService contentService){
         this.contentService = contentService;
     }
+
+    @Autowired
+    public void SetSpaceService(SpaceService spaceService){ this.spaceService = spaceService;}
 
     @GetMapping("/admin/contents")
     public String ShowContentManagementPage(Model model) {

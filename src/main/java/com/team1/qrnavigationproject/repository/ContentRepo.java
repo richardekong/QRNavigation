@@ -11,7 +11,9 @@ import java.util.List;
 @Repository
 public interface ContentRepo extends JpaRepository<Content, Integer> {
 
-    @Query("SELECT c FROM Content c")
+    @Query("SELECT DISTINCT c.eventId  FROM Content c")
+    List<Integer> findDistinctContentIds();
+    @Query("SELECT c FROM Content c ORDER BY c.eventId")
     List<Content> findAllContents();
 
     Content save(Content content);

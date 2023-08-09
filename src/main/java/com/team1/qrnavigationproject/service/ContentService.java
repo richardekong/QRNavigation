@@ -5,6 +5,7 @@ import com.team1.qrnavigationproject.model.Content;
 import java.util.List;
 
 public interface ContentService {
+
     List<Content> findAll();
     Content saveContent(Content content);
     Content findContentByName(String contentName);
