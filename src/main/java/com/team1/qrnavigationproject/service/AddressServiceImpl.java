@@ -1,15 +1,41 @@
 package com.team1.qrnavigationproject.service;
 
+import com.team1.qrnavigationproject.model.Address;
 import com.team1.qrnavigationproject.repository.AddressRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class AddressServiceImpl implements AddressService{
-    private AddressRepo addressRepo;
+import java.util.List;
+import java.util.Optional;
+
+public class AddressServiceImpl implements AddressService {
+
+    private final AddressRepo addressRepo;
 
     @Autowired
-    private void setAddressRepo(AddressRepo addressRepo){
+    public AddressServiceImpl(AddressRepo addressRepo) {
         this.addressRepo = addressRepo;
     }
+
+    @Override
+    public List<Address> getAllAddresses() {
+        return addressRepo.findAll();
+    }
+
+    @Override
+    public Optional<Address> getAddressById(int id) {
+        return addressRepo.findById(id);
+    }
+
+    @Override
+    public Address saveAddress(Address address) {
+        return addressRepo.save(address);
+    }
+
+    @Override
+    public void deleteAddress(int id) {
+        addressRepo.deleteById(id);
+    }
+
+
 }
+
