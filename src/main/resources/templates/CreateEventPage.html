@@ -19,79 +19,79 @@
             <!--LINK TO NAV BAR STYLE SHEET-->
             <link rel="stylesheet" th:href="@{/css/adminNavBar.css}">
         </head>
-            <body style="overflow-y: scroll; background-color: #F2F2F2; font-family: 'Merriweather';">
-                <!-- HERE THE ADMIN HEADER FRAGMENT INSERTED-->
-                <header th:insert="adminHeader::adminHeader"></header>
-                <!--HERE THE NAV BAR FRAGMENT INSERTED-->
-                <nav th:insert="adminNavBar::adminNavBar"></nav>
-                <main style="margin-bottom: 5%; margin-left: 20%; ">
-                    <div class="container mt-5" style="padding-top: 3%;">
-                        <div class="row">
-                            <!-- Left section for the dialogue form -->
-                            <div class="col-md-6 shadow" style="background-color: #FFFFFF; border-radius: 4px; margin-bottom: 10%; padding-bottom: 20px;">
-                                <h3>Create New Event  </h3>
-                                <form>
-                                    <!-- First row -->
-                                    <div class="row mb-3">
-                                        <div class="col-md-5">
-                                            <label for="eventName">Event Name:</label>
-                                            <input type="text" class="form-control" id="eventName" placeholder="Write the name"  required size="28">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="eventFromDate">From:</label>
-                                            <input type="date" class="form-control" id="eventFromDate" required>
-                                        </div>
-                                        <div class="col-md-3 mt-3 mt-md-0">
-                                            <label for="eventFromTime">Time:</label>
-                                            <div class="input-group">
-                                                <input type="time" class="form-control" id="eventFromTime" required>
-                                            </div>
+        <body style="overflow-y: scroll; background-color: #F2F2F2; font-family: 'Merriweather';">
+            <!-- HERE THE ADMIN HEADER FRAGMENT INSERTED-->
+            <header th:insert="adminHeader::adminHeader"></header>
+            <!--HERE THE NAV BAR FRAGMENT INSERTED-->
+            <nav th:insert="adminNavBar::adminNavBar"></nav>
+            <main style="margin-bottom: 5%; margin-left: 20%; ">
+                <div class="container mt-5" style="padding-top: 3%;">
+                    <div class="row">
+                        <!-- Left section for the dialogue form -->
+                        <div class="col-md-6 shadow" style="background-color: #FFFFFF; border-radius: 4px; margin-bottom: 10%; padding-bottom: 20px;">
+                            <h3>Create New Event  </h3>
+                            <form th:action="@{/admin/events/createNewEvent}" th:object="${event}" th:method="POST">
+                                <!-- First row -->
+                                <div class="row mb-3">
+                                    <div class="col-md-5">
+                                        <label for="name">Event Name:</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Write the name"  required size="28">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="eventStartDate">Start:</label>
+                                        <input type="date" class="form-control" id="eventStartDate" name="event_start_date" required>
+                                    </div>
+                                    <div class="col-md-3 mt-3 mt-md-0">
+                                        <label for="eventStartTime">Time:</label>
+                                        <div class="input-group">
+                                            <input type="time" class="form-control" id="eventStartTime" name="event_start_time" required>
                                         </div>
                                     </div>
-                                    <!-- Second row -->
-                                    <div class="row mb-3">
-                                        <div class="col-md-5">
-                                            <label for="venue">Venues:</label>
-                                            <select class="form-select" id="venue" required>
-                                                <option value="" selected>Select a venue</option>
-                                                <option value="venue1">Venue 1</option>
-                                                <option value="venue2">Venue 2</option>
-                                                <!-- Add more venues as needed -->
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="eventToDate">To:</label>
-                                            <input type="date" class="form-control" id="eventToDate" required>
-                                        </div>
-                                        <div class="col-md-3 mt-3 mt-md-0">
-                                            <label for="eventToTime">Time:</label>
-                                            <div class="input-group">
-                                                <input type="time" class="form-control" id="eventToTime" required>
-                                            </div>
+                                </div>
+                                <!-- Second row -->
+                                <div class="row mb-3">
+                                    <div class="col-md-5">
+                                        <label for="venue">Venues:</label>
+                                        <select class="form-select" id="venue" required>
+                                            <option value="" selected>Select a venue</option>
+                                            <option value="venue1">Venue 1</option>
+                                            <option value="venue2">Venue 2</option>
+                                            <!-- Add more venues as needed -->
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="eventToDate">End:</label>
+                                        <input type="date" class="form-control" id="eventEndDate" name="event_end_date" required>
+                                    </div>
+                                    <div class="col-md-3 mt-3 mt-md-0">
+                                        <label for="eventEndTime">Time:</label>
+                                        <div class="input-group">
+                                            <input type="time" class="form-control" id="eventEndTime" name="event_end_time" required>
                                         </div>
                                     </div>
-                                    <!-- Third row -->
-                                    <div class="mb-3">
-                                        <label for="eventDescription">Event Description:</label>
-                                        <textarea class="form-control h-50" id="eventDescription" rows="3" placeholder="Enter event description" ></textarea>
-                                    </div>
-                                    <!-- Create Button -->
-                                    <a th:href="@{/admin/main/events}">
-                                        <button type="submit" class="btn btn-primary" style="background-color: #1E98D7; margin-left: 40%">Create</button>
-                                    </a>
-                                </form>
-                            </div>
+                                </div>
+                                <!-- Third row -->
+                                <div class="mb-3">
+                                    <label for="eventDescription">Event Description:</label>
+                                    <textarea class="form-control h-50" id="eventDescription" rows="3" placeholder="Enter event description" name="description"></textarea>
+                                </div>
+                                <!-- Create Button -->
+                                <a th:href="@{/admin/main/events}">
+                                    <button type="submit" class="btn btn-primary" style="background-color: #1E98D7; margin-left: 40%">Create</button>
+                                </a>
+                            </form>
+                        </div>
 
-                            <!-- Right section for the event icon -->
-                            <div class="col-md-6" >
-                                <!-- Replace 'black-event-icon.svg' with the actual image URL for the event icon -->
-                                <img th:src="@{/images/black-event-icon.svg}" src="/static/images/black-event-icon.svg" alt="Event Icon" class="img-fluid" style="height: 400px; width: 400px; margin-left: 20%;" >
-                            </div>
+                        <!-- Right section for the event icon -->
+                        <div class="col-md-6" >
+                            <!-- Replace 'black-event-icon.svg' with the actual image URL for the event icon -->
+                            <img th:src="@{/images/black-event-icon.svg}" src="/static/images/black-event-icon.svg" alt="Event Icon" class="img-fluid" style="height: 400px; width: 400px; margin-left: 20%;" >
                         </div>
                     </div>
+                </div>
 
-                </main>
-                <!-- HERE THE ADMIN FOOTER FRAGMENT INSERTED-->
-                <footer th:insert="adminFooter::adminFooter"></footer>
+            </main>
+            <!-- HERE THE ADMIN FOOTER FRAGMENT INSERTED-->
+            <footer th:insert="adminFooter::adminFooter"></footer>
         </body>
-</html>
+    </html>

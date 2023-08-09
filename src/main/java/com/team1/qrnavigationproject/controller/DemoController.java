@@ -66,22 +66,6 @@ public class DemoController {
         return "createMainPlace";
     }
 
-    @GetMapping("/admin/events")
-    public String ViewEventManagementPage() {
-        return "eventManagementPage";
-    }
-
-    @GetMapping("/admin/events/createEvent")
-    public String ViewCreateEventPage() {
-        return "createEventPage";
-    }
-
-    @GetMapping("/admin/events/updateEvent")
-    public String ViewUpdateEventPage() {
-        return "eventUpdate";
-    }
-
-
 
     @GetMapping("/qrnavigation/footer")
     public String ViewQRNavigationFooter() {
