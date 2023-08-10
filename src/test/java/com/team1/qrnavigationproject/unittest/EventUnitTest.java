@@ -102,7 +102,7 @@ class EventUnitTest {
     @Test
     void setOrganizer() {
         Organization organization = new Organization(
-                2, "National Health Services",2,
+                2, "National Health Services",null,
                 "0734634523623",
                 "https://www.nhs.gov.uk/logo.png",
                 "https://www.nhs.gov.uk",

@@ -21,6 +21,7 @@ class OrganizationUnitTest {
 
     private void init() {
         organization = TestData.createOrganization();
+        organization.setAddress(TestData.createAddress());
         organization.add(TestData.createEvent());
         organization.add(TestData.createSpace());
     }
@@ -48,9 +49,9 @@ class OrganizationUnitTest {
     }
 
     @Test
-    void getAddressId() {
-        assertEquals(organization.getAddressId(), 1);
-        assertNotEquals(organization.getAddressId(), 100);
+    void getAddress() {
+        assertEquals(organization.getAddress().getId(), 1);
+        assertNotEquals(organization.getAddress().getId(), 100);
     }
 
     @Test
@@ -114,11 +115,11 @@ class OrganizationUnitTest {
     }
 
     @Test
-    void setAddressId() {
+    void setAddress() {
         int id = 3;
-        organization.setAddressId(id);
-        assertEquals(organization.getAddressId(), id);
-        assertNotEquals(organization.getAddressId(), 1);
+        organization.getAddress().setId(id);
+        assertEquals(organization.getAddress().getId(), id);
+        assertNotEquals(organization.getAddress().getId(), 1);
     }
 
     @Test
@@ -190,7 +191,7 @@ class OrganizationUnitTest {
         Organization similarOrganization = new Organization(
                 organization.getId(),
                 organization.getName(),
-                organization.getAddressId(),
+                organization.getAddress(),
                 organization.getPhone(),
                 organization.getLogoURL(),
                 organization.getWebsiteURL(),
@@ -209,7 +210,7 @@ class OrganizationUnitTest {
         Organization similarOrganization = new Organization(
                 organization.getId(),
                 organization.getName(),
-                organization.getAddressId(),
+                organization.getAddress(),
                 organization.getPhone(),
                 organization.getLogoURL(),
                 organization.getWebsiteURL(),
