@@ -1,9 +1,12 @@
 package com.team1.qrnavigationproject.controller;
 
 import com.team1.qrnavigationproject.model.Content;
+import com.team1.qrnavigationproject.model.Event;
+import com.team1.qrnavigationproject.model.Space;
 import com.team1.qrnavigationproject.response.CustomException;
 import com.team1.qrnavigationproject.response.Response;
 import com.team1.qrnavigationproject.service.ContentService;
+import com.team1.qrnavigationproject.service.EventService;
 import com.team1.qrnavigationproject.service.SpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,8 @@ import java.util.Optional;
 public class contentController {
 
     private ContentService contentService;
+
+    private EventService eventService;
     private SpaceService spaceService;
 
     @Autowired
@@ -29,10 +34,19 @@ public class contentController {
     }
 
     @Autowired
+    public void setEventService(EventService eventService) { this.eventService = eventService;}
+
+    @Autowired
     public void SetSpaceService(SpaceService spaceService){ this.spaceService = spaceService;}
 
     @GetMapping("/admin/contents")
     public String ShowContentManagementPage(Model model) {
+        // This list stores the unique IDs of events that have appeared in the content table.
+        List<Integer> listOfEventsIdsInContentTable = contentService.findDistinctContentIds();
+        List<Object[]> eventNamesAndIdsList = eventService.findEventNamesAndIdsByIds(listOfEventsIdsInContentTable);
+        // passing the list eventNamesAndIdsList to view ( contentManagementPage )
+        model.addAttribute("eventNamesAndIdsList", eventNamesAndIdsList);
+
         Optional<List<Content>> unConfirmedContents = Optional.of(contentService.findAll());
         unConfirmedContents.ifPresentOrElse(
                 contents -> model.addAttribute("contents", contents),
@@ -51,7 +65,15 @@ public class contentController {
     }
 
     @GetMapping("/admin/contents/createContent")
-    public String ViewCreateContentPage() {
+    public String ViewCreateContentPage(Model model) {
+        List<Event> events = eventService.findAll();
+        // passing the list events to view ( createContentPage )
+        model.addAttribute("events", events);
+
+        List<Space> spaces = spaceService.getAllSpaces();
+        // passing the list spaces to view ( createContentPage )
+        model.addAttribute("spaces", spaces);
+
         return "createContentPage";
     }
 

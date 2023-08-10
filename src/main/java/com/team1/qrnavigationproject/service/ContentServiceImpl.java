@@ -16,6 +16,9 @@ public class ContentServiceImpl implements ContentService{
 
         this.contentRepo = contentRepo;
     }
+
+    @Override
+    public List<Integer>findDistinctContentIds(){ return contentRepo.findDistinctContentIds();}
     @Override
     public List<Content> findAll(){
         return contentRepo.findAllContents();

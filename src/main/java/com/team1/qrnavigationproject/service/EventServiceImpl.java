@@ -56,4 +56,9 @@ public class EventServiceImpl implements EventService{
             throw new IllegalArgumentException("Event with name " + event.getName() + " not found." + existingEvent.getName());
         }
     }
+
+    @Override
+    public List<Object[]> findEventNamesAndIdsByIds(List<Integer> eventIds) {
+        return eventRepo.findEventNamesAndIdsByIds(eventIds);
+    }
 }

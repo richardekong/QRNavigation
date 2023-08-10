@@ -42,8 +42,10 @@
                                 <h5>Filter by Event:</h5>
                                 <select class="form-control" id="eventFilter">
                                     <option value="all">All Events</option>
-                                    <option value="Open day">Open day</option>
-                                    <!-- Add more options for different events -->
+                                    <option th:each="eventNameAndId : ${eventNamesAndIdsList}"
+                                            th:value="${eventNameAndId[0]}"
+                                            th:text="${eventNameAndId[1]}">
+                                    </option>
                                 </select>
                             </div>
                         </form>
@@ -59,11 +61,11 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr data-event="Open day">
-                                <td><p style="text-align: center; ">Abacws / 3.65</p></td>
-                                <td><p style="text-align: center; ">Open day</p></td>
-                                <td><p style="text-align: center; ">7/7/2023</p></td>
-                                <td><p style="text-align: center; ">8/7/2023</p></td>
+                            <tr th:each="content:${contents}">
+                                <td><p style="text-align: center; " th:text="${content.description}"></p></td>
+                                <td><p style="text-align: center; " th:text="${content.eventId}"></p></td>
+                                <td><p style="text-align: center; " th:text="${content.spaceId}"></p></td>
+                                <td><p style="text-align: center; " th:text="${content.subSpaceId}"></p></td>
                                 <td class="centered-buttons">
                                     <a th:href="@{//admin/contents/viewContent}">
                                         <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>

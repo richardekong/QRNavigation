@@ -12,4 +12,5 @@ public interface EventService {
      Event findEventById(int eventId);
      Event updateEvent(Event event);
      void deleteEventById(int eventId);
+     List<Object[]> findEventNamesAndIdsByIds(List<Integer> eventIds);
 }

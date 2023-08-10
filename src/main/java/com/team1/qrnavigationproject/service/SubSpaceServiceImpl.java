@@ -42,4 +42,9 @@ public class SubSpaceServiceImpl implements SubSpaceService {
     public Optional<SubSpace> getSubSpaceByName(String subSpaceName) {
         return subSpaceRepo.findSubSpaceByName(subSpaceName);
     }
+
+    @Override
+    public List<SubSpace> getSubspacesBySpaceId(Integer spaceId){
+        return subSpaceRepo.getSubspacesBySpaceId(spaceId);
+    }
 }

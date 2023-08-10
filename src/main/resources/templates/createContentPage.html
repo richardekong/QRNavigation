@@ -34,11 +34,10 @@
                     <!-- First row -->
                     <div class="row mb-1">
                         <div class="col-md-6">
-                            <label for="mainPlace">Choose main place :</label>
+                            <label for="mainPlace">Choose main place:</label>
                             <select class="form-select" id="mainPlace" required>
                                 <option value="" selected>Select main place</option>
-                                <option value="mainPlace1">Abacws</option>
-                                <option value="mainPlace2">Queen</option>
+                                <option th:each="space:${spaces}" th:value="${space.name}" th:text="${space.name}"></option>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -46,18 +45,16 @@
                             <select class="form-select" id="subPlace" required>
                                 <option value="" selected>Select sub place</option>
                                 <option value="subPlace1">3.65</option>
-                                <option value="subPlace2">5.48</option>
                             </select>
                         </div>
                     </div>
                     <!-- Second row -->
                     <div class="row mb-1">
                         <div class="col-md-12">
-                            <label for="event">Choose event :</label>
+                            <label for="event">Choose Event :</label>
                             <select class="form-select" id="event" required>
-                                <option value="" selected>Select event</option>
-                                <option value="event1">Open Day</option>
-                                <option value="event2">Placement</option>
+                                <option value="" selected>Select Event</option>
+                                <option th:each="event:${events}" th:text="${event.name}"></option>
                             </select>
                         </div>
                     </div>

@@ -10,4 +10,6 @@ public interface SubSpaceService {
     SubSpace saveSubSpace(SubSpace subSpace);
     void deleteSubSpace(int id);
     Optional<SubSpace> getSubSpaceByName(String subSpaceName);
+
+    List<SubSpace> getSubspacesBySpaceId(Integer spaceId);
 }
