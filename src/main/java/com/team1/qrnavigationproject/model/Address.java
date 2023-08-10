@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -26,9 +23,14 @@ public class Address {
     @NotBlank(message = "Please provide a description")
     private String description;
 
-    private int locationId;
+    @OneToOne
+    @JoinColumn(name = "location_id", referencedColumnName = "id")
+    private Location location;
 
     @NotBlank(message ="Please provide a postcode")
     @Pattern(regexp = POSTCODE_REGEX, message = "Invalid UK postcode")
     private String postcode;
+
+    @OneToOne(mappedBy = "address", cascade = CascadeType.REFRESH)
+    private Organization organization;
 }

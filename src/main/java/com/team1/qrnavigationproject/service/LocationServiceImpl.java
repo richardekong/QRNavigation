@@ -39,4 +39,5 @@ public class LocationServiceImpl implements LocationService {
     }
 
     // Add other business logic methods if needed
+
 }

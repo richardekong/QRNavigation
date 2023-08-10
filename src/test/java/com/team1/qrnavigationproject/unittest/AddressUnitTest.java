@@ -1,6 +1,7 @@
 package com.team1.qrnavigationproject.unittest;
 
 import com.team1.qrnavigationproject.model.Address;
+import com.team1.qrnavigationproject.model.Location;
 import com.team1.qrnavigationproject.stub.TestData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,8 +39,10 @@ class AddressUnitTest {
 
     @Test
     void getLocationId() {
-        assertEquals(address.getLocationId(), 1);
-        assertNotEquals(address.getLocationId(), 10);
+        Location location = TestData.createLocation();
+        address.setLocation(location);
+        assertEquals(address.getLocation(), location);
+        assertNotEquals(address.getLocation(), null);
     }
 
     @Test
@@ -66,14 +69,6 @@ class AddressUnitTest {
     }
 
     @Test
-    void setLocationId() {
-        int id = 300;
-        address.setLocationId(id);
-        assertEquals(address.getLocationId(), 300);
-        assertNotEquals(address.getLocationId(), 301);
-    }
-
-    @Test
     void setPostcode() {
         String postCode = "CF24 4DS";
         address.setPostcode(postCode);
@@ -86,8 +81,9 @@ class AddressUnitTest {
         Address address1 = new Address(
                 address.getId(),
                 address.getDescription(),
-                address.getLocationId(),
-                address.getPostcode()
+                address.getLocation(),
+                address.getPostcode(),
+                null
         );
 
         assertEquals(address1, address);
@@ -97,19 +93,19 @@ class AddressUnitTest {
 
     @Test
     void testHashCode() {
-        int hashCode = 315331412;
+        int hashCode = 1609689895;
         assertEquals(address.hashCode(), hashCode);
-        assertNotEquals(address.hashCode(), 316252928);
+        assertNotEquals(address.hashCode(), 1609689896);
     }
 
     @Test
     void testToString() {
         String addressString = "Address(id=1, description=Abacws Building, " +
-                "Senghennydd Road, locationId=1, postcode=CF24 4AG)";
+                "Senghennydd Road, location=null, postcode=CF24 4AG, organization=null)";
         assertEquals(address.toString(), addressString);
         address.setId(5);
         assertNotEquals(address.toString(), "Address(id=1, description=Abacws" +
-                " Building, Senghennydd Road, locationId=1, postcode=CF24 4AG)");
+                " Building, Senghennydd Road, location=null, postcode=CF24 4AG, organization=null)");
         assertNotNull(address.toString());
     }
 

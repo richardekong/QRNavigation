@@ -27,7 +27,10 @@ public class Organization {
     private int id;
 
     private String name;
-    private int addressId;
+
+    @OneToOne
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;
 
     @NotNull
     private String phone;

@@ -72,7 +72,8 @@ class LocationUnitTest {
         Location anotherLocation = new Location(
                 location.getId(),
                 location.getLatitude(),
-                location.getLongitude()
+                location.getLongitude(),
+                location.getAddress()
         );
         assertEquals(location,anotherLocation);
         anotherLocation.setLatitude(0.0000);
@@ -85,7 +86,8 @@ class LocationUnitTest {
         Location anotherLocation = new Location(
                 location.getId(),
                 location.getLatitude(),
-                location.getLongitude()
+                location.getLongitude(),
+                location.getAddress()
         );
         assertEquals(location.hashCode(),anotherLocation.hashCode());
         anotherLocation.setLatitude(0.0000);
@@ -94,9 +96,9 @@ class LocationUnitTest {
 
     @Test
     void testToString() {
-        String locString = "Location(id=1, latitude=51.4891719, longitude=-3.1811802)";
+        String locString = "Location(id=1, latitude=51.4891719, longitude=-3.1811802, address=null)";
         assertEquals(location.toString(), locString);
-        assertNotEquals(location.toString(), "Location(id=1, latitude=51.4891719, longitude=3.1811802)");
+        assertNotEquals(location.toString(), "Location(id=1, latitude=51.4891719, longitude=3.1811802, address=null)");
     }
 }
 

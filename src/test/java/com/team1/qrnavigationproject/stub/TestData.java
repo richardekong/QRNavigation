@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public interface TestData {
 
     static Address createAddress() {
-        return new Address(1, "Abacws Building, Senghennydd Road", 1, "CF24 4AG");
+        return new Address(1, "Abacws Building, Senghennydd Road", null, "CF24 4AG", null);
     }
 
     static Content createContent() {
@@ -34,7 +34,8 @@ public interface TestData {
         return new Location(
                 1,
                 51.4891719,
-                -3.1811802
+                -3.1811802,
+                null
         );
     }
 
@@ -42,7 +43,7 @@ public interface TestData {
         return new Organization(
                 1,
                 "Cardiff University",
-                1,
+                null,
                 "0809723723",
                 "https://www.cardiffuni.com/logo.png",
                 "https://www.cardiffuni.com",
@@ -51,6 +52,7 @@ public interface TestData {
                 "#FFFFFF",
                 "#FFFFFF"
         );
+
     }
 
     static QRCode createQRCode() {
