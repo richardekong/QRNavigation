@@ -14,4 +14,6 @@ public class Constant {
     public static final String NAME_REGEX = "^[a-zA-ZÀ-ÖØ-öø-ÿ-' ]+$";
 
 
+
+
 }
