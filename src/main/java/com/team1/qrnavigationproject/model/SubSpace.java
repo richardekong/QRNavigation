@@ -14,7 +14,7 @@ import static com.team1.qrnavigationproject.model.Constant.IMAGE_URL_REGEX;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="sub_space")
+@Table(name="subspace")
 public class SubSpace {
 
     @Id

@@ -55,22 +55,26 @@
                             <tr>
                                 <th><h5 style="text-align: center; ">Content name</h5></th>
                                 <th><h5 style="text-align: center; ">Event name</h5></th>
-                                <th><h5 style="text-align: center; ">Start Date</h5></th>
-                                <th><h5 style="text-align: center; ">End Date</h5></th>
+                                <th><h5 style="text-align: center; ">Space name</h5></th>
+                                <th><h5 style="text-align: center; ">Sub space Name </h5></th>
                                 <th><h5 style="text-align: center; ">Make Decision</h5></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="content:${contents}">
-                                <td><p style="text-align: center; " th:text="${content.description}"></p></td>
-                                <td><p style="text-align: center; " th:text="${content.eventId}"></p></td>
-                                <td><p style="text-align: center; " th:text="${content.spaceId}"></p></td>
-                                <td><p style="text-align: center; " th:text="${content.subSpaceId}"></p></td>
+                            <tr th:each="contentInfo : ${contentInfoList}">
+                                <td><p style="text-align: center;" th:text="${contentInfo[0].name}"></p></td>
+                                <td><p style="text-align: center;" th:text="${contentInfo[1]}"></p></td>
+                                <td><p style="text-align: center;" th:text="${contentInfo[2]}"></p></td>
+                                <td><p style="text-align: center;" th:text="${contentInfo[3]}"></p></td>
                                 <td class="centered-buttons">
-                                    <a th:href="@{//admin/contents/viewContent}">
-                                        <button type="button" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
-                                    </a>
-                                    <button type="button" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
+                                    <form th:action="@{/admin/contents/deleteContent}" th:method="POST">
+                                        <input type="hidden" name="eventId" th:value="${contentInfo[0].id}" th:method="POST" />
+                                        <button type="submit" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
+                                    </form>
+                                    <form th:action="@{/admin/contents/deleteContent}" th:method="POST">
+                                        <input type="hidden" name="contentId" th:value="${contentInfo[0].id}" />
+                                        <button type="submit" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                             <!-- Add more table rows -->

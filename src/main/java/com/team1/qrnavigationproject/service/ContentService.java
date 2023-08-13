@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ContentService {
     List<Integer> findDistinctContentIds();
-    List<Content> findAll();
+    List<Object[]> findAll();
     Content saveContent(Content content);
     Content findContentByName(String contentName);
     Content findContentById(int contentId);

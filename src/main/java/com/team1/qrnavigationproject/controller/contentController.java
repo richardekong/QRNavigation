@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,20 +48,34 @@ public class contentController {
         // passing the list eventNamesAndIdsList to view ( contentManagementPage )
         model.addAttribute("eventNamesAndIdsList", eventNamesAndIdsList);
 
-        Optional<List<Content>> unConfirmedContents = Optional.of(contentService.findAll());
-        unConfirmedContents.ifPresentOrElse(
-                contents -> model.addAttribute("contents", contents),
-                () -> {
-                    HttpStatus status = HttpStatus.NO_CONTENT;
-                    model.addAttribute("ContentsLoadErrorDisplay", new Response(status.value(), status.getReasonPhrase(), System.currentTimeMillis()));
-                    throw new CustomException(HttpStatus.NO_CONTENT.getReasonPhrase(), HttpStatus.NO_CONTENT);
-                });
+//        Optional<List<Content>> unConfirmedContents = Optional.of(contentService.findAll());
+//        unConfirmedContents.ifPresentOrElse(
+//                contents -> model.addAttribute("contents", contents),
+//                () -> {
+//                    HttpStatus status = HttpStatus.NO_CONTENT;
+//                    model.addAttribute("ContentsLoadErrorDisplay", new Response(status.value(), status.getReasonPhrase(), System.currentTimeMillis()));
+//                    throw new CustomException(HttpStatus.NO_CONTENT.getReasonPhrase(), HttpStatus.NO_CONTENT);
+//                });
+//
+//        model.addAttribute(
+//                "contentsLoadSuccessDisplay",
+//                new Response(HttpStatus.OK.value(), "Contents Loaded Successfully!", System.currentTimeMillis())
+//        );
+//        model.addAttribute("contents", unConfirmedContents.get());
+        List<Object[]> contentWithNames = contentService.findAll();
+        List<Object[]> contentInfoList = new ArrayList<>();
 
-        model.addAttribute(
-                "contentsLoadSuccessDisplay",
-                new Response(HttpStatus.OK.value(), "Contents Loaded Successfully!", System.currentTimeMillis())
-        );
-        model.addAttribute("contents", unConfirmedContents.get());
+        for (Object[] result : contentWithNames) {
+            Content content = (Content) result[0];
+            String eventName = (String) result[1];
+            String subSpaceName = (String) result[2];
+            String spaceName = (String) result[3];
+
+            Object[] contentInfo = { content, eventName, subSpaceName, spaceName };
+            contentInfoList.add(contentInfo);
+        }
+
+        model.addAttribute("contentInfoList", contentInfoList);
         return "contentManagementPage";
     }
 
