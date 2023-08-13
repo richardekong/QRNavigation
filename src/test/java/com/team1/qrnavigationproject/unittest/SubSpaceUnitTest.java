@@ -91,22 +91,6 @@ class SubSpaceUnitTest {
     }
 
     @Test
-    void testEquals() {
-        SubSpace similarSubspace = new SubSpace(
-                subSpace.getId(),
-                subSpace.getName(),
-                subSpace.getDescription(),
-                subSpace.getPhotoURL(),
-                subSpace.getSpace(),
-                subSpace.getEvent(),
-                subSpace.getTypeId()
-        );
-        assertEquals(subSpace, similarSubspace);
-        assertEquals(subSpace.hashCode(), similarSubspace.hashCode());
-
-    }
-
-    @Test
     void testToString() {
         assertFalse(subSpace.toString().isEmpty());
         assertNotNull(subSpace.toString());

@@ -7,7 +7,9 @@
     <title></title>
 </head>
 <body>
-<nav th:fragment="adminNavBar">
+<!--Note: The background of this nav bar will be feed from a script associated with the footer-->
+<!--<nav id="adminNavBar" th:fragment="adminNavBar" th:style="'background:'+${organizationTheme?.headerBackground}+';'">-->
+<nav id="adminNavBar" th:fragment="adminNavBar">
     <section id="top">
         <img src="/static/images/qr_code_white_icon.svg" th:src="@{/images/qr_code_white_icon.svg}" alt="qr code sample">
     </section>

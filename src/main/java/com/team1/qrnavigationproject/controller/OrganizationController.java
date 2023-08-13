@@ -1,26 +1,30 @@
 package com.team1.qrnavigationproject.controller;
 
-import com.team1.qrnavigationproject.model.Address;
-import com.team1.qrnavigationproject.model.Location;
-import com.team1.qrnavigationproject.model.Organization;
-import com.team1.qrnavigationproject.response.Response;
+import com.team1.qrnavigationproject.configuration.QRNavigationPaths;
+import com.team1.qrnavigationproject.model.*;
+import com.team1.qrnavigationproject.response.CustomException;
 import com.team1.qrnavigationproject.service.AddressService;
 import com.team1.qrnavigationproject.service.LocationService;
 import com.team1.qrnavigationproject.service.OrganizationService;
+import com.team1.qrnavigationproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Controller
-public class OrganizationController {
+public class OrganizationController  {
 
     private OrganizationService organizationService;
 
@@ -28,8 +32,7 @@ public class OrganizationController {
 
     private LocationService locationService;
 
-    //Todo: This will be resolved as soon as spring security is integrated
-    private static final int id = 15;
+    private UserService userService;
 
     private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
@@ -48,37 +51,36 @@ public class OrganizationController {
         this.addressService = addressService;
     }
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping("/admin/organization/register")
-    public String ViewOrganizationRegistrationPage() {
-        return "organizationRegistrationPage";
+    public ModelAndView ViewOrganizationRegistrationPage(Authentication auth, ModelAndView modelAndView) {
+        modelAndView.setViewName("organizationRegistrationPage");
+        return modelAndView;
     }
 
 
     @GetMapping("/admin/organization/update")
-    public ModelAndView ViewOrganizationUpdatePage(ModelAndView modelAndView) {
-        //Todo: This will be resolved as soon as spring security is integrated
-        var currentOrganization = organizationService.findById(id);
-        if (currentOrganization == null) {
-            Response response = new Response(
-                    HttpStatus.NOT_FOUND.value(),
-                    "Failed to retrieve organization details",
-                    System.currentTimeMillis()
-            );
-            modelAndView.addObject("error", response);
-            return modelAndView;
+    public ModelAndView ViewOrganizationUpdatePage(Authentication auth, ModelAndView modelAndView) {
+        Organization currentOrganization = new Organization();
+        if (auth != null) {
+           currentOrganization = requestCurrentUser(auth).getOrganization();
         }
-
         modelAndView.setViewName("organizationUpdatePage");
         modelAndView.addObject("organization", currentOrganization);
         return modelAndView;
     }
 
-    @PostMapping("/admin/organization/register/process")
+    @PostMapping(QRNavigationPaths.ADMIN_ORG_REG_PROCESS)
     public ModelAndView processOrganizationRegistrationForm(
             @Valid @ModelAttribute Organization organization,
             @ModelAttribute Address address,
             @ModelAttribute Location location,
             ModelAndView modelAndView,
+            Authentication auth,
             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -93,20 +95,23 @@ public class OrganizationController {
         Address savedAddress = addressService.saveAddress(address);
         //associate the organization with the saved address then save the organization
         organization.setAddress(savedAddress);
+        //associate the organization with the current user
+        requestCurrentUser(auth).setOrganization(organization);
         Organization savedOrganization = organizationService.save(organization);
 
         //pass the saved organization to the main admin page, and set the next page to main admin page after submitting the form
         modelAndView.addObject("organization", savedOrganization);
         modelAndView.addObject("success", "%s %s!".formatted(savedOrganization.getName(), HttpStatus.CREATED.getReasonPhrase()));
-        modelAndView.setViewName("adminMainPage");
+        modelAndView.setViewName("redirect:/admin/main");
         return modelAndView;
     }
 
-    @PostMapping("/admin/organization/update/process")
+    @PostMapping(QRNavigationPaths.ADMIN_ORG_UPDATE_PROCESS)
     public ModelAndView processUpdateForm(
             @Valid @ModelAttribute Organization orgFormData,
             @ModelAttribute Address addressFormData,
             @ModelAttribute Location locationFormData,
+            Authentication auth,
             ModelAndView modelAndView, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -115,10 +120,7 @@ public class OrganizationController {
         }
 
         //updating organization detail
-        //Todo: This will be resolved as soon as spring security is integrated
-        Organization orgToUpdate = organizationService.findById(id);
-
-        //update the location data
+        Organization orgToUpdate = requestCurrentUser(auth).getOrganization();
         Location updatedLocation = locationService.saveLocation(locationFormData);
         //update the address
         addressFormData.setLocation(updatedLocation);
@@ -131,8 +133,22 @@ public class OrganizationController {
 
         modelAndView.addObject("organization", orgToUpdate);
         modelAndView.addObject("success", "Changes saved!");
-        modelAndView.setViewName("adminMainPage");
+        modelAndView.setViewName("redirect:/admin/main");
         return modelAndView;
     }
+
+    @GetMapping("/admin/organization")
+    public ResponseEntity<Organization> requestOrganization(Authentication auth){
+        return Optional.of(requestCurrentUser(auth).getOrganization())
+                .map(org -> new ResponseEntity<>(org, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    private User requestCurrentUser(Authentication auth) {
+        return userService
+                .findUserByUsername(auth.getName())
+                .orElseThrow(() -> new CustomException(HttpStatus.UNAUTHORIZED.getReasonPhrase(), HttpStatus.UNAUTHORIZED));
+    }
+
 
 }

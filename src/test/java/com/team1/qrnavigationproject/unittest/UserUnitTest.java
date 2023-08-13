@@ -3,6 +3,7 @@ package com.team1.qrnavigationproject.unittest;
 import com.team1.qrnavigationproject.model.Role;
 import com.team1.qrnavigationproject.model.User;
 import com.team1.qrnavigationproject.model.UserType;
+import com.team1.qrnavigationproject.stub.TestData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,10 +20,9 @@ class UserUnitTest {
                 "Sammy",
                 "password",
                 21,
-                Integer.MAX_VALUE,
                 null,
                 null,
-                1,
+                null,
                 false,
                 false,
                 false,
@@ -103,11 +103,12 @@ class UserUnitTest {
     }
 
     @Test
-    void getOrganizationId() {
-        int id = sammy.getOrganizationId() - 1;
-        sammy.setOrganizationId(id);
-        assertEquals(sammy.getOrganizationId(), id);
-        assertNotEquals(sammy.getOrganizationId(), Integer.MAX_VALUE);
+    void getOrganization() {
+        sammy.setOrganization(TestData.createOrganization());
+        int organizationId = sammy.getOrganization().getId();
+        sammy.getOrganization().setId(organizationId);
+        assertEquals(sammy.getOrganization().getId(), organizationId);
+        assertNotEquals(sammy.getOrganization().getId(), Integer.MAX_VALUE);
     }
 
     @Test
@@ -129,9 +130,9 @@ class UserUnitTest {
     @Test
     void getTypeId() {
         int id = 2;
-        sammy.setTypeId(id);
-        assertEquals(sammy.getTypeId(), id);
-        assertNotEquals(sammy.getTypeId(), 1);
+        sammy.getUserTypes().get(0).setId(id);
+        assertEquals(sammy.getUserTypes().get(0).getId(), id);
+        assertNotEquals(sammy.getUserTypes().get(0).getId(), 1);
     }
 
     @Test
@@ -141,10 +142,9 @@ class UserUnitTest {
                 sammy.getUsername(),
                 sammy.getPassword(),
                 sammy.getAge(),
-                sammy.getOrganizationId(),
+                sammy.getOrganization(),
                 sammy.getRoles(),
                 sammy.getUserTypes(),
-                sammy.getTypeId(),
                 sammy.isAccountExpired(),
                 sammy.isCredentialExpired(),
                 sammy.isAccountLocked(),

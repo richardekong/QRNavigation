@@ -10,10 +10,21 @@
     <div class="adminHeader-top-section" >
         <div class="col-9 col-md-9">
             <div class="adminHeader-logo-container">
-                <a th:href="@{/admin/main}"><img class="adminHeader-logo" th:src="@{/images/cardiff_uni_logo.png}" src="/static/images/cardiff_uni_logo.png" alt="Organization Logo"></a>
+                <a th:href="@{/admin/main}">
+<!--                    <img id="adminHeader-logo" class="adminHeader-logo" th:src="${organizationTheme?.logoURL}" src="/static/images/cardiff_uni_logo.png" alt="Organization Logo">-->
+
+                    <!--Note: this logo will be feed from a script associated with the footer fragment -->
+                    <img id="adminHeader-logo" class="adminHeader-logo" alt="Organization Logo">
+
+                </a>
             </div>
             <div class="adminHeader-org-name-container">
-                <a class="adminHeader-org-name-link" th:href="@{/admin/main}"><p class="adminHeader-org-name">Cardiff University</p></a>
+                <a class="adminHeader-org-name-link" th:href="@{/admin/main}">
+                    <!--Note: The organization's name will be feed from a script associated with the footer fragment -->
+<!--                    <p id="adminHeader-org-name" class="adminHeader-org-name" th:text="${organizationTheme?.name}">Cardiff University</p>-->
+                    <p id="adminHeader-org-name" class="adminHeader-org-name">[Organization's Name]</p>
+
+                </a>
             </div>
         </div>
         <div class="col-3 col-md-3">
@@ -23,12 +34,13 @@
                     <img class="adminHeader-profile-icon" th:src="@{/images/profile-icon.svg}" src="/static/images/profile-icon.svg" alt="profile icon">
                 </a>
             </div>
-            <div class="adminHeader-org-logout-container">
-                <a class="adminHeader-org-logout-link" th:href="@{/admin/main}">
+            <form class="adminHeader-org-logout-container" th:action="@{/logout}" th:method="POST">
+                <!--Note: The background of this logout button will be feed from a script associated with the footer fragment -->
+                <button id="adminHeader-org-logout-button" class="adminHeader-org-logout-link" type="submit">
                     <p class="adminHeader-org-logout">Logout</p>
                     <img class="adminHeader-logout-icon" th:src="@{/images/logout-icon.svg}" src="/static/images/logout-icon.svg" alt="logout icon">
-                </a>
-            </div>
+                </button>
+            </form>
         </div>
     </div>
 </header>

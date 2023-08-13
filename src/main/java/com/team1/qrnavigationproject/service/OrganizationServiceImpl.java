@@ -24,12 +24,12 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
     @Override
     public Organization save(Organization organization) {
-        if (organizationRepo.findOrganizationByName(organization.getName()).isPresent()) {
-            throw new CustomException(
-                    "%s already exists".formatted(organization.getName()),
-                    HttpStatus.CONFLICT
-            );
-        }
+//        if (organizationRepo.findOrganizationByName(organization.getName()).isPresent()) {
+//            throw new CustomException(
+//                    "%s already exists".formatted(organization.getName()),
+//                    HttpStatus.CONFLICT
+//            );
+//        }
         return organizationRepo.save(organization);
     }
 

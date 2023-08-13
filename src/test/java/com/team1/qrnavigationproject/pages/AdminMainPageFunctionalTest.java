@@ -13,14 +13,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import static java.lang.String.format;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class AdminMainPageFunctionalTest {
     @Value("${local.server.port}")
     private int port;
@@ -35,12 +39,11 @@ public class AdminMainPageFunctionalTest {
 
     @BeforeEach
     void setupTest() {
-        final String pageURL = format(BASE_URL + "/admin/main", port);
+        String pageURL = BASE_URL.formatted(port) + "/admin/main";
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
-        //access the page
         driver.get(pageURL);
     }
 
@@ -50,8 +53,11 @@ public class AdminMainPageFunctionalTest {
     }
 
     @Test
-    public void verifyPresenceOfQRCodesLink(){
-        WebElement qrAnchorTag = driver.findElement(By.xpath("//a[@href='/admin/qrcodes']"));
+    public void verifyPresenceOfQRCodesLink() {
+
+        WebElement qrAnchorTag;
+        //Request the main admin page
+        qrAnchorTag = driver.findElement(By.xpath("//a[@href='/admin/qrcodes']"));
         assertNotNull(qrAnchorTag);
         assertTrue(qrAnchorTag.isDisplayed());
         qrAnchorTag.click();
@@ -59,7 +65,7 @@ public class AdminMainPageFunctionalTest {
     }
 
     @Test
-    public void verifyPresenceOfEventsLink(){
+    public void verifyPresenceOfEventsLink() {
         WebElement eventAnchorTag = driver.findElement(By.xpath("//a[@href='/admin/events']"));
         assertNotNull(eventAnchorTag);
         assertTrue(eventAnchorTag.isDisplayed());
@@ -68,7 +74,7 @@ public class AdminMainPageFunctionalTest {
     }
 
     @Test
-    public void verifyPresenceOfContentsLink(){
+    public void verifyPresenceOfContentsLink() {
         WebElement contentAnchorTag = driver.findElement(By.xpath("//a[@href='/admin/contents']"));
         contentAnchorTag.click();
         assertNotNull(contentAnchorTag);
@@ -76,7 +82,7 @@ public class AdminMainPageFunctionalTest {
     }
 
     @Test
-    public void verifyPresenceOfPlaceLink(){
+    public void verifyPresenceOfPlaceLink() {
         WebElement placeAnchorTag = driver.findElement(By.xpath("//a[@href='/admin/places']"));
         assertNotNull(placeAnchorTag);
         assertTrue(placeAnchorTag.isDisplayed());

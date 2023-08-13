@@ -7,11 +7,14 @@ import com.team1.qrnavigationproject.repository.UserRepo;
 import com.team1.qrnavigationproject.response.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.beans.SimpleBeanInfo;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,19 +36,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User user) {
+    public User save(User user) throws CustomException {
         return userRepo.save(verifyUsernameThenEncodePassword(user));
     }
 
     @Override
-    public User save(User user, UserType userType) {
+    public User save(User user, UserType userType) throws CustomException {
         var verifiedUser = verifyUsernameThenEncodePassword(user);
         verifiedUser.add(userType);
         return userRepo.save(verifiedUser);
     }
 
     @Override
-    public User save(User user, UserType userType, Role userRole) {
+    public User save(User user, UserType userType, Role userRole) throws CustomException {
         var verifiedUser = verifyUsernameThenEncodePassword(user);
         verifiedUser.add(userType);
         verifiedUser.add(userRole);
@@ -88,12 +91,20 @@ public class UserServiceImpl implements UserService {
                 });
     }
 
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepo.findUserByUsername(username).orElseThrow();
+    public Optional<User> findUserByUsername(String username) {
+        return userRepo.findUserByUsername(username);
     }
 
-    private User verifyUsernameThenEncodePassword(User user) {
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepo.findUserByUsername(username)
+                .orElseThrow(()->new UsernameNotFoundException("Wrong email or password"));
+
+    }
+
+    private User verifyUsernameThenEncodePassword(User user) throws CustomException {
         boolean existsByUsername = userRepo.existsByUsername(user.getUsername());
         boolean existsById = userRepo.existsById(user.getId());
         if (existsById && existsByUsername) {

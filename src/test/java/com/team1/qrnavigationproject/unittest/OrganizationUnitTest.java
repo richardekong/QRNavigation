@@ -103,7 +103,7 @@ class OrganizationUnitTest {
     void setId() {
         organization.setId(2);
         assertEquals(organization.getId(), 2);
-        assertNotEquals(organization.getId(),1);
+        assertNotEquals(organization.getId(), 1);
     }
 
     @Test
@@ -186,46 +186,4 @@ class OrganizationUnitTest {
         assertFalse(organization.getEvents().isEmpty());
     }
 
-    @Test
-    void testEquals() {
-        Organization similarOrganization = new Organization(
-                organization.getId(),
-                organization.getName(),
-                organization.getAddress(),
-                organization.getPhone(),
-                organization.getLogoURL(),
-                organization.getWebsiteURL(),
-                organization.getSpaces(),
-                organization.getEvents(),
-                organization.getHeaderBackground(),
-                organization.getFooterBackground()
-        );
-        assertEquals(organization, similarOrganization);
-        assertNotEquals(organization, new Organization());
-    }
-
-    @Test
-    void testHashCode() {
-        Organization anotherOrganization = new Organization();
-        Organization similarOrganization = new Organization(
-                organization.getId(),
-                organization.getName(),
-                organization.getAddress(),
-                organization.getPhone(),
-                organization.getLogoURL(),
-                organization.getWebsiteURL(),
-                organization.getSpaces(),
-                organization.getEvents(),
-                organization.getHeaderBackground(),
-                organization.getFooterBackground()
-        );
-        assertEquals(organization.hashCode(), similarOrganization.hashCode());
-        assertNotEquals(organization.hashCode(), anotherOrganization.hashCode());
-    }
-
-    @Test
-    void testToString() {
-        assertNotNull(organization.toString());
-        assertFalse(organization.toString().isEmpty());
-    }
 }

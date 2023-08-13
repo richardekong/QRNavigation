@@ -14,12 +14,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static java.lang.String.format;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class QRNavigationHeaderFunctionalTest {
 
     @Value("${local.server.port}")
@@ -73,16 +75,15 @@ public class QRNavigationHeaderFunctionalTest {
 
     @Test
     public void verifyPresenceOfCallToAction() {
-        final WebElement anchorElement = driver.findElements(By.className("auth-link")).get(0);
-        final WebElement childSpanElement = anchorElement.findElement(By.tagName("span"));
-        final WebElement childImgElement = anchorElement.findElement(By.tagName("img"));
-        final String loginURL = format("http://localhost:%d/qrnavigation/login",port);
-        final String logoutURL = format("http://localhost:%d/qrnavigation/logout",port);
-        final String link = anchorElement.getAttribute("href");
-        assertNotNull(anchorElement);
+        final WebElement formElement = driver.findElement(By.id("header-auth-form"));
+        final WebElement childSpanElement = formElement.findElement(By.tagName("span"));
+        final WebElement childImgElement = formElement.findElement(By.tagName("img"));
+        final String logoutURL = format("http://localhost:%d/logout",port);
+        final String link = formElement.getAttribute("action");
+        assertNotNull(formElement);
         assertNotNull(link);
         assertFalse(link.isEmpty());
-        assertTrue(link.equals(loginURL) || link.equals(logoutURL));
+        assertTrue(link.equals(logoutURL));
 
         assertNotNull(childSpanElement);
         assertFalse(childSpanElement.getText().isEmpty());
@@ -97,9 +98,4 @@ public class QRNavigationHeaderFunctionalTest {
 
     }
 
-    @Test
-    public void verifyLoginSlashLoginTextToggle() {
-        //TODO latter
-        System.out.println("TODO latter");
-    }
 }

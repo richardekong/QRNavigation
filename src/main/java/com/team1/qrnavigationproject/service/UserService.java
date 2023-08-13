@@ -10,17 +10,19 @@ import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
 
-    User save(User user);
+    User save(User user) throws Exception;
 
-    User save(User user, UserType userType);
+    User save(User user, UserType userType) throws Exception;
 
-    User save(User user, UserType userType, Role userRole);
+    User save(User user, UserType userType, Role userRole) throws Exception;
 
-    User update(int id, User user);
+    User update(int id, User user) throws Exception;
 
-    User update(User user);
+    User update(User user) throws Exception;
 
     Optional<User> findById(int id);
+
+    Optional<User> findUserByUsername(String username);
 
     Optional<List<User>> findAll();
 

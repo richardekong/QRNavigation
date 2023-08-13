@@ -20,10 +20,10 @@ import static com.team1.qrnavigationproject.model.Constant.USERNAME_REGEX;
 
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Getter
 @Setter
 @Entity
+@Table(name="app_user")
 public class User implements UserDetails, Serializable {
 
     @Id
@@ -46,16 +46,14 @@ public class User implements UserDetails, Serializable {
     @Max(value = 120)
     private int age;
 
-    @Column("org_id")
-    private int organizationId;
+    @OneToOne
+    @JoinColumn(name = "organization_id", referencedColumnName = "id")
+    private Organization organization;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Role> roles;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<UserType> userTypes;
-
-    @Column("type_id")
-    private int typeId;
 
     @Column("is_account_expired")
     private boolean isAccountExpired;

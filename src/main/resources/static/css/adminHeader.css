@@ -27,7 +27,7 @@
     display: inline-block;
 }
 
-.adminHeader-org-name-link{
+.adminHeader-org-name-link {
     text-decoration: none;
 }
 
@@ -43,7 +43,7 @@
     margin-left: 40%;
 }
 
-.adminHeader-org-profile-link{
+.adminHeader-org-profile-link {
     text-decoration: none;
     display: inline-block;
 }
@@ -60,13 +60,17 @@
     height: 17px;
     vertical-align: middle;
 }
+
 .adminHeader-org-logout-container {
     display: inline-block;
     margin-left: 10px;
 }
 
-.adminHeader-org-logout-link{
-    text-decoration: none;
+.adminHeader-org-logout-link {
+    /*text-decoration: none;*/
+    /*    changed the target of this style rule to a submit button, since we it will help in sending post requests through the logout path*/
+    background-color: #30344C;
+    border: 0;
 }
 
 .adminHeader-org-logout {
@@ -80,6 +84,7 @@
     width: 18px;
     height: 18px;
 }
+
 /* THIS THE END OF THE SECTION FOR THE ADMIN HEADER FRAGMENT #CREATED BY FAISAL# */
 
 
