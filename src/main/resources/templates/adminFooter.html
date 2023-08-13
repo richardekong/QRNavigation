@@ -2,33 +2,117 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<footer class="adminFooter" id="adminFooter" th:fragment = "adminFooter">
+<!--Note: The footer background will be feed from a script associated with the footer-->
+<footer class="adminFooter" id="adminFooter" th:fragment="adminFooter">
     <div class="adminFooter-top-section">
         <div class="adminFooter-logo-container">
-            <a th:href="@{/admin/main}"><img class="adminFooter-logo" th:src="@{/images/cardiff_uni_logo.png}" src="/static/images/cardiff_uni_logo.png" alt="Organization Logo"></a>
+            <a th:href="@{/admin/main}">
+                <!--Note: The logo will be feed from a script associated with the footer-->
+                <!--                <img id="adminFooter-logo" class="adminFooter-logo" th:src="@{/images/cardiff_uni_logo.png}"-->
+                <!--                                             src="/static/images/cardiff_uni_logo.png" alt="Organization Logo">-->
+                <img id="adminFooter-logo" class="adminFooter-logo"
+                     src="/static/images/cardiff_uni_logo.png" alt="Organization Logo">
+            </a>
         </div>
         <div class="adminFooter-org-name-container">
-            <a class="adminFooter-org-name-link" th:href="@{/admin/main}"><p class="adminFooter-org-name">Cardiff University</p></a>
+            <a class="adminFooter-org-name-link" th:href="@{/admin/main}">
+                <!--Note: The organization's name will be feed from a script associated with the footer-->
+                <!--                <p id="adminFooter-org-name" class="adminFooter-org-name" th:text="${organizationTheme?.name}">Cardiff University</p>-->
+                <p id="adminFooter-org-name" class="adminFooter-org-name">[Organization Name]</p>
+            </a>
         </div>
     </div>
     <div class="adminFooter-bottom-section">
         <div class="adminFooter-website-icon-container">
-            <a href="https://www.cardiff.ac.uk/"><img class="adminFooter-icon" th:src="@{/images/website-icon.svg}" src="/static/images/website-icon.svg" alt="Organization website"></a>
+            <!--<a id="adminFooter-website-lnk" th:href="${organizationTheme?.websiteURL}" href="https://www.cardiff.ac.uk/">-->
+            <a class="adminFooter-org-website-link" href="">
+                <!--Note: The organization's website will be feed from a script associated with the footer-->
+                <!--                <img class="adminFooter-icon" th:src="${organizationTheme?.logoURL}"-->
+                <!--                     src="/static/images/website-icon.svg" alt="Organization website">-->
+                <img class="adminFooter-icon" th:src="@{/images/website-icon.svg}" src="/static/images/website-icon.svg"
+                     alt="Organization website">
+            </a>
         </div>
         <div class="adminFooter-org-website-container">
-            <a class="adminFooter-org-website-link" href="https://www.cardiff.ac.uk/"><p class="adminFooter-website-name">Website</p></a>
+            <!--Note: The organization's website will be feed from a script associated with the footer-->
+            <!--            <a class="adminFooter-org-website-link" th:href="${organizationTheme?.websiteURL}"-->
+            <!--               href="https://www.cardiff.ac.uk/">-->
+            <a class="adminFooter-org-website-link" href="">
+                <p class="adminFooter-website-name">Website</p>
+            </a>
         </div>
         <div class="adminFooter-copy-right-icon-container">
-            <img class="adminFooter-copy-right-icon" th:src="@{/images/copy-right-icon.png}" src="/static/images/copy-right-icon.png" alt="copy right icon">
+            <img class="adminFooter-copy-right-icon" th:src="@{/images/copy-right-icon.png}"
+                 src="/static/images/copy-right-icon.png" alt="copy right icon">
         </div>
         <div class="adminFooter-copy-right-container">
             <p class="adminFooter-copy-right-name">All Right Reserved</p>
         </div>
     </div>
+
+    <!--
+    1. Script for customizing app theme according to organization's name, website, logo, background color
+    2. The inline script will get the current organization's theme from the server as an object
+    and use such an object to customize the admin pages based on the current authenticated admin
+    organization's theme.  -->
+    <!--=============================================================================================================-->
+    <script th:inline="javascript">
+        //define organizational theme past from current authenticated admin
+
+        const theme = /*[[${organizationTheme}]]*/ {};
+
+        //function to style the header
+        const styleAdminHeaderTheme = (theTheme) => {
+            //define element to style
+            let adminHeader = document.querySelector("#adminHeader");
+            let adminHeaderLogo = document.querySelector("#adminHeader-logo");
+            let adminHeaderOrgName = document.querySelector("#adminHeader-org-name");
+            let adminHeaderLogoutButton = document.querySelector("#adminHeader-org-logout-button");
+
+            //set the style
+            adminHeader.style.backgroundColor = `${theTheme.headerBackground}` ?? `${adminHeader.style.backgroundColor}`;
+            adminHeaderLogo.src = `${theTheme.logoURL}` ?? adminHeaderLogo.src;
+            adminHeaderOrgName.textContent = `${theTheme.name}` ?? adminHeaderOrgName.textContent;
+            adminHeaderLogoutButton.style.backgroundColor = `${theTheme.headerBackground}` ?? adminHeaderLogoutButton.style.backgroundColor;
+
+        };
+
+        //function to restyle the admin navigation bar
+        const styleAdminNavBar = (theTheme) => {
+            //define the element to style
+            let adminNavBar = document.querySelector("#adminNavBar");
+
+            //set the background color of the navigation bar
+            adminNavBar.style.backgroundColor = `${theTheme.headerBackground}` ?? adminNavBar.style.backgroundColor;
+        };
+
+        //function to restyle the admin footer
+        const styleAdminFooter = (theTheme) => {
+            //define the element to style
+            let adminFooter = document.querySelector("#adminFooter");
+            let adminFooterLogo = document.querySelector("#adminFooter-logo");
+            let adminFooterOrgName = document.querySelector("#adminFooter-org-name");
+            let adminFooterWebsiteLinks = document.querySelectorAll(".adminFooter-org-website-link");
+
+            //set the background, logo, organization name and website of these elements defined above
+            adminFooter.style.backgroundColor = `${theTheme.footerBackground}` ?? adminFooter.style.backgroundColor;
+            adminFooterLogo.src = `${theTheme.logoURL}` ?? adminFooterLogo.src;
+            adminFooterOrgName.textContent = `${theTheme.name}` ?? adminFooterOrgName.textContent;
+            adminFooterWebsiteLinks.forEach(link => link.href = `${theTheme.websiteURL}` ?? link.href);
+        };
+
+    // call the functions to begin the customization process
+        styleAdminHeaderTheme(theme);
+        styleAdminNavBar(theme);
+        styleAdminFooter(theme);
+
+    </script>
+    <!--=================================================================================================================-->
 </footer>
 </body>
 </html>

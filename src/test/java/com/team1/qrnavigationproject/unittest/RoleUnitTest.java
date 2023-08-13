@@ -27,17 +27,17 @@ class RoleUnitTest {
                 "david",
                 "password",
                 20,
-                1,
                 null,
-                null, 1, false, false, false, true);
+                null,
+                null, false, false, false, true);
         User matt = new User(
                 1,
                 "Matt",
                 "password",
                 21,
-                1,
                 null,
-                null, 1, false, false, false, true);
+                null,
+                null, false, false, false, true);
         david.add(superAdmin);
         david.add(admin);
         matt.add(userRole);

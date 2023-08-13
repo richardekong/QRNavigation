@@ -15,12 +15,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class WelcomePageFunctionalTest {
 
     @Value("${local.server.port}")
@@ -66,9 +68,8 @@ public class WelcomePageFunctionalTest {
 
     @Test
     public void verifyLoginClick(){
-        driver.findElement(By.xpath("//a[@href='/qrnavigation/login']")).click();
-        assertEquals(driver.getCurrentUrl(), format("http://localhost:%d/qrnavigation/login",port));
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+        assertEquals(driver.getCurrentUrl(), format("http://localhost:%d/login",port));
     }
-
 
 }

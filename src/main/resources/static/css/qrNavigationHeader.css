@@ -45,7 +45,7 @@ header{
     text-shadow: var(--text-shadow);
 }
 
-.auth-link{
+#header-auth-form{
     color: var(--link-color);
     display: flex;
     flex-direction: row;
@@ -55,7 +55,8 @@ header{
     text-decoration: var(--text-deco);
 }
 
-.auth-text{
+#auth-text{
+    color:#FFFFFF;
     font-size: var(--font);
     margin: auto auto auto auto;
 }

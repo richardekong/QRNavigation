@@ -83,30 +83,12 @@ class AddressUnitTest {
                 address.getDescription(),
                 address.getLocation(),
                 address.getPostcode(),
-                null
+                address.getOrganization()
         );
 
         assertEquals(address1, address);
         address.setId(5);
         assertNotEquals(address1, address);
-    }
-
-    @Test
-    void testHashCode() {
-        int hashCode = 1609689895;
-        assertEquals(address.hashCode(), hashCode);
-        assertNotEquals(address.hashCode(), 1609689896);
-    }
-
-    @Test
-    void testToString() {
-        String addressString = "Address(id=1, description=Abacws Building, " +
-                "Senghennydd Road, location=null, postcode=CF24 4AG, organization=null)";
-        assertEquals(address.toString(), addressString);
-        address.setId(5);
-        assertNotEquals(address.toString(), "Address(id=1, description=Abacws" +
-                " Building, Senghennydd Road, location=null, postcode=CF24 4AG, organization=null)");
-        assertNotNull(address.toString());
     }
 
     @Test

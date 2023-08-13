@@ -24,6 +24,9 @@ public class UserType {
     @JoinColumn(name="user_id")
     private User user;
 
+    public UserType(String name){
+        this.name = name;
+    }
 
 }
 

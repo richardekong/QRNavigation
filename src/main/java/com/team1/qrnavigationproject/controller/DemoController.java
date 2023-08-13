@@ -82,15 +82,4 @@ public class DemoController {
         return "qrNavHeaderTest";
     }
 
-
-    @GetMapping("/qrnavigation/login")
-    public String viewLoginPage() {
-        return "loginpage";
-    }
-
-    @GetMapping("/qrnavigation/signup")
-    public String viewSignUpPage() {
-        return "signUpPage";
-    }
-
 }

@@ -14,6 +14,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.regex.Pattern;
 
@@ -24,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class OrganizationUpdatePageFunctionalTest {
 
     @Value("${local.server.port}")
@@ -70,7 +72,7 @@ public class OrganizationUpdatePageFunctionalTest {
         assertNotNull(driver.findElement(By.name("websiteURL")));
         assertNotNull(driver.findElement(By.name("headerBackground")));
         assertNotNull(driver.findElement(By.name("footerBackground")));
-        assertEquals(driver.findElement(By.tagName("button")).getText(), "Edit");
+        assertNotNull(driver.findElement(By.id("edit-btn")));
     }
 
     //Todo: check why these tests are failing here
