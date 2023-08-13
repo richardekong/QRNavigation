@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -106,9 +107,30 @@ public class contentController {
     }
 
     @PostMapping("/admin/contents/viewContent")
-    public String viewContentPage(@RequestParam("contentId") int contentId,  Model model) {
+    public String viewContentPage(@RequestParam Map<String, String> requestParams, Model model) {
+        int contentId = Integer.parseInt(requestParams.get("contentId"));
+        String contentName = requestParams.get("contentName");
+        String eventName = requestParams.get("eventName");
+        String spaceName = requestParams.get("spaceName");
+        String subspaceName = requestParams.get("subspaceName");
+
         Content content = contentService.findContentById(contentId);
         model.addAttribute("content", content);
+        model.addAttribute("contentName", contentName);
+        model.addAttribute("eventName", eventName);
+        model.addAttribute("spaceName", spaceName);
+        model.addAttribute("subspaceName", subspaceName);
+        /////
+
+
+        List<Event> events = eventService.findAll();
+        // passing the list events to view ( createContentPage )
+        model.addAttribute("events", events);
+
+        List<Space> spaces = spaceService.getAllSpaces();
+        // passing the list spaces to view ( createContentPage )
+        model.addAttribute("spaces", spaces);
+
         return "contentUpdate";
     }
 

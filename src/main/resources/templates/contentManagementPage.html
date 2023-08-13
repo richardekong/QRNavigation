@@ -62,13 +62,17 @@
                             </thead>
                             <tbody>
                             <tr th:each="contentInfo : ${contentInfoList}">
-                                <td><p style="text-align: center;" th:text="${contentInfo[0].name}"></p></td>
-                                <td><p style="text-align: center;" th:text="${contentInfo[1]}"></p></td>
-                                <td><p style="text-align: center;" th:text="${contentInfo[2]}"></p></td>
-                                <td><p style="text-align: center;" th:text="${contentInfo[3]}"></p></td>
+                                <td><p style="text-align: center;" name="content_name" th:text="${contentInfo[0].name}"></p></td>
+                                <td><p style="text-align: center;" name="event_name" th:text="${contentInfo[1]}"></p></td>
+                                <td><p style="text-align: center;" name="space_name" th:text="${contentInfo[3]}"></p></td>
+                                <td><p style="text-align: center;" name="subspace_name" th:text="${contentInfo[2]}"></p></td>
                                 <td class="centered-buttons">
-                                    <form th:action="@{/admin/contents/deleteContent}" th:method="POST">
-                                        <input type="hidden" name="eventId" th:value="${contentInfo[0].id}" th:method="POST" />
+                                    <form th:action="@{/admin/contents/viewContent}" th:method="POST">
+                                        <input type="hidden" name="contentId" th:value="${contentInfo[0].id}"  />
+                                        <input type="hidden" name="contentName" th:value="${contentInfo[0].name}" />
+                                        <input type="hidden" name="eventName" th:value="${contentInfo[1]}" />
+                                        <input type="hidden" name="spaceName" th:value="${contentInfo[3]}" />
+                                        <input type="hidden" name="subspaceName" th:value="${contentInfo[2]}" />
                                         <button type="submit" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
                                     </form>
                                     <form th:action="@{/admin/contents/deleteContent}" th:method="POST">
