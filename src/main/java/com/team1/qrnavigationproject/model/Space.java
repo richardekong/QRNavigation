@@ -35,7 +35,7 @@ public class Space {
     @javax.persistence.Column(columnDefinition = "json")
     private String photoURLs;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "org_id")
     private Organization organization;
 
@@ -49,9 +49,11 @@ public class Space {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     List<SubSpace> subSpaces;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name="event_id")
     private Event event;
+
+    
 
     public void add(SubSpace subSpace) {
         if (subSpaces == null) {

@@ -1,8 +1,9 @@
 package com.team1.qrnavigationproject.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,7 +13,8 @@ import static com.team1.qrnavigationproject.model.Constant.IMAGE_URL_REGEX;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="subspace")
 public class SubSpace {
@@ -42,4 +44,5 @@ public class SubSpace {
 
     @Column(name="type")
     private int typeId;
+
 }

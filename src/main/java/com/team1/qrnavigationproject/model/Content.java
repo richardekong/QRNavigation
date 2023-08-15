@@ -35,14 +35,15 @@ public class Content {
 //    @Column(value = "subspace_id")
 //    private int subspaceId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "event_id")
     private Event event;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "space_id")
     private Space space;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "subspace_id")
     private SubSpace subSpace;
 

@@ -125,6 +125,7 @@ public class contentController {
         content.setSpace(space);
         content.setSubSpace(subSpace);
 
+
         contentService.saveContent(content);
 
         return "redirect:/admin/contents";

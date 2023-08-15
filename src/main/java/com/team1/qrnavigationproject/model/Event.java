@@ -35,7 +35,7 @@ public class Event {
     @Size(min = 2, message = "Characters must be at least 2")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name="organizer")
     private Organization organizer;
 

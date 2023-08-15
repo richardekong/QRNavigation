@@ -39,9 +39,17 @@ public class ContentServiceImpl implements ContentService{
     }
     @Override
     public void deleteContentById(int contentId) {
+        System.out.println("Content ID: "+contentId);
         Content content = contentRepo.findByContentId(contentId);
         if (content != null) {
+            System.out.println("HERE ****** Content ID: "+content.getId());
             contentRepo.delete(content);
+            try {
+                contentRepo.delete(content);
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Log or handle the exception appropriately
+            }
         }
     }
 
