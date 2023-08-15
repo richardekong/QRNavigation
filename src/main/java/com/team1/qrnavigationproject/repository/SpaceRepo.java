@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface SpaceRepo extends JpaRepository<Space, Integer> {
 
     Optional<Space> findSpaceByName(String spaceName);
+
+    Space findById(int id);
 }

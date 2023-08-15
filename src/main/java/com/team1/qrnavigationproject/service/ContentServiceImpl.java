@@ -51,6 +51,9 @@ public class ContentServiceImpl implements ContentService{
         if (existingContent != null) {
             existingContent.setName(content.getName());
             existingContent.setDescription(content.getDescription());
+            existingContent.setEvent(content.getEvent());
+            existingContent.setSpace(content.getSpace());
+            existingContent.setSubSpace(content.getSubSpace());
             return contentRepo.save(existingContent);
         } else {
             throw new IllegalArgumentException("Content with name " + content.getName() + " not found." + existingContent.getName());

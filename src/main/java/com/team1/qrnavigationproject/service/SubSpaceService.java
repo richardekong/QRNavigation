@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SubSpaceService {
+
     List<SubSpace> getAllSubSpaces();
     Optional<SubSpace> getSubSpaceById(int id);
     SubSpace saveSubSpace(SubSpace subSpace);
@@ -12,4 +13,6 @@ public interface SubSpaceService {
     Optional<SubSpace> getSubSpaceByName(String subSpaceName);
 
     List<SubSpace> getSubspacesBySpaceId(Integer spaceId);
+
+    SubSpace findById(int id);
 }

@@ -15,4 +15,6 @@ public interface SubSpaceRepo extends JpaRepository<SubSpace, Integer>{
 
     @Query("SELECT s FROM SubSpace s WHERE s.space.id = :spaceId")
     List<SubSpace> getSubspacesBySpaceId(Integer spaceId);
+
+    SubSpace findById(int id);
 }

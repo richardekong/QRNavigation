@@ -3,43 +3,41 @@ package com.team1.qrnavigationproject.controller;
 import com.team1.qrnavigationproject.model.Content;
 import com.team1.qrnavigationproject.model.Event;
 import com.team1.qrnavigationproject.model.Space;
+import com.team1.qrnavigationproject.model.SubSpace;
 import com.team1.qrnavigationproject.response.CustomException;
 import com.team1.qrnavigationproject.response.Response;
 import com.team1.qrnavigationproject.service.ContentService;
 import com.team1.qrnavigationproject.service.EventService;
 import com.team1.qrnavigationproject.service.SpaceService;
+import com.team1.qrnavigationproject.service.SubSpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class contentController {
 
     private ContentService contentService;
-
     private EventService eventService;
     private SpaceService spaceService;
+
+    private SubSpaceService subSpaceService;
 
     @Autowired
     public void setContentService(ContentService contentService){
         this.contentService = contentService;
     }
-
     @Autowired
     public void setEventService(EventService eventService) { this.eventService = eventService;}
-
     @Autowired
     public void SetSpaceService(SpaceService spaceService){ this.spaceService = spaceService;}
+    @Autowired
+    public void setSubSpaceService(SubSpaceService subSpaceService){ this.subSpaceService = subSpaceService;}
 
     @GetMapping("/admin/contents")
     public String ShowContentManagementPage(Model model) {
@@ -90,15 +88,48 @@ public class contentController {
         // passing the list spaces to view ( createContentPage )
         model.addAttribute("spaces", spaces);
 
+        //
+        //List<SubSpace> subSpaces = subSpaceService.getSubspacesBySpaceId(spaceId);
+
         return "createContentPage";
     }
 
+    @GetMapping(value = "/admin/contents/getSubspaces/{spaceId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<Map<String, Object>> getSubspacesBySpaceId(@PathVariable("spaceId") int spaceId) {
+        List<SubSpace> subSpaces = subSpaceService.getSubspacesBySpaceId(spaceId);
+
+        List<Map<String, Object>> response = new ArrayList<>();
+        for (SubSpace subSpace : subSpaces) {
+            Map<String, Object> subSpaceMap = new HashMap<>();
+            subSpaceMap.put("id", subSpace.getId());
+            subSpaceMap.put("name", subSpace.getName());
+            response.add(subSpaceMap);
+        }
+
+        return response;
+    }
+
     @PostMapping("/admin/contents/createNewContent")
-    public String CreateNewContent(@ModelAttribute Content content){
+    public String createNewContent(@ModelAttribute Content content,
+                                   @RequestParam Map<String, String> paramMap) {
+        int eventId = Integer.parseInt(paramMap.get("event.id"));
+        int spaceId = Integer.parseInt(paramMap.get("space.id"));
+        int subSpaceId = Integer.parseInt(paramMap.get("subspace.id"));
+
+        Event event = eventService.findEventById(eventId);
+        Space space = spaceService.findById(spaceId);
+        SubSpace subSpace = subSpaceService.findById(subSpaceId);
+
+        content.setEvent(event);
+        content.setSpace(space);
+        content.setSubSpace(subSpace);
+
         contentService.saveContent(content);
 
         return "redirect:/admin/contents";
     }
+
 
     @PostMapping("/admin/contents/deleteContent")
     public String deleteContent(@RequestParam("contentId") int contentId) {
@@ -131,12 +162,32 @@ public class contentController {
         // passing the list spaces to view ( createContentPage )
         model.addAttribute("spaces", spaces);
 
+        List<SubSpace> spaceSubSpaces = subSpaceService.getSubspacesBySpaceId(content.getSpace().getId());
+        model.addAttribute("spaceSubSpaces", spaceSubSpaces);
+
+
         return "contentUpdate";
     }
 
     @PostMapping("/admin/contents/updateContent")
-    public String UpdateContent(@ModelAttribute Content content){
+    public String UpdateContent(@ModelAttribute Content content,
+                                @RequestParam Map<String, String> paramMap) {
+        int eventId = Integer.parseInt(paramMap.get("event.id"));
+        int spaceId = Integer.parseInt(paramMap.get("space.id"));
+        int subSpaceId = Integer.parseInt(paramMap.get("subspace.id"));
+
+
+        Event event = eventService.findEventById(eventId);
+        Space space = spaceService.findById(spaceId);
+        SubSpace subSpace = subSpaceService.findById(subSpaceId);
+
+
+        content.setEvent(event);
+        content.setSpace(space);
+        content.setSubSpace(subSpace);
         contentService.updateContent(content);
+
+
         return "redirect:/admin/contents";
     }
 }

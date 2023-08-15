@@ -30,43 +30,44 @@
             <!-- Left section for the dialogue form -->
             <div class="col-md-6 shadow" style="background-color: #FFFFFF; border-radius: 4px; margin-bottom: 10%; padding-bottom: 20px;">
                 <h3>Create New Content</h3>
-                <form>
+                <form th:action="@{/admin/contents/createNewContent}" th:object="${content}" th:method="POST">
                     <!-- First row -->
                     <div class="row mb-1">
                         <div class="col-md-6">
-                            <label for="mainPlace">Choose main place:</label>
-                            <select class="form-select" id="mainPlace" required>
-                                <option value="" selected>Select main place</option>
-                                <option th:each="space:${spaces}" th:value="${space.name}" th:text="${space.name}"></option>
-                            </select>
+                            <label for="contentName">Content Name:</label>
+                            <input type="text" class="form-control" id="contentName" name="name"  placeholder="Write the Content name" required size="28">
                         </div>
                         <div class="col-md-6">
-                            <label for="subPlace">Choose sub place :</label>
-                            <select class="form-select" id="subPlace" required>
-                                <option value="" selected>Select sub place</option>
-                                <option value="subPlace1">3.65</option>
+                            <label for="event">Choose Event :</label>
+                            <select class="form-select" id="event" name="event.id" required>
+                                <option value="" selected>Select Event</option>
+                                <option th:each="event : ${events}" th:value="${event.id}" th:text="${event.name}"></option>
                             </select>
                         </div>
                     </div>
                     <!-- Second row -->
                     <div class="row mb-1">
-                        <div class="col-md-12">
-                            <label for="event">Choose Event :</label>
-                            <select class="form-select" id="event" required>
-                                <option value="" selected>Select Event</option>
-                                <option th:each="event:${events}" th:text="${event.name}"></option>
+                        <div class="col-md-6">
+                            <label for="mainPlace">Choose main place:</label>
+                            <select class="form-select" id="mainPlace" name="space.id" required>
+                                <option value="" selected>Select main place</option>
+                                <option th:each="space:${spaces}" th:value="${space.id}" th:text="${space.name}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="subPlace">Choose sub place :</label>
+                            <select class="form-select" id="subPlace" name="subspace.id" required>
+                                <option value="" selected>Select sub place</option>
                             </select>
                         </div>
                     </div>
                     <!-- Third row -->
                     <div class="mb-1">
                         <label for="contentDescription">Content Description:</label>
-                        <textarea class="form-control h-50" id="contentDescription" rows="3" placeholder="Enter content description" ></textarea>
+                        <textarea class="form-control h-50" id="contentDescription" rows="3" placeholder="Enter content description" name="description"></textarea>
                     </div>
                     <!-- Create Button -->
-                    <a th:href="@{/admin/main/contents}">
                         <button type="submit" class="btn btn-primary" style="background-color: #1E98D7; margin-left: 40%">Create</button>
-                    </a>
                 </form>
             </div>
             <!-- Right section for the content icon -->
@@ -78,5 +79,32 @@
 </main>
 <!-- HERE THE ADMIN FOOTER FRAGMENT INSERTED-->
 <footer th:insert="adminFooter::adminFooter"></footer>
+<!-- Add jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Add event listener to mainPlace dropdown
+    $('#mainPlace').change(function() {
+        var selectedSpaceId = $(this).val();
+        $.get('/admin/contents/getSubspaces/' + selectedSpaceId, function(data) {
+            // Clear previous options
+            $('#subPlace').empty();
+
+            // Add the "Select sub place" option as the first option
+            $('#subPlace').append($('<option>', {
+                value: '',
+                text: 'Select sub place',
+                selected: true
+            }));
+
+            // Add fetched subspaces as options
+            $.each(data, function(index, subspace) {
+                $('#subPlace').append($('<option>', {
+                    value: subspace.id,
+                    text: subspace.name
+                }));
+            });
+        });
+    });
+</script>
 </body>
 </html>

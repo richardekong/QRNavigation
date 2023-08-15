@@ -25,7 +25,7 @@ public class SubSpaceServiceImpl implements SubSpaceService {
 
     @Override
     public Optional<SubSpace> getSubSpaceById(int id) {
-        return subSpaceRepo.findById(id);
+        return Optional.ofNullable(subSpaceRepo.findById(id));
     }
 
     @Override
@@ -47,4 +47,7 @@ public class SubSpaceServiceImpl implements SubSpaceService {
     public List<SubSpace> getSubspacesBySpaceId(Integer spaceId){
         return subSpaceRepo.getSubspacesBySpaceId(spaceId);
     }
+
+    @Override
+    public SubSpace findById(int id){ return subSpaceRepo.findById(id);}
 }

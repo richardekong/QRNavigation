@@ -25,7 +25,7 @@ public class SpaceServiceImpl implements SpaceService {
 
     @Override
     public Optional<Space> getSpaceById(int id) {
-        return spaceRepo.findById(id);
+        return Optional.ofNullable(spaceRepo.findById(id));
     }
 
     @Override
@@ -43,5 +43,6 @@ public class SpaceServiceImpl implements SpaceService {
         return spaceRepo.findSpaceByName(name);
     }
 
-    // Add other business logic methods if needed
+    @Override
+    public Space findById(int id){ return spaceRepo.findById(id);}
 }
