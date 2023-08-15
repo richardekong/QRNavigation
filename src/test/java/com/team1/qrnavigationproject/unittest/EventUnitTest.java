@@ -1,9 +1,6 @@
 package com.team1.qrnavigationproject.unittest;
 
-import com.team1.qrnavigationproject.model.Event;
-import com.team1.qrnavigationproject.model.Organization;
-import com.team1.qrnavigationproject.model.Space;
-import com.team1.qrnavigationproject.model.SubSpace;
+import com.team1.qrnavigationproject.model.*;
 import com.team1.qrnavigationproject.stub.TestData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -101,16 +98,24 @@ class EventUnitTest {
 
     @Test
     void setOrganizer() {
+
         Organization organization = new Organization(
-                2, "National Health Services",2,
+                2, "National Health Services",null,
                 "0734634523623",
                 "https://www.nhs.gov.uk/logo.png",
                 "https://www.nhs.gov.uk",
                 List.of(),
                 List.of(),
+                null,
                 "#ffffff",
                 "#fffff"
         );
+
+        User user = new User();
+        user.setId(1);
+
+        organization.setUser(user);
+
         event.setOrganizer(organization);
         assertEquals(event.getOrganizer(), organization);
         init();

@@ -45,4 +45,5 @@ public class SubSpace {
     @Column(name="type")
     private int typeId;
 
+
 }

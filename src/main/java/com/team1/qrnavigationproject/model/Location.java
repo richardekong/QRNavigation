@@ -1,17 +1,15 @@
 package com.team1.qrnavigationproject.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+//@Data
+@Getter @Setter
 @Entity
 public class Location {
 
@@ -22,6 +20,15 @@ public class Location {
     private double latitude;
 
     private double longitude;
+
+    @OneToOne(mappedBy = "location", cascade = CascadeType.REFRESH)
+    private Address address;
+    public void setAddress(Address address) {
+        if(address!=null) {
+            this.address = address;
+        }
+    }
+
 }
 
 

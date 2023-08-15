@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -23,12 +24,12 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
     @Override
     public Organization save(Organization organization) {
-        if (organizationRepo.existsById(organization.getId())) {
-            throw new CustomException(
-                    "%s already exists".formatted(organization.getName()),
-                    HttpStatus.CONFLICT
-            );
-        }
+//        if (organizationRepo.findOrganizationByName(organization.getName()).isPresent()) {
+//            throw new CustomException(
+//                    "%s already exists".formatted(organization.getName()),
+//                    HttpStatus.CONFLICT
+//            );
+//        }
         return organizationRepo.save(organization);
     }
 

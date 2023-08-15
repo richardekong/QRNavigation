@@ -21,15 +21,6 @@ public class DemoController {
         return "contentPage";
     }
 
-    @GetMapping("/admin/organization/register")
-    public String ViewOrganizationRegistrationPage() {
-        return "organizationRegistrationPage";
-    }
-    @GetMapping("/admin/organization/update")
-    public String ViewOrganizationUpdatePage() {
-        return "organizationUpdatePage";
-    }
-
     @GetMapping("/admin/qrcodes")
     public String viewQRCodes(){
         return "qrcodes";
@@ -75,17 +66,6 @@ public class DemoController {
     @GetMapping("/qrnavigation/header")
     public String ViewQRNavigationHeader() {
         return "qrNavHeaderTest";
-    }
-
-
-    @GetMapping("/qrnavigation/login")
-    public String viewLoginPage() {
-        return "loginpage";
-    }
-
-    @GetMapping("/qrnavigation/signup")
-    public String viewSignUpPage() {
-        return "signUpPage";
     }
 
 }

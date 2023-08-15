@@ -12,6 +12,26 @@
         <span style="color:#FFFFFF; margin:auto auto auto 30px;">
             &copy; 2023 QR Navigation System, All rights reserved
         </span>
+    <script th:inline="javascript">
+        window.onload = () => {
+            let currentPath = /*[[${#httpServletRequest.getRequestURI()}]]*/ '';
+            let headerAuthForm = document.querySelector("#header-auth-form");
+            let authSpan = document.querySelector("#auth-text");
+            let criteriaIsMet = (
+                currentPath === "/qrnavigation/welcome"
+                || currentPath === "/login"
+                || currentPath === "/qrnavigation/signup"
+                || currentPath === "/login-error"
+            );
+            if (criteriaIsMet) {
+                authSpan.textContent = 'Login';
+                headerAuthForm.action = '/login';
+            } else {
+                authSpan.textContent = 'Logout';
+                headerAuthForm.action = '/logout';
+            }
+        };
+    </script>
 </footer>
 </body>
 </html>

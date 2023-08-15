@@ -65,4 +65,17 @@ public class Space {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Space{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", photoURLs='" + photoURLs + '\'' +
+                ", organizationId=" + organization.getId() +
+                ", addressId=" + addressId +
+                ", typeId=" + typeId +
+                ", eventId=" + event.getId() +
+                '}';
+    }
 }

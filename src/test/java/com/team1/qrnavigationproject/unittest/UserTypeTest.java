@@ -17,9 +17,9 @@ class UserTypeTest {
                 "Xamy",
                 "password",
                 1,
-                Integer.MAX_VALUE,
                 null,
-                null, 1, false, false, false, true);
+                null,
+                null, false, false, false, true);
         xamy.add(child);
     }
 
@@ -57,10 +57,9 @@ class UserTypeTest {
                 user.getUsername(),
                 user.getPassword(),
                 user.getAge(),
-                user.getOrganizationId(),
+                user.getOrganization(),
                 user.getRoles(),
                 user.getUserTypes(),
-                user.getTypeId(),
                 user.isAccountExpired(),
                 user.isCredentialExpired(),
                 user.isAccountLocked(),

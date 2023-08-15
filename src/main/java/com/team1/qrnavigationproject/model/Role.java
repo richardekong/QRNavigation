@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Data
 @Entity
 public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -21,4 +22,20 @@ public class Role {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Role(String name) {
+        this.name = name;
+    }
+
+    public enum RoleType{
+        SUPER_ADMIN("SUPER_ADMIN"),
+        ADMIN("ADMIN"),
+        USER("USER");
+
+        private final String role;
+        RoleType(String role){
+            this.role = role;
+        }
+
+    }
 }

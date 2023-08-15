@@ -31,18 +31,18 @@
                 <h5 class="fw-bold">Login to your account</h5>
                 <div class="card shadow">
                     <div class="card-body">
-                        <form class="mt-5" th:action="@{/admin/main}">
+                        <form class="mt-5" th:action="@{/login}" th:method="POST">
                             <div class="row mb-3">
                                 <label for="email" class="col-sm-3 col-form-label fw-bold text-end">Email:</label>
                                 <div class="col-sm-9">
-                                    <input type="email" class="form-control border border-dark rounded-2" id="email"
+                                    <input type="email" class="form-control border border-dark rounded-2" id="email" name="username"
                                         placeholder="Enter your email">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="password" class="col-sm-3 col-form-label fw-bold text-end">Password:</label>
                                 <div class="col-sm-9">
-                                    <input type="password" class="form-control border border-dark rounded-2"
+                                    <input type="password" class="form-control border border-dark rounded-2" name="password"
                                         id="password" placeholder="Enter your password">
                                 </div>
                             </div>

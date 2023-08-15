@@ -13,7 +13,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.regex.Pattern;
 
@@ -24,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class OrganizationRegistrationPageFunctionalTest {
 
     @Value("${local.server.port}")
@@ -61,16 +64,17 @@ public class OrganizationRegistrationPageFunctionalTest {
     }
 
     @Test
+
     public void verifyPresenceOfFormInputTags() {
         assertNotNull(driver.findElement(By.name("name")));
         assertNotNull(driver.findElement(By.name("phone")));
         assertNotNull(driver.findElement(By.name("postcode")));
-        assertNotNull(driver.findElement(By.name("address")));
-        assertNotNull(driver.findElement(By.name("logo")));
-        assertNotNull(driver.findElement(By.name("website")));
-        assertNotNull(driver.findElement(By.name("header-background")));
-        assertNotNull(driver.findElement(By.name("footer-background")));
-        assertEquals(driver.findElement(By.tagName("button")).getText(),"Register");
+        assertNotNull(driver.findElement(By.name("description")));
+        assertNotNull(driver.findElement(By.name("logoURL")));
+        assertNotNull(driver.findElement(By.name("websiteURL")));
+        assertNotNull(driver.findElement(By.name("headerBackground")));
+        assertNotNull(driver.findElement(By.name("footerBackground")));
+        assertNotNull(driver.findElement(By.id("register-btn")));
     }
 
     @Test
@@ -79,8 +83,8 @@ public class OrganizationRegistrationPageFunctionalTest {
                 nameInput = driver.findElement(By.name("name")),
                 phoneInput = driver.findElement(By.name("phone")),
                 postcodeInput = driver.findElement(By.name("postcode")),
-                logoInput = driver.findElement(By.name("logo")),
-                websiteInput = driver.findElement(By.name("website"));
+                logoInput = driver.findElement(By.name("logoURL")),
+                websiteInput = driver.findElement(By.name("websiteURL"));
 
         Pattern
                 namePattern = Pattern.compile(NAME_REGEX),

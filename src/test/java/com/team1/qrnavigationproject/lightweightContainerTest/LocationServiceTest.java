@@ -1,4 +1,4 @@
-package com.team1.qrnavigationproject.lightweight;
+package com.team1.qrnavigationproject.lightweightContainerTest;
 
 import com.team1.qrnavigationproject.model.Location;
 import com.team1.qrnavigationproject.repository.LocationRepo;

@@ -21,6 +21,7 @@ class OrganizationUnitTest {
 
     private void init() {
         organization = TestData.createOrganization();
+        organization.setAddress(TestData.createAddress());
         organization.add(TestData.createEvent());
         organization.add(TestData.createSpace());
     }
@@ -48,9 +49,9 @@ class OrganizationUnitTest {
     }
 
     @Test
-    void getAddressId() {
-        assertEquals(organization.getAddressId(), 1);
-        assertNotEquals(organization.getAddressId(), 100);
+    void getAddress() {
+        assertEquals(organization.getAddress().getId(), 1);
+        assertNotEquals(organization.getAddress().getId(), 100);
     }
 
     @Test
@@ -102,7 +103,7 @@ class OrganizationUnitTest {
     void setId() {
         organization.setId(2);
         assertEquals(organization.getId(), 2);
-        assertNotEquals(organization.getId(),1);
+        assertNotEquals(organization.getId(), 1);
     }
 
     @Test
@@ -114,11 +115,11 @@ class OrganizationUnitTest {
     }
 
     @Test
-    void setAddressId() {
+    void setAddress() {
         int id = 3;
-        organization.setAddressId(id);
-        assertEquals(organization.getAddressId(), id);
-        assertNotEquals(organization.getAddressId(), 1);
+        organization.getAddress().setId(id);
+        assertEquals(organization.getAddress().getId(), id);
+        assertNotEquals(organization.getAddress().getId(), 1);
     }
 
     @Test
@@ -185,46 +186,4 @@ class OrganizationUnitTest {
         assertFalse(organization.getEvents().isEmpty());
     }
 
-    @Test
-    void testEquals() {
-        Organization similarOrganization = new Organization(
-                organization.getId(),
-                organization.getName(),
-                organization.getAddressId(),
-                organization.getPhone(),
-                organization.getLogoURL(),
-                organization.getWebsiteURL(),
-                organization.getSpaces(),
-                organization.getEvents(),
-                organization.getHeaderBackground(),
-                organization.getFooterBackground()
-        );
-        assertEquals(organization, similarOrganization);
-        assertNotEquals(organization, new Organization());
-    }
-
-    @Test
-    void testHashCode() {
-        Organization anotherOrganization = new Organization();
-        Organization similarOrganization = new Organization(
-                organization.getId(),
-                organization.getName(),
-                organization.getAddressId(),
-                organization.getPhone(),
-                organization.getLogoURL(),
-                organization.getWebsiteURL(),
-                organization.getSpaces(),
-                organization.getEvents(),
-                organization.getHeaderBackground(),
-                organization.getFooterBackground()
-        );
-        assertEquals(organization.hashCode(), similarOrganization.hashCode());
-        assertNotEquals(organization.hashCode(), anotherOrganization.hashCode());
-    }
-
-    @Test
-    void testToString() {
-        assertNotNull(organization.toString());
-        assertFalse(organization.toString().isEmpty());
-    }
 }

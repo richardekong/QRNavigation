@@ -39,28 +39,28 @@
 
     </style>
 </head>
-<body>
+<body th:with="organization=${organization}">
 <header th:insert="adminHeader::adminHeader"></header>
 <nav th:insert="adminNavBar::adminNavBar"></nav>
 <main>
     <div class="row">
         <div id="welcome-note" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ms-0">
-            <span style="font-size: 28px; padding: 5%;">Welcome [organization_name] to QR Navigation System</span>
+            <span style="font-size: 28px; padding: 5%;">Welcome [[${organization?.name}]] to QR Navigation System</span>
         </div>
         <div id="menu" class="container row ms-5 mt-3">
             <div class="card col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lx-4 me-5 p-3 shadow">
                 <img class="w-50 h-50 mb-3" src="/static/images/qrCode.png" th:src="@{/images/qrCode.png}"
                      alt="sample qr image">
-                <a href="" th:href="@{/admin/qrcodes}">Manage QR codes</a>
+                <a href="/admin/qrcodes" th:href="@{/admin/qrcodes}">Manage QR codes</a>
                 <br>
-                <a href="" th:href="@{/admin/places}">Manage Places</a>
+                <a href="/admin/places" th:href="@{/admin/places}">Manage Places</a>
             </div>
             <div class="card col-xs-12 col-sm-12 col-md-4 col-lg-4 col-lx-4 ms-5 p-3 shadow">
                 <img class="w-50 h-50 mb-3" src="/static/images/calendar_icon.png" th:src="@{/images/calendar_icon.png}"
                      alt="sample calendar image">
-                <a href="" th:href="@{/admin/events}">Manage Events</a>
+                <a href="/admin/events" th:href="@{/admin/events}">Manage Events</a>
                 <br>
-                <a href="" th:href="@{/admin/contents}">Manage Contents</a>
+                <a href="/admin/contents" th:href="@{/admin/contents}">Manage Contents</a>
             </div>
         </div>
     </div>

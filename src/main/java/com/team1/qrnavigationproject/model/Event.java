@@ -16,7 +16,6 @@ import static com.team1.qrnavigationproject.model.Constant.DATE_TIME_REGEX;
 
 @NoArgsConstructor
 @AllArgsConstructor
-//@Data
 @Getter
 @Setter
 @Entity
@@ -82,4 +81,16 @@ public class Event {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", organizer=" + organizer.getId() +
+                ", start=" + start +
+                ", end=" + end +
+                ", imageUrls='" + imageUrls + '\'' +
+                '}';
+    }
 }
