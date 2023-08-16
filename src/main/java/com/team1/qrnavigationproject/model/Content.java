@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -35,3 +34,5 @@ public class Content {
     private SubSpace subSpace;
 
 }
+
+
