@@ -73,23 +73,23 @@ values ('Park');
 insert into Space_type(name)
 values ('Countryside trail');
 
-insert into space(name, description, photo_urls, org_id, address_id, space_type_id)
+insert into space(name, description, photo_urls, org_id, address_id, type)
 values ('Abacws Building', 'Building for school of computer science and informatics', '', null, 1,  1);
 
-insert into space(name, description, photo_urls, org_id, address_id,  space_type_id)
+insert into space(name, description, photo_urls, org_id, address_id,  type)
 values ('Cardiff Student Union', 'Building for Cardiff University Student Union', '', null, 2,  1);
 
-insert into space(name, description, photo_urls, org_id, address_id, space_type_id)
+insert into space(name, description, photo_urls, org_id, address_id, type)
 values ('Senghennydd Court', 'Cardiff University Hostel', '', null, 3,  1);
 
 
-insert into subspace(name, description, photo_url, main_space,space_type_id)
+insert into subspace(name, description, photo_url, main_space,type)
 values ('Room 3.65', 'Bookable room containing tables, chairs and white board','', 1,2);
 
-insert into subspace(name, description, photo_url, main_space,space_type_id )
+insert into subspace(name, description, photo_url, main_space,type )
 values ('Reception', 'Room for receptionist in student union building','', 2,2);
 
-insert into subspace(name, description, photo_url, main_space,space_type_id)
+insert into subspace(name, description, photo_url, main_space,type)
 values ('Reception', ' Room for receptionist in Senghennydd court','', 3,2);
 
 

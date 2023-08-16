@@ -39,7 +39,7 @@ public class Space {
     @Column(name="address_id")
     private int addressId;
 
-    @Column(name="space_type_id")
+    @Column(name="type")
     private int typeId;
 
     @JsonManagedReference
@@ -47,10 +47,10 @@ public class Space {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     List<SubSpace> subSpaces;
 
-//    @JsonBackReference
-//    @ManyToOne
-//    @JoinColumn(name="event_id")
-//    private Event event;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name="event_id")
+    private Event event;
 
     public void add(SubSpace subSpace) {
         if (subSpaces == null) {
@@ -73,7 +73,7 @@ public class Space {
                 ", addressId=" + addressId +
                 ", typeId=" + typeId +
                 ", subSpaces=" + subSpaces +
-//                ", event=" + event +
+                ", event=" + event +
                 '}';
     }
 }

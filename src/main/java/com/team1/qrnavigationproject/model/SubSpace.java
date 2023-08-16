@@ -39,13 +39,13 @@ public class SubSpace {
     @ManyToOne
     @JoinColumn(name = "main_space")
     private Space space;
-//
-//    @JsonBackReference
-//    @ManyToOne
-//    @JoinColumn(name="event_id")
-//    private Event event;
 
-    @Column(name="space_type_id")
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name="event_id")
+    private Event event;
+
+    @Column(name="type")
     private int typeId;
 
     @Override
@@ -56,7 +56,7 @@ public class SubSpace {
                 ", description='" + description + '\'' +
                 ", photoURL='" + photoURL + '\'' +
                 ", spaceId=" + space.getId() +
-//                ", eventId=" + event.getId() +
+                ", eventId=" + event.getId() +
                 ", typeId=" + typeId +
                 '}';
     }

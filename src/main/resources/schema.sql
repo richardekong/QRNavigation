@@ -89,12 +89,12 @@ create table space(
                       photo_urls json null,
                       org_id int default null,
                       address_id int default null,
---                    event_id int default null,
-                      space_type_id int default null,
+                   event_id int default null,
+                      `type` int default null,
                       foreign key(org_id) references organization(id),
                       foreign key(address_id) references address(id),
-                      foreign key(space_type_id) references space_type(id)
---                       foreign key (event_id) references event(id)
+                      foreign key(`type`) references space_type(id),
+                      foreign key (event_id) references event(id)
 );
 
 create table subspace(
@@ -103,11 +103,11 @@ create table subspace(
                          `description` text,
                          photo_url text default null,
                          main_space int default null,
-                         space_type_id int default null,
---                          event_id int default null,
+                         `type` int default null,
+                         event_id int default null,
                          foreign key (main_space) references space(id),
---                          foreign key (event_id) references event(id),
-                         foreign key (space_type_id) references space_type(id)
+                         foreign key (event_id) references event(id),
+                         foreign key (`type`) references space_type(id)
 );
 
 
