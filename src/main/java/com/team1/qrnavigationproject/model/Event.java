@@ -34,7 +34,7 @@ public class Event {
     @Size(min = 2, message = "Characters must be at least 2")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name="organizer")
     private Organization organizer;
 
@@ -94,3 +94,5 @@ public class Event {
                 '}';
     }
 }
+
+

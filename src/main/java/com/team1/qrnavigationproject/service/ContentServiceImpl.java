@@ -18,10 +18,10 @@ public class ContentServiceImpl implements ContentService{
     }
 
     @Override
-    public List<Integer>findDistinctContentIds(){ return contentRepo.findDistinctContentIds();}
+    public List<Integer>findDistinctContentIds(int organizationId){ return contentRepo.findDistinctContentIds(organizationId);}
     @Override
-    public List<Object[]> findAll(){
-        return contentRepo.findAllContentsWithNames();
+    public List<Object[]> findAll(int organizationId){
+        return contentRepo.findAllContentsWithNames(organizationId);
     }
 
     @Override

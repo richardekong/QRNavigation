@@ -5,8 +5,8 @@ import com.team1.qrnavigationproject.model.Content;
 import java.util.List;
 
 public interface ContentService {
-    List<Integer> findDistinctContentIds();
-    List<Object[]> findAll();
+    List<Integer> findDistinctContentIds(int organizationId);
+    List<Object[]> findAll(int organizationId);
     Content saveContent(Content content);
     Content findContentByName(String contentName);
     Content findContentById(int contentId);

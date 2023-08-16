@@ -3,7 +3,7 @@ const selectElement = document.getElementById('addresses');
 const hiddenLatitude = document.getElementById('latitude');
 const hiddenLongitude = document.getElementById('longitude');
 const headers = new Headers({
-    'Key': 'jGY58SN9yj5knL0xNgb2q59M0jIZKinOMVE1SHHRnw'
+    'Key': 'VgkafDsZnyqgIHoCOBDUMVLYV6p65YGPTlGCxk0lAQY'
 });
 
 const options = {

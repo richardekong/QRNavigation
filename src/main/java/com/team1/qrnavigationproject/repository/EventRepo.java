@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface EventRepo extends JpaRepository<Event, Integer> {
 
-    @Query("SELECT e FROM Event e")
-    List<Event> findAllEvents();
+    @Query("SELECT e FROM Event e WHERE e.organizer.id = :organizationId")
+    List<Event> findAllEvents(int organizationId);
 
     Event save(Event event);
 

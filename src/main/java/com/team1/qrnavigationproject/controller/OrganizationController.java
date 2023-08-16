@@ -1,5 +1,6 @@
 package com.team1.qrnavigationproject.controller;
 
+import com.team1.qrnavigationproject.configuration.AuthenticatedUser;
 import com.team1.qrnavigationproject.configuration.QRNavigationPaths;
 import com.team1.qrnavigationproject.model.*;
 import com.team1.qrnavigationproject.response.CustomException;
@@ -22,6 +23,8 @@ import javax.validation.Valid;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static com.team1.qrnavigationproject.configuration.AuthenticatedUser.requestCurrentUser;
 
 @Controller
 public class OrganizationController  {
@@ -67,7 +70,7 @@ public class OrganizationController  {
     public ModelAndView ViewOrganizationUpdatePage(Authentication auth, ModelAndView modelAndView) {
         Organization currentOrganization = new Organization();
         if (auth != null) {
-           currentOrganization = requestCurrentUser(auth).getOrganization();
+           currentOrganization = requestCurrentUser(auth,userService).getOrganization();
         }
         modelAndView.setViewName("organizationUpdatePage");
         modelAndView.addObject("organization", currentOrganization);
@@ -96,7 +99,7 @@ public class OrganizationController  {
         //associate the organization with the saved address then save the organization
         organization.setAddress(savedAddress);
         //associate the organization with the current user
-        requestCurrentUser(auth).setOrganization(organization);
+        requestCurrentUser(auth, userService).setOrganization(organization);
         Organization savedOrganization = organizationService.save(organization);
 
         //pass the saved organization to the main admin page, and set the next page to main admin page after submitting the form
@@ -120,7 +123,7 @@ public class OrganizationController  {
         }
 
         //updating organization detail
-        Organization orgToUpdate = requestCurrentUser(auth).getOrganization();
+        Organization orgToUpdate = requestCurrentUser(auth,userService).getOrganization();
         Location updatedLocation = locationService.saveLocation(locationFormData);
         //update the address
         addressFormData.setLocation(updatedLocation);
@@ -139,16 +142,12 @@ public class OrganizationController  {
 
     @GetMapping("/admin/organization")
     public ResponseEntity<Organization> requestOrganization(Authentication auth){
-        return Optional.of(requestCurrentUser(auth).getOrganization())
+        return Optional.of(requestCurrentUser(auth,userService).getOrganization())
                 .map(org -> new ResponseEntity<>(org, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    private User requestCurrentUser(Authentication auth) {
-        return userService
-                .findUserByUsername(auth.getName())
-                .orElseThrow(() -> new CustomException(HttpStatus.UNAUTHORIZED.getReasonPhrase(), HttpStatus.UNAUTHORIZED));
-    }
+
 
 
 }

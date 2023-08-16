@@ -1,32 +1,28 @@
 package com.team1.qrnavigationproject.controller;
 
-import com.team1.qrnavigationproject.model.Content;
-import com.team1.qrnavigationproject.model.Event;
-import com.team1.qrnavigationproject.model.Space;
-import com.team1.qrnavigationproject.model.SubSpace;
-import com.team1.qrnavigationproject.response.CustomException;
-import com.team1.qrnavigationproject.response.Response;
-import com.team1.qrnavigationproject.service.ContentService;
-import com.team1.qrnavigationproject.service.EventService;
-import com.team1.qrnavigationproject.service.SpaceService;
-import com.team1.qrnavigationproject.service.SubSpaceService;
+import com.team1.qrnavigationproject.configuration.AuthenticatedUser;
+import com.team1.qrnavigationproject.model.*;
+import com.team1.qrnavigationproject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
-public class contentController {
+public class ContentController {
 
     private ContentService contentService;
     private EventService eventService;
     private SpaceService spaceService;
-
     private SubSpaceService subSpaceService;
+    private UserService userService;
 
     @Autowired
     public void setContentService(ContentService contentService){
@@ -39,10 +35,20 @@ public class contentController {
     @Autowired
     public void setSubSpaceService(SubSpaceService subSpaceService){ this.subSpaceService = subSpaceService;}
 
+    @Autowired
+    public void setUserService(UserService userService){ this.userService = userService;}
+
     @GetMapping("/admin/contents")
-    public String ShowContentManagementPage(Model model) {
+    public String ShowContentManagementPage(Model model, Authentication authentication) {
+        User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
+        if (admin == null){
+            return "redirect:/login";
+        }
+        admin.getOrganization().getId();
+        int organizationId = admin.getOrganization().getId();
+        System.out.println("********* org id : "+admin.getOrganization().getId());
         // This list stores the unique IDs of events that have appeared in the content table.
-        List<Integer> listOfEventsIdsInContentTable = contentService.findDistinctContentIds();
+        List<Integer> listOfEventsIdsInContentTable = contentService.findDistinctContentIds(organizationId);
         List<Object[]> eventNamesAndIdsList = eventService.findEventNamesAndIdsByIds(listOfEventsIdsInContentTable);
         // passing the list eventNamesAndIdsList to view ( contentManagementPage )
         model.addAttribute("eventNamesAndIdsList", eventNamesAndIdsList);
@@ -61,7 +67,7 @@ public class contentController {
 //                new Response(HttpStatus.OK.value(), "Contents Loaded Successfully!", System.currentTimeMillis())
 //        );
 //        model.addAttribute("contents", unConfirmedContents.get());
-        List<Object[]> contentWithNames = contentService.findAll();
+        List<Object[]> contentWithNames = contentService.findAll(organizationId);
         List<Object[]> contentInfoList = new ArrayList<>();
 
         for (Object[] result : contentWithNames) {
@@ -79,8 +85,15 @@ public class contentController {
     }
 
     @GetMapping("/admin/contents/createContent")
-    public String ViewCreateContentPage(Model model) {
-        List<Event> events = eventService.findAll();
+    public String ViewCreateContentPage(Model model,Authentication authentication) {
+        User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
+        if (admin == null){
+            return "redirect:/login";
+        }
+        admin.getOrganization().getId();
+        int organizationId = admin.getOrganization().getId();
+        /////////
+        List<Event> events = eventService.findAll(organizationId);
         // passing the list events to view ( createContentPage )
         model.addAttribute("events", events);
 
@@ -139,7 +152,15 @@ public class contentController {
     }
 
     @PostMapping("/admin/contents/viewContent")
-    public String viewContentPage(@RequestParam Map<String, String> requestParams, Model model) {
+    public String viewContentPage(@RequestParam Map<String, String> requestParams, Model model , Authentication authentication) {
+        User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
+        if (admin == null){
+            return "redirect:/login";
+        }
+        admin.getOrganization().getId();
+        int organizationId = admin.getOrganization().getId();
+        /////////
+
         int contentId = Integer.parseInt(requestParams.get("contentId"));
         String contentName = requestParams.get("contentName");
         String eventName = requestParams.get("eventName");
@@ -155,7 +176,7 @@ public class contentController {
         /////
 
 
-        List<Event> events = eventService.findAll();
+        List<Event> events = eventService.findAll(organizationId);
         // passing the list events to view ( createContentPage )
         model.addAttribute("events", events);
 

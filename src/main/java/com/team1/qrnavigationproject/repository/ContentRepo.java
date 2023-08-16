@@ -11,15 +11,18 @@ import java.util.List;
 @Repository
 public interface ContentRepo extends JpaRepository<Content, Integer> {
 
-    @Query("SELECT DISTINCT c.event.id  FROM Content c")
-    List<Integer> findDistinctContentIds();
+    @Query("SELECT DISTINCT c.event.id FROM Content c WHERE c.event.organizer.id = :organizationId")
+    List<Integer> findDistinctContentIds(int organizationId);
+
+
     @Query("SELECT c, e.name AS eventName, ss.name AS subSpaceName, s.name AS spaceName " +
             "FROM Content c " +
             "JOIN c.event e " +
             "JOIN c.subSpace ss " +
             "JOIN ss.space s " +
+            "WHERE e.organizer.id = :organizationId " +
             "ORDER BY c.event.id")
-    List<Object[]> findAllContentsWithNames();
+    List<Object[]> findAllContentsWithNames(int organizationId);
 
 
 

@@ -39,7 +39,7 @@ public interface QRNavigationPaths {
             LOGIN_ERROR,
             SIGN_UP_PAGE,
             " /qrnavigation/signup",
-//            LOGIN_PAGE,
+            LOGIN_PAGE,
             ERROR_PAGE,
             AUTH_SIGN_UP,
             AUTH_LOGIN

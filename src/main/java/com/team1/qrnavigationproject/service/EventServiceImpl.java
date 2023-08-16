@@ -18,8 +18,8 @@ public class EventServiceImpl implements EventService{
         this.eventRepo = eventRepo;
     }
     @Override
-    public List<Event> findAll(){
-        return eventRepo.findAllEvents();
+    public List<Event> findAll(int organizationId){
+        return eventRepo.findAllEvents(organizationId);
     }
 
     @Override
