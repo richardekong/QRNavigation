@@ -1,5 +1,6 @@
 package com.team1.qrnavigationproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,15 +35,17 @@ public class SubSpace {
     @Column(name="photo_url")
     private String photoURL;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "main_space")
     private Space space;
+//
+//    @JsonBackReference
+//    @ManyToOne
+//    @JoinColumn(name="event_id")
+//    private Event event;
 
-    @ManyToOne
-    @JoinColumn(name="event_id")
-    private Event event;
-
-    @Column(name="type")
+    @Column(name="space_type_id")
     private int typeId;
 
     @Override
@@ -53,7 +56,7 @@ public class SubSpace {
                 ", description='" + description + '\'' +
                 ", photoURL='" + photoURL + '\'' +
                 ", spaceId=" + space.getId() +
-                ", eventId=" + event.getId() +
+//                ", eventId=" + event.getId() +
                 ", typeId=" + typeId +
                 '}';
     }

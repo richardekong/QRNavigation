@@ -46,4 +46,9 @@ public interface QRNavigationPaths {
     };
     String ADMIN_ORG_REG_PROCESS = "/admin/organization/register/process";
     String ADMIN_ORG_UPDATE_PROCESS = "/admin/organization/update/process";
+    String ADMIN_QRCODES = "/admin/qrcodes";
+    String ADMIN_QRCODES_GENERATE = "/admin/qrcodes/generate";
+    String ADMIN_QRCODES_GENERATE_PROCESS = "/admin/qrcodes/generate/process";
+    String ADMIN_QRCODES_UPDATE = "/admin/qrcodes/update";
+    String ADMIN_QRCODES_UPDATE_PROCESS = "/admin/qrcodes/update/process";
 }

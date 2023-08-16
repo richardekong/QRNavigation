@@ -1,8 +1,21 @@
 insert into location(latitude, longitude)
 values (51.4891719, -3.1811802);
 
+insert into location(latitude, longitude)
+values (51.4891719, -3.1811802);
+
+insert into location(latitude, longitude)
+values (51.4891719, -3.1811802);
+
 insert into address(description, location_id, postcode)
-values ('Senghennydd Road', 1, 'CF24 4AG');
+values ('Abacws, Senghennydd Road', 1, 'CF24 4AG');
+
+insert into address(description, location_id, postcode)
+values ('Cardiff Student Union, Senghennydd Road', 2, 'CF24 4AG');
+
+insert into address(description, location_id, postcode)
+values ('Salisbury Road', 3, 'CF24 4DS');
+
 
 insert into organization(name, address_id, phone, logo_url, website_url)
 values ('Fake University', 1, '022972352373',
@@ -52,22 +65,38 @@ insert into space_type(name)
 values ('Building');
 
 insert into space_type(name)
+values('Room');
+
+insert into space_type(name)
 values ('Park');
 
 insert into Space_type(name)
 values ('Countryside trail');
 
-insert into space(name, description, photo_urls, org_id, address_id, event_id, type)
-values ('Abacws Building', 'Building for school of computer science and informatics', '["imagefile1","imagefile2","imagefile3"]', 1, 1, 1,  1);
+insert into space(name, description, photo_urls, org_id, address_id, space_type_id)
+values ('Abacws Building', 'Building for school of computer science and informatics', '', null, 1,  1);
 
-insert into subspace(name, description, photo_url, main_space,event_id)
-values ('Room 3.65', 'Bookable room containing tables, chairs and white board',null, 1,1);
+insert into space(name, description, photo_urls, org_id, address_id,  space_type_id)
+values ('Cardiff Student Union', 'Building for Cardiff University Student Union', '', null, 2,  1);
+
+insert into space(name, description, photo_urls, org_id, address_id, space_type_id)
+values ('Senghennydd Court', 'Cardiff University Hostel', '', null, 3,  1);
+
+
+insert into subspace(name, description, photo_url, main_space,space_type_id)
+values ('Room 3.65', 'Bookable room containing tables, chairs and white board','', 1,2);
+
+insert into subspace(name, description, photo_url, main_space,space_type_id )
+values ('Reception', 'Room for receptionist in student union building','', 2,2);
+
+insert into subspace(name, description, photo_url, main_space,space_type_id)
+values ('Reception', ' Room for receptionist in Senghennydd court','', 3,2);
 
 
 insert into content(description, event_id)
 values ('Content for open day event', 1);
 
-insert into qrcode(content_id, space_id, sub_space_id, description, image_url,page_url, created_at)
+insert into qrcode(content_id, space_id, subspace_id, description, image_url,page_url, created_at)
 values (1, 1, 1, 'QR code for room 3.45 @ Abacws building', 'img_url', 'https://www.qrnavigation.com/content', '2023-05-16 10:00:00');
 
 select u.*,r.name as ROLE from app_user u right outer join Role r on u.id=r.id;

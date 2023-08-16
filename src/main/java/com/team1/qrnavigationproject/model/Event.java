@@ -1,5 +1,7 @@
 package com.team1.qrnavigationproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,17 +36,21 @@ public class Event {
     @Size(min = 2, message = "Characters must be at least 2")
     private String description;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="organizer")
     private Organization organizer;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    List<Space> spaces;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    List<SubSpace> subSpaces;
+//    @JsonManagedReference
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
+//            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+//    List<Space> spaces;
+
+//    @JsonManagedReference
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
+//            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+//    List<SubSpace> subSpaces;
 
     @NotNull(message = "Please provide a start date and time")
     @Pattern(regexp = DATE_TIME_REGEX,
@@ -60,26 +66,26 @@ public class Event {
     @Column(columnDefinition = "json")
     private String imageUrls;
 
-    public void addSpace(Space space){
-        if (spaces == null){
-            spaces = new ArrayList<>();
-        }
-        if (!spaces.contains(space)){
-            spaces.add(space);
-            space.setEvent(this);
-        }
-    }
+//    public void addSpace(Space space){
+//        if (spaces == null){
+//            spaces = new ArrayList<>();
+//        }
+////        if (!spaces.contains(space)){
+//            spaces.add(space);
+//            space.setEvent(this);
+////        }
+//    }
 
-    public void addSubSpace(SubSpace subSpace){
-        if (subSpaces == null){
-            subSpaces = new ArrayList<>();
-        }
-
-        if (!subSpaces.contains(subSpace)){
-            subSpaces.add(subSpace);
-            subSpace.setEvent(this);
-        }
-    }
+//    public void addSubSpace(SubSpace subSpace){
+//        if (subSpaces == null){
+//            subSpaces = new ArrayList<>();
+//        }
+//
+////        if (!subSpaces.contains(subSpace)){
+//            subSpaces.add(subSpace);
+//            subSpace.setEvent(this);
+////        }
+//    }
 
     @Override
     public String toString() {

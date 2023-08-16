@@ -1,6 +1,7 @@
 package com.team1.qrnavigationproject.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.security.core.GrantedAuthority;
@@ -49,9 +50,12 @@ public class User implements UserDetails, Serializable {
     @OneToOne
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     private Organization organization;
+
+    @JsonBackReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Role> roles;
 
+    @JsonBackReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<UserType> userTypes;
 

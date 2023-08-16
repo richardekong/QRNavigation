@@ -1,5 +1,6 @@
 package com.team1.qrnavigationproject.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -45,9 +46,11 @@ public class Organization {
             message = "Invalid website URL")
     private String websiteURL;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization")
     private List<Space> spaces;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "organizer")
     private List<Event> events;
 
@@ -64,20 +67,20 @@ public class Organization {
         if (spaces == null) {
             spaces = new LinkedList<>();
         }
-        if (!spaces.contains(space)) {
+//        if (!spaces.contains(space)) {
             spaces.add(space);
             space.setOrganization(this);
-        }
+//        }
     }
 
     public void add(Event event) {
         if (events == null) {
             events = new LinkedList<>();
         }
-        if (!events.contains(event)) {
+//        if (!events.contains(event)) {
             events.add(event);
             event.setOrganizer(this);
-        }
+//        }
     }
 
     public void setUser(User user) {

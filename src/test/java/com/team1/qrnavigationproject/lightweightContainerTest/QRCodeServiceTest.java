@@ -73,7 +73,14 @@ public class QRCodeServiceTest {
         when(repo.findQRCodeById(1)).thenReturn(existingQRCode);
         // Update QRCode
         QRCode updatedQRCode = new QRCode(
-                qr.getId(), qr.getDescription(), qr.getContentId(), qr.getSpaceId(), 2, qr.getPageURL(), qr.getImageURL(), qr.getCreatedAt()
+                qr.getId(),
+                qr.getDescription(),
+                qr.getContent(),
+                qr.getSpace(),
+                qr.getSubSpace(),
+                qr.getPageURL(),
+                qr.getImageURL(),
+                qr.getCreatedAt()
         );
         qrCodeService.update(updatedQRCode);
 

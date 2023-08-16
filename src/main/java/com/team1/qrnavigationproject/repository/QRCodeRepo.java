@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface QRCodeRepo extends JpaRepository<QRCode, Integer> {
     QRCode findQRCodeById(int id);
@@ -16,5 +17,9 @@ public interface QRCodeRepo extends JpaRepository<QRCode, Integer> {
     QRCode findQRCodeByCreatedAt(LocalDateTime dateTime);
     @Query("SELECT q FROM QRCode q")
     List<QRCode> findAllQRCodes();
+
+    @Query("SELECT q FROM QRCode q where q.spaceId=: spaceId and q.subSpaceId=: subspaceId")
+    Optional<QRCode> findQRCodeBySpaceIdAndSubspaceId(int spaceId, int subspaceId);
+
 
 }

@@ -12,9 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class S3ServiceImpl implements S3Service {
@@ -23,6 +27,8 @@ public class S3ServiceImpl implements S3Service {
     private String s3BucketName;
 
     private AmazonS3 amazonS3Client;
+
+    private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
     @Autowired
     public void setAmazonS3Client(AmazonS3 amazonS3Client) {
@@ -52,6 +58,25 @@ public class S3ServiceImpl implements S3Service {
                 );
             }
             return amazonS3Client.getUrl(s3BucketName, fileName).toString();
+        }).join();
+    }
+
+    public File download(String fileName, S3ObjectInputStream objectInputStream) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                File file = new File(fileName);
+                try (OutputStream fileOutputStream = new FileOutputStream(file)) {
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = objectInputStream.read(buffer)) != -1) {
+                        fileOutputStream.write(buffer, 0, bytesRead);
+                    }
+                    logger.log(Level.FINE, "File %s downloaded successfully".formatted(fileName));
+                    return file;
+                }
+            } catch (Exception e) {
+                throw new CustomException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }).join();
     }
 }

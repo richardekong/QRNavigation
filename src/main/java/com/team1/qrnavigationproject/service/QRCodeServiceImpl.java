@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -80,6 +81,41 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     @Override
+    public QRCode linkQRToSPace(QRCode qrCodeToLink) throws IOException{
+        //Determine the filename fn1 of the QR code q1 to link
+        String fn1 = qrCodeToLink.getImageURL().substring(qrCodeToLink.getImageURL().lastIndexOf("/"));
+        //Determine the filename fn2 of the QR code q2 associate with the space, s1 and subspace sp1 to be linked
+        String fn2 = qrCodeRepo.findQRCodeBySpaceIdAndSubspaceId(qrCodeToLink.getSpaceId(), qrCodeToLink.getSubSpaceId())
+                .map(QRCode::getImageURL)
+                .map(url -> url.substring(url.lastIndexOf("/")))
+                .orElse("");
+
+        //Download q2 image as input stream s1 from cloud through filename fn2
+        S3ObjectInputStream s1 = s3Service.getS3Object(fn2);
+        //Download q1 image as input stream s2 cloud through filename fn1
+        S3ObjectInputStream s2 = s3Service.getS3Object(fn1);
+        //save s1 as file f1 (q2) with name fn2 in classpath
+        File f1 = s3Service.download(fn2, s1);
+        //save s2 as file f2 (q1) with name fn1 in classpath
+        File f2 = s3Service.download(fn1, s2);
+        //overwrite qr code q2 from cloud with file f1
+        s3Service.putObjectInS3(f1);
+        // delete f1 from classpath
+        f1.delete();
+        //overwrite qr code q1 from cloud with file f2
+        s3Service.putObjectInS3(f2);
+        //delete f2 from classpath
+        f2.delete();
+
+        return qrCodeRepo.save(qrCodeToLink);
+    }
+
+    @Override
+    public Optional<QRCode> findQRCodeBySpaceIdAndSubspaceId(int spaceId, int subspaceId) {
+        return qrCodeRepo.findQRCodeBySpaceIdAndSubspaceId(spaceId, subspaceId);
+    }
+
+    @Override
     public InputStreamResource download(int id) {
         //get the qrcode information from the database
         QRCode qrToDownload = qrCodeRepo.findQRCodeById(id);
@@ -129,5 +165,9 @@ public class QRCodeServiceImpl implements QRCodeService {
         return qrCodeRepo.findAllQRCodes();
     }
 
+    @Override
+    public void deleteById(int id) {
+        qrCodeRepo.deleteById(id);
+    }
 }
 

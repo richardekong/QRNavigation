@@ -21,7 +21,7 @@ create table location(
 create table address(
                         id int auto_increment primary key,
                         `description` text,
-                        location_id int,
+                        location_id int default null,
                         postcode varchar(10),
                         foreign key(location_id) references location(id)
 );
@@ -29,7 +29,7 @@ create table address(
 create table organization(
                              id int auto_increment primary key,
                              `name` varchar(60) unique,
-                             address_id int,
+                             address_id int default null,
                              phone varchar(15),
                              logo_url text,
                              website_url text,
@@ -43,7 +43,7 @@ create table app_user(
                          username varchar(60) unique,
                          password text,
                          age int,
-                         organization_id int,
+                         organization_id int default null,
                          is_account_expired bit,
                          is_credential_expired bit,
                          is_account_locked bit,
@@ -54,14 +54,14 @@ create table app_user(
 create table role(
                      id int auto_increment primary key,
                      `name` varchar(20),
-                     user_id int,
+                     user_id int default null,
                      foreign key(user_id) references app_user(id)
 );
 
 create table user_type(
                           id int auto_increment primary key,
                           `name` varchar(10),
-                          user_id int,
+                          user_id int default null,
                           foreign key(user_id) references app_user(id)
 );
 
@@ -69,10 +69,10 @@ create table event(
                       id int auto_increment primary key,
                       `name` varchar(30),
                       `description` text,
-                      organizer int,
+                      organizer int default null,
                       `start` datetime,
                       `end` datetime,
-                      image_urls json null,
+                      image_urls json default '[]',
                       foreign key(organizer) references organization(id)
 );
 
@@ -87,14 +87,14 @@ create table space(
                       `name` varchar(30) unique not null,
                       `description` text,
                       photo_urls json null,
-                      org_id int,
-                      address_id int,
-                      event_id int,
-                      `type` int,
+                      org_id int default null,
+                      address_id int default null,
+--                    event_id int default null,
+                      space_type_id int default null,
                       foreign key(org_id) references organization(id),
                       foreign key(address_id) references address(id),
-                      foreign key(`type`) references space_type(id),
-                      foreign key (event_id) references event(id)
+                      foreign key(space_type_id) references space_type(id)
+--                       foreign key (event_id) references event(id)
 );
 
 create table subspace(
@@ -102,12 +102,12 @@ create table subspace(
                          `name` varchar(30),
                          `description` text,
                          photo_url text default null,
-                         main_space int,
-                         `type` int,
-                         event_id int,
+                         main_space int default null,
+                         space_type_id int default null,
+--                          event_id int default null,
                          foreign key (main_space) references space(id),
-                         foreign key (event_id) references event(id),
-                         foreign key (`type`) references space_type(id)
+--                          foreign key (event_id) references event(id),
+                         foreign key (space_type_id) references space_type(id)
 );
 
 
@@ -116,9 +116,9 @@ create table content(
                         id int auto_increment primary key,
                         `name` varchar(50),
                         `description` text,
-                        event_id int,
-                        space_id int,
-                        subspace_id int,
+                        event_id int default null,
+                        space_id int default null,
+                        subspace_id int default null,
                         foreign key(event_id) references event(id),
                         foreign key (space_id) references space(id),
                         foreign key (subspace_id) references subspace(id)
@@ -126,13 +126,14 @@ create table content(
 
 create table qrcode(
                        id int auto_increment primary key,
-                       content_id int,
-                       space_id int,
-                       sub_space_id int,
+                       content_id int default null,
+                       space_id int default null,
+                       subspace_id int default null,
                        `description` text,
                        image_url text,
                        page_url text,
                        created_at datetime,
                        foreign key(space_id) references space(id),
+                       foreign key (subspace_id) references subspace(id),
                        foreign key (content_id) references content(id)
 );

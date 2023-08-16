@@ -21,13 +21,12 @@ import static com.team1.qrnavigationproject.configuration.QRNavigationPaths.*;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Profile("dev")
 public class QRNavigationSecurityConfiguration {
 
-    private PasswordEncoder passwordEncoder;
+    protected PasswordEncoder passwordEncoder;
 
-    private AppAuthenticationProvider appAuthenticationProvider;
-    private UserService userService;
+    protected AppAuthenticationProvider appAuthenticationProvider;
+    protected UserService userService;
 
 
     @Autowired
@@ -71,7 +70,7 @@ public class QRNavigationSecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChainForAdmin(HttpSecurity http) throws Exception {
         // Allow unauthorized access to an array of paths
 
         // Access to other addresses requires authentication permissions
@@ -81,7 +80,6 @@ public class QRNavigationSecurityConfiguration {
                 .and()
                 .formLogin()
                 .successHandler(successHandler())
-//                .defaultSuccessUrl(ADMIN_ORG_REG_PAGE, true)
                 // Username and password parameter names
                 .passwordParameter("password")
                 .usernameParameter("username")
