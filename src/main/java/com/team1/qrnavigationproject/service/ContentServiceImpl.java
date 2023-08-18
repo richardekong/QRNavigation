@@ -4,31 +4,27 @@ import com.team1.qrnavigationproject.model.Content;
 import com.team1.qrnavigationproject.repository.ContentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class ContentServiceImpl implements ContentService{
     private ContentRepo contentRepo;
-
     @Autowired
     void setContentRepo(ContentRepo contentRepo){
-
         this.contentRepo = contentRepo;
     }
-
     @Override
     public List<Integer>findDistinctContentIds(int organizationId){ return contentRepo.findDistinctContentIds(organizationId);}
     @Override
     public List<Object[]> findAll(int organizationId){
         return contentRepo.findAllContentsWithNames(organizationId);
     }
-
+    @Override
+    public List<Object[]> getContentsByEventId(int eventId){ return contentRepo.findAllContentsWithNamesByEventId(eventId); }
     @Override
     public Content saveContent(Content content) {
         return contentRepo.save(content);
     }
-
     @Override
     public Content findContentByName(String contentName) {
         return contentRepo.findByContentName(contentName);
@@ -52,7 +48,6 @@ public class ContentServiceImpl implements ContentService{
             }
         }
     }
-
     @Override
     public Content updateContent(Content content) {
         Content existingContent = contentRepo.findByContentId(content.getId());
@@ -67,5 +62,4 @@ public class ContentServiceImpl implements ContentService{
             throw new IllegalArgumentException("Content with name " + content.getName() + " not found." + existingContent.getName());
         }
     }
-
 }
