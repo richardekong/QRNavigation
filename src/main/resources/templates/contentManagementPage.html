@@ -14,6 +14,140 @@
             <link rel="stylesheet" th:href="@{/css/contentManagementPage.css}" />
             <!--LINK TO NAV BAR STYLE SHEET-->
             <link rel="stylesheet" th:href="@{/css/adminNavBar.css}">
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    // Detect when an option is selected
+                    $("#eventFilter").on("change", function() {
+                        var selectedEventId = $(this).val();
+
+                        if (selectedEventId === "all") {
+                            // Handle "All Events" option if needed
+                            // Here, you might want to reload the entire page
+                            window.location.href = "/admin/contents"; // Replace with your URL
+                        } else {
+                            // Make an AJAX request to fetch contents based on the selected event ID
+                            $.ajax({
+                                url: "/admin/contents/getContents/" + selectedEventId,
+                                type: "GET",
+                                dataType: "json",
+                                success: function(response) {
+                                    // Update the table with the new content data
+                                    updateTable(response);
+                                },
+                                error: function() {
+                                    console.log("Error fetching contents.");
+                                }
+                            });
+                        }
+                    });
+                    // Function to update the table with new content data
+                    function updateTable(response) {
+                        var tableBody = $("#contentTable tbody");
+                        tableBody.empty(); // Clear the table body
+
+                        // Loop through the response data and add new rows to the table
+                        for (var i = 0; i < response.length; i++) {
+                            var content = response[i];
+                            var row = $("<tr>");
+
+                            var contentNameCell = $("<td>").css("text-align", "center").text(content.contentName);
+                            var eventNameCell = $("<td>").css("text-align", "center").text(content.eventName);
+                            var spaceNameCell = $("<td>").css("text-align", "center").text(content.spaceName);
+                            var subSpaceNameCell = $("<td>").css("text-align", "center").text(content.subSpaceName);
+                            var actionsCell = $("<td>").css("text-align", "center").addClass("centered-buttons");
+
+                            // View button form
+                            var viewForm = $("<form>").attr({
+                                "action": "/admin/contents/viewContent",
+                                "method": "POST"
+                            });
+
+                            // Append CSRF token as hidden input
+                            var csrfToken = $("input[name='_csrf']").val();
+                            if (csrfToken) {
+                                viewForm.append($("<input>").attr({
+                                    "type": "hidden",
+                                    "name": "_csrf",
+                                    "value": csrfToken
+                                }));
+                            }
+
+                            viewForm.append($("<input>").attr({
+                                "type": "hidden",
+                                "name": "contentId",
+                                "value": content.contentId
+                            }));
+
+                            viewForm.append($("<input>").attr({
+                                "type": "hidden",
+                                "name": "contentName",
+                                "value": content.contentName
+                            }));
+                            viewForm.append($("<input>").attr({
+                                "type": "hidden",
+                                "name": "eventName",
+                                "value": content.eventName
+                            }));
+                            viewForm.append($("<input>").attr({
+                                "type": "hidden",
+                                "name": "spaceName",
+                                "value": content.spaceName
+                            }));
+                            viewForm.append($("<input>").attr({
+                                "type": "hidden",
+                                "name": "subspaceName",
+                                "value": content.subSpaceName
+                            }));
+                            var viewButton = $("<button>").attr({
+                                "type": "submit",
+                                "class": "btn btn-primary",
+                                "style": "background-color: #1E98D7; margin-right:10px;"
+                            }).text("View");
+                            viewForm.append(viewButton);
+
+                            // Delete button form
+                            var deleteForm = $("<form>").attr({
+                                "action": "/admin/contents/deleteContent",
+                                "method": "POST"
+                            });
+
+                            // Append CSRF token as hidden input
+                            if (csrfToken) {
+                                deleteForm.append($("<input>").attr({
+                                    "type": "hidden",
+                                    "name": "_csrf",
+                                    "value": csrfToken
+                                }));
+                            }
+
+                            deleteForm.append($("<input>").attr({
+                                "type": "hidden",
+                                "name": "contentId",
+                                "value": content.contentId
+                            }));
+
+                            var deleteButton = $("<button>").attr({
+                                "type": "submit",
+                                "class": "btn btn-danger",
+                                "style": "background-color: #E01818;"
+                            }).text("Delete");
+                            deleteForm.append(deleteButton);
+
+                            actionsCell.append(viewForm);
+                            actionsCell.append(deleteForm);
+
+                            row.append(contentNameCell);
+                            row.append(eventNameCell);
+                            row.append(spaceNameCell);
+                            row.append(subSpaceNameCell);
+                            row.append(actionsCell);
+
+                            tableBody.append(row);
+                        }
+                    }
+                });
+            </script>
         </head>
             <body style="overflow-y: scroll; background-color: #FFFFFF; font-family: 'Merriweather','serif';">
             <!-- HERE THE ADMIN HEADER FRAGMENT INSERTED-->
@@ -49,8 +183,7 @@
                                 </select>
                             </div>
                         </form>
-
-                        <table class="table table-hover table-bordered table-responsive" style="border-radius: 4px;">
+                        <table class="table table-hover table-bordered table-responsive" id="contentTable" style="border-radius: 4px;">
                             <thead class="table-light">
                             <tr>
                                 <th><h5 style="text-align: center; ">Content name</h5></th>
@@ -81,7 +214,6 @@
                                     </form>
                                 </td>
                             </tr>
-                            <!-- Add more table rows -->
                             </tbody>
                         </table>
                     </div>
@@ -90,6 +222,6 @@
             </main>
             <!-- HERE THE ADMIN FOOTER FRAGMENT INSERTED-->
             <footer th:insert="adminFooter::adminFooter"></footer>
-        </body>
+            </body>
     </html>
 
