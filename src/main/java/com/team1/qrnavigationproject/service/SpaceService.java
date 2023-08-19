@@ -11,4 +11,6 @@ public interface SpaceService {
     public Space saveSpace(Space space);
     public void deleteSpace(int id);
     public Optional<Space> getSpaceByName(String name);
+
+    Space updateSpace(Space spaceUp);
 }

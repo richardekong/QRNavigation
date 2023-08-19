@@ -1,5 +1,7 @@
 package com.team1.qrnavigationproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +37,7 @@ public class Space {
     @javax.persistence.Column(columnDefinition = "json")
     private String photoURLs;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "org_id")
     private Organization organization;
@@ -45,10 +48,12 @@ public class Space {
     @Column("type")
     private int typeId;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "space",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     List<SubSpace> subSpaces;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="event_id")
     private Event event;
@@ -70,10 +75,10 @@ public class Space {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", photoURLs='" + photoURLs + '\'' +
-                ", organizationId=" + organization.getId() +
+                ", organizationId=" + organization+
                 ", addressId=" + addressId +
                 ", typeId=" + typeId +
-                ", eventId=" + event.getId() +
+                ", eventId=" + event +
                 '}';
     }
 }

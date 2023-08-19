@@ -44,7 +44,8 @@
                 <h5 class="fw-bold">Manage your places</h5>
             </div>
             <div class="d-flex mt-4">
-                <a class="btn" href="/admin/subPlace/createSubPlace"
+                <a class="btn" th:href="@{/admin/places/create/subspace}"
+
                    style="background-color:#3cc494; border:1px solid #3cc494; color: #FFFFFF;">
                     <i class="fas fa-plus me-2"></i>Create new place
                 </a>
@@ -62,30 +63,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>abacws/3.65</td>
+                    <tr th:each="space : ${spaces}">
+                        <td th:text="${space.id}"></td>
+                        <td th:text="${space.name}"></td>
                         <td class="text-center">
-                            <a href="/admin/places/updates">
+                            <a th:href="@{/admin/places/update/{id}(id=${space.id})}">
+                                <input type="hidden" name="spaceId" th:value="${space.id}" />
                                 <button type="button" class="btn btn-primary shadow btn-blue me-2">View</button>
                             </a>
-                            <a href="">
+                            <a th:href="@{/admin/spaces/delete/{id}(id=${space.id})}">
                                 <button type="button" class="btn btn-danger shadow">Delete</button>
                             </a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>abacws/5.48</td>
-                        <td class="text-center">
-                            <a href="/admin/places/updates">
-                                <button type="button" class="btn btn-primary shadow btn-blue me-2">View</button>
-                            </a>
-                            <a href="">
-                                <button type="button" class="btn btn-danger shadow">Delete</button>
-                            </a>
-                        </td>
-                    </tr>
+
                     <!-- Add more rows with place data as needed -->
                     </tbody>
                 </table>

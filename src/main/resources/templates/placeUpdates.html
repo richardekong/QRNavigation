@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -34,33 +34,30 @@
     <div class="col-md-8 mt-5">
         <div class="card shadow py-5">
             <div class="card-body">
-                <form>
+                <form th:action="@{~/admin/spaces/update/process}"  autocomplete="off"
+                      th:object="${space}" method="POST">
+                    <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                    <input type="hidden" th:field="*{id}">
                     <div class="row mb-3">
                         <div class="col-sm-3">
-                            <label for="mainPlace" class="col-form-label fw-bold text-end">Choose main
-                                place:</label>
+                            <label for="mainPlace" class="col-form-label fw-bold text-end">Edit main place:</label>
                         </div>
                         <div class="col-sm-9 mb-3">
-                            <select class="form-select border border-dark rounded-2" id="mainPlace"
-                                    style="border-radius: 5px;">
-                                <option value="Option 1">abacws</option>
-                                <option value="Option 2">queens</option>
-                                <option value="Option 3">abacws</option>
-                            </select>
+                            <input th:field="*{name}" class="form-control border border-dark rounded-2" id="mainPlace"
+                                   style="border-radius: 5px;">
                         </div>
 
                         <div class="col-sm-3">
                             <label for="mainPlace" class="col-form-label fw-bold text-end"></label>
                         </div>
                         <div class="col-sm-9">
-                                <textarea class="form-control border border-dark rounded-2 h-50" id="subPlace" rows="5"
+                                <textarea th:field="*{description}" class="form-control border border-dark rounded-2 h-50" id="subPlace" rows="5"
                                           placeholder="Enter your new place"></textarea>
                         </div>
                     </div>
                     <div class="text-end">
-                        <a href="/admin/places">
-                            <button type="button" class="btn btn-primary btn-blue px-4 mt-3 shadow">Edit</button>
-                        </a>
+
+                            <button type="submit" class="btn btn-primary btn-blue px-4 mt-3 shadow">Edit</button>
                     </div>
                 </form>
             </div>

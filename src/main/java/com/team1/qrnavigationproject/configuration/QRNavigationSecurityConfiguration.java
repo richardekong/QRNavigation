@@ -21,7 +21,7 @@ import static com.team1.qrnavigationproject.configuration.QRNavigationPaths.*;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Profile("dev")
+//@Profile("dev")
 public class QRNavigationSecurityConfiguration {
 
     private PasswordEncoder passwordEncoder;

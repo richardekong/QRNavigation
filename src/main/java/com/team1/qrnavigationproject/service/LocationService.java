@@ -10,4 +10,6 @@ public interface LocationService {
     public Optional<Location> getLocationById(int id);
     public Location saveLocation(Location location);
     public void deleteLocation(int id);
+
+    Location updateLocation(Location locationUp);
 }

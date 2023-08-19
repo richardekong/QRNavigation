@@ -1,5 +1,6 @@
 package com.team1.qrnavigationproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class UserType {
     @NotBlank(message="User must be categorized as either an adult, child, student or staff")
     private String name;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;

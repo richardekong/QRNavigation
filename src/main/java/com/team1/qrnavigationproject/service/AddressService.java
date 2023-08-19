@@ -12,5 +12,6 @@ public interface AddressService {
     Address saveAddress(Address address);
     void deleteAddress(int id);
 
+    Address updateAddress(Address addressUp);
 }
 
