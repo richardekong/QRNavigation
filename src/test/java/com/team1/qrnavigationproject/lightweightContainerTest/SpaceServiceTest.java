@@ -60,7 +60,7 @@ public class SpaceServiceTest {
 
         given(this.spaceRepo.findAll()).willReturn(spacesToFetch);
 
-        List<Space> resultSpaces = this.spaceService.getAllSpaces();
+        List<Space> resultSpaces = this.spaceService.getAllSpaces(1);
 
         verify(this.spaceRepo, times(1)).findAll();
 
@@ -73,7 +73,7 @@ public class SpaceServiceTest {
     public void testFetchSpaceByIdNumber() {
         Space spaceToFetch = this.space;
 
-        given(this.spaceRepo.findById(spaceToFetch.getId())).willReturn(Optional.of(spaceToFetch));
+        //given(this.spaceRepo.findById(spaceToFetch.getId())).willReturn(Optional.of(spaceToFetch));
 
         Optional<Space> space = this.spaceService.getSpaceById(spaceToFetch.getId());
 

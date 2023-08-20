@@ -52,13 +52,23 @@
                                 <div class="row mb-3">
                                     <div class="col-md-5">
                                         <label for="venue">Venues:</label>
-                                        <select class="form-select" id="venue" required>
-                                            <option value="" selected>Select a venue</option>
-                                            <option value="venue1">Venue 1</option>
-                                            <option value="venue2">Venue 2</option>
-                                            <!-- Add more venues as needed -->
-                                        </select>
+                                        <div class="dropdown" style="width: 100%;" id="venue" required>
+                                            <button class="btn btn-secondary dropdown-toggle bg-white text-black border" type="button" id="venueDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
+                                                Select venues
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="venueDropdown">
+                                                <div th:each="spaceSubspace : ${spaceSubspaceMap}">
+                                                    <div th:each="subspaceInfo : ${spaceSubspace.value}">
+                                                        <label class="dropdown-item text-black">
+                                                            <input type="hidden" th:name="${subspaceInfo.type}" th:value="${subspaceInfo.id}" th:attr="data-name=${subspaceInfo.name}">
+                                                            <input type="checkbox" name="${subspaceInfo.type}" th:value="${subspaceInfo.id}" th:text="${subspaceInfo.name}">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+
                                     <div class="col-md-4">
                                         <label for="eventEndDate">End:</label>
                                         <input type="date" class="form-control" id="eventEndDate" name="event_end_date" required>

@@ -1,10 +1,14 @@
 package com.team1.qrnavigationproject.controller;
 
+import com.team1.qrnavigationproject.configuration.AuthenticatedUser;
 import com.team1.qrnavigationproject.model.Space;
+import com.team1.qrnavigationproject.model.User;
 import com.team1.qrnavigationproject.service.SpaceService;
+import com.team1.qrnavigationproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,8 +17,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/qrnavigation/spaces")
 public class SpaceController {
+    private UserService userService;
 
     private final SpaceService spaceService;
+
+    @Autowired
+    public void setUserService(UserService userService){ this.userService = userService;}
 
     @Autowired
     public SpaceController(SpaceService spaceService) {
@@ -22,8 +30,14 @@ public class SpaceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Space>> getAllSpaces() {
-        List<Space> spaces = spaceService.getAllSpaces();
+    public ResponseEntity<List<Space>> getAllSpaces(Authentication authentication) {
+        User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
+        if (admin == null){
+            //return "redirect:/login";
+        }
+        admin.getOrganization().getId();
+        int organizationId = admin.getOrganization().getId();
+        List<Space> spaces = spaceService.getAllSpaces(organizationId);
         return new ResponseEntity<>(spaces, HttpStatus.OK);
     }
 

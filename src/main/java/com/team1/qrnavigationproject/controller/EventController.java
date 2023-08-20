@@ -2,10 +2,14 @@ package com.team1.qrnavigationproject.controller;
 
 import com.team1.qrnavigationproject.configuration.AuthenticatedUser;
 import com.team1.qrnavigationproject.model.Event;
+import com.team1.qrnavigationproject.model.Space;
+import com.team1.qrnavigationproject.model.SubSpace;
 import com.team1.qrnavigationproject.model.User;
 import com.team1.qrnavigationproject.response.CustomException;
 import com.team1.qrnavigationproject.response.Response;
 import com.team1.qrnavigationproject.service.EventService;
+import com.team1.qrnavigationproject.service.SpaceService;
+import com.team1.qrnavigationproject.service.SubSpaceService;
 import com.team1.qrnavigationproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,20 +23,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class EventController {
     private EventService eventService;
     private UserService userService;
+    private SpaceService spaceService;
+    private SubSpaceService subSpaceService;
     @Autowired
     public void setEventService(EventService eventService){
         this.eventService = eventService;
     }
     @Autowired
     public void setUserService(UserService userService){ this.userService = userService;}
+    @Autowired
+    public void setSpaceService(SpaceService spaceService){ this.spaceService = spaceService;}
+    @Autowired
+    public void setSubSpaceService(SubSpaceService subSpaceService){ this.subSpaceService = subSpaceService;}
     @GetMapping("/admin/events")
     public String ShowEventManagementPage(Model model, Authentication authentication) {
         User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
@@ -59,7 +67,58 @@ public class EventController {
         return "eventManagementPage";
     }
     @GetMapping("/admin/events/createEvent")
-    public String ViewCreateEventPage() {
+    public String ViewCreateEventPage(Model model, Authentication authentication) {
+        User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
+        if (admin == null){
+            return "redirect:/login";
+        }
+        admin.getOrganization().getId();
+        int organizationId = admin.getOrganization().getId();
+
+
+        List<Space> spaceList = spaceService.getAllSpaces(organizationId);
+        Map<String, List<Map<String, String>>> spaceSubspaceMap = new LinkedHashMap<>();
+
+        for (Space space : spaceList) {
+            List<SubSpace> subSpaceList = subSpaceService.getSubspacesBySpaceId(space.getId());
+            List<Map<String, String>> subspaceInfoList = new ArrayList<>();  // Change the type to List<Map<String, String>>
+
+            Map<String, String> spaceInfo = new HashMap<>();
+            spaceInfo.put("type", "space");
+            spaceInfo.put("id", String.valueOf(space.getId()));  // Convert ID to String
+            spaceInfo.put("name", " " + space.getName());
+            subspaceInfoList.add(spaceInfo);
+
+            for (SubSpace subSpace : subSpaceList) {
+                Map<String, String> subspaceInfo = new HashMap<>();  // Change the type to Map<String, String>
+                subspaceInfo.put("type", "Sub space");  // Change spaceInfo.put to subspaceInfo.put
+                subspaceInfo.put("id", String.valueOf(subSpace.getId()));  // Convert ID to String
+                subspaceInfo.put("name", " " + subSpace.getName() + " / " + space.getName());
+                subspaceInfoList.add(subspaceInfo);
+            }
+
+            spaceSubspaceMap.put(space.getName(), subspaceInfoList);
+        }
+
+        model.addAttribute("spaceSubspaceMap", spaceSubspaceMap);
+
+
+
+        for (Map.Entry<String, List<Map<String, String>>> entry : spaceSubspaceMap.entrySet()) {
+            String spaceName = entry.getKey();
+            List<Map<String, String>> subspaceInfoList = entry.getValue();
+
+            for (Map<String, String> subspaceInfo : subspaceInfoList) {
+                String subspaceName = subspaceInfo.get("name");
+                String subspaceId = subspaceInfo.get("id");
+                System.out.println("Space: " + spaceName + " (ID: " + subspaceId + ")");
+                System.out.println("Subspace: " + subspaceName + " (ID: " + subspaceId + ")");
+            }
+        }
+
+
+
+
         return "createEventPage";
     }
     @PostMapping("/admin/events/createNewEvent")
@@ -76,6 +135,8 @@ public class EventController {
 
         LocalDateTime end = event_end_date.atTime(event_end_time);
         event.setEnd(end);
+
+
 
         eventService.saveEvent(event);
 

@@ -40,4 +40,9 @@ public class SubSpaceServiceImpl implements SubSpaceService {
     }
     @Override
     public SubSpace findById(int id){ return subSpaceRepo.findById(id);}
+//    @Override
+//    public List<Object[]> getSpaceAndSubspaceInfo(int orgId){
+//        return subSpaceRepo.getSpaceAndSubspaceInfo(orgId);
+//    }
+
 }

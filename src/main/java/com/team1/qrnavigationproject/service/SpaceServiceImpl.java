@@ -15,8 +15,8 @@ public class SpaceServiceImpl implements SpaceService {
         this.spaceRepo = spaceRepo;
     }
     @Override
-    public List<Space> getAllSpaces() {
-        return spaceRepo.findAll();
+    public List<Space> getAllSpaces(int organizationId) {
+        return spaceRepo.findAllSpaces(organizationId);
     }
     @Override
     public Optional<Space> getSpaceById(int id) {
