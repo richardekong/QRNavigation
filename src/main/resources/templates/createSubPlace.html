@@ -53,6 +53,7 @@
                         </div>
                         <div class="col-md-8">
                             <select id="spaceDropdown" class="form-select border border-dark rounded-2 form-select-sm" name="spaceId">
+                                <option value="0" th:value="0">Select main space</option>
                                 <option th:each="space : ${spaces}" th:value="${space.id}" th:text="${space.name}"></option>
                             </select>
                         </div>
@@ -67,7 +68,7 @@
                         </div>
                         <div class="mb-1 col-sm-8">
                             <select id="space-type" class="form-select border border-dark rounded-2 form-select-sm" name="typeId">
-                                <option>Select space type</option>
+                                <option value="0" th:value="0">Select space type</option>
                                 <option th:each="spaceType : ${spaceTypes}" th:value="${spaceType.id}" th:text="${spaceType.name}"></option>
                             </select>
                         </div>

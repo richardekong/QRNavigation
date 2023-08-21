@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/static/css/adminFooter.css" th:href="@{/css/adminFooter.css}">
     <link rel="stylesheet" th:href="@{/css/adminNavBar.css}">
     <!--LINK TO CONTENT MANAGEMENT PAGE STYLE SHEET-->
-    <link rel="stylesheet" th:href="@{/css/contentManagementPage.css}" />
+    <link rel="stylesheet" th:href="@{/css/contentManagementPage.css}"/>
 
     <style>
         .bg-clr {
@@ -38,14 +38,14 @@
 <header th:insert="adminHeader::adminHeader"></header>
 <nav th:insert="adminNavBar::adminNavBar"></nav>
 <div class="container d-flex align-items-center justify-content-center my-5">
-    <div class="col-md-8">
+    <div class="col-md-8 mt-4">
         <div class="d-flex d-flex justify-content-between align-items-center">
-            <div class="d-flex mt-4 mb-3">
-                <h5 class="fw-bold">Manage your places</h5>
+            <img class="d-flex mt-4"  src="/static/images/qr_code_icon.svg" th:src="@{/images/place_black_icon.svg}" alt="house icon" style="width: 5%;">
+            <div class="d-flex mt-4 mb-3" style="margin-left: 5%;">
+                <h5 class="fw-bold" >Manage your places</h5>
             </div>
             <div class="d-flex mt-4">
                 <a class="btn" th:href="@{/admin/places/create/subspace}"
-
                    style="background-color:#3cc494; border:1px solid #3cc494; color: #FFFFFF;">
                     <i class="fas fa-plus me-2"></i>Create new place
                 </a>
@@ -57,18 +57,20 @@
                 <table class="table table-hover table-bordered table-responsive">
                     <thead class="table-light">
                     <tr>
-                        <th scope="col" style="text-align: center; ">Id</th>
-                        <th scope="col" style="text-align: center; ">Place Name</th>
+                        <th scope="col" style="text-align: center; ">Place</th>
+                        <th scope="col" style="text-align: center;">Subspaces</th>
                         <th scope="col" class="text-center">Make Decision</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="space : ${spaces}">
-                        <td th:text="${space.id}"></td>
                         <td th:text="${space.name}"></td>
+                        <td>
+                            <select class="form-select border border-dark rounded-2 form-select-sm subspacesDropdown text-center"></select>
+                        </td>
                         <td class="text-center">
                             <a th:href="@{/admin/places/update/{id}(id=${space.id})}">
-                                <input type="hidden" name="spaceId" th:value="${space.id}" />
+                                <input type="hidden" name="spaceId" th:value="${space.id}"/>
                                 <button type="button" class="btn btn-primary shadow btn-blue me-2">View</button>
                             </a>
                             <a th:href="@{/admin/spaces/delete/{id}(id=${space.id})}">
@@ -76,7 +78,6 @@
                             </a>
                         </td>
                     </tr>
-
                     <!-- Add more rows with place data as needed -->
                     </tbody>
                 </table>
@@ -84,6 +85,12 @@
         </div>
     </div>
 </div>
-</body>
 <footer th:insert="adminFooter::adminFooter"></footer>
+<script th:inline="javascript">
+    const groupedSpaces = /*[[${groupedSpaces}]]*/ [];
+    const selectElements = document.querySelectorAll('.subspacesDropdown');
+    groupedSpaces.forEach((subspaces, index)=>
+        selectElements[index].innerHTML = (subspaces.map(subspace =>`<option value="${subspace.name}" th:value="${subspace.name}">${subspace.name}</option>`).join("")));
+</script>
+</body>
 </html>

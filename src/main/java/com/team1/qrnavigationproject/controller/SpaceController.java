@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -76,9 +77,22 @@ public class SpaceController {
     private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
     @GetMapping(ADMIN_SPACES_PAGE)
-    public String getAllSpaces(Model model) {
+    public String getAllSpaces(Model model, RedirectAttributes attributes, Authentication auth) {
+        if (auth.getName() == null) {
+            attributes.addFlashAttribute("error", "Error (%d): %s"
+                    .formatted(
+                            HttpStatus.UNAUTHORIZED.value(),
+                            HttpStatus.UNAUTHORIZED.getReasonPhrase())
+            );
+            return "redirect:/login";
+        }
         List<Space> spaces = spaceService.getAllSpaces();
+        List<List<SubSpace>> groupedOfSubspaces = spaces
+                .stream()
+                .map(Space::getSubSpaces)
+                .toList();
         model.addAttribute("spaces", spaces);
+        model.addAttribute("groupedSpaces",groupedOfSubspaces);
         return "managePlaces";
 
     }
@@ -184,11 +198,26 @@ public class SpaceController {
 
     @PostMapping("/admin/spaces/create/subspace/process")
     public ModelAndView createSubPlaceForm(
-            @RequestParam(name="spaceId") int spaceId,
-            @RequestParam(name="typeId") int typeId,
+            @RequestParam(name = "spaceId") String spaceIdParam,
+            @RequestParam(name = "typeId") String typeIdParam,
             @Valid @ModelAttribute SubSpace subSpace,
             ModelAndView mav,
+            RedirectAttributes redirectAttributes,
             Authentication auth) {
+
+        int spaceId = Integer.parseInt(spaceIdParam),
+                typeId = Integer.parseInt(typeIdParam);
+
+        if (spaceId < 1) {
+            redirectAttributes.addAttribute("error", "Error (%d): select a space".formatted(HttpStatus.BAD_REQUEST.value()));
+            mav.setViewName("redirect:/admin/places/create/subspace");
+            return mav;
+        }
+        if (typeId < 1) {
+            redirectAttributes.addAttribute("error", "Error (%d): select a space type".formatted(HttpStatus.BAD_REQUEST.value()));
+            mav.setViewName("redirect:/admin/places/create/subspace");
+            return mav;
+        }
 
         Optional<User> admin = Optional.empty();
         Optional<Space> optionalSpace = spaceService.getSpaceById(spaceId);
@@ -196,10 +225,10 @@ public class SpaceController {
         if (auth.isAuthenticated() && auth.getName() != null) {
             admin = userService.findUserByUsername(auth.getName());
         }
-        if (optionalSpace.isEmpty()){
+        if (optionalSpace.isEmpty()) {
             throw new CustomException("Could not find space", HttpStatus.NOT_FOUND);
         }
-        if(optionalSpaceType.isEmpty()){
+        if (optionalSpaceType.isEmpty()) {
             throw new CustomException("Could not find space type", HttpStatus.NOT_FOUND);
         }
         admin.ifPresentOrElse(user -> {
@@ -215,8 +244,10 @@ public class SpaceController {
             organizationService.update(organization);
             mav.addObject("space", updatedSpace)
                     .addObject("success", "Success (%d): Space created".formatted(HttpStatus.CREATED.value()));
-        }, () -> mav.addObject("error", HttpStatus.UNAUTHORIZED.getReasonPhrase())
-                .setViewName("redirect:/" + LOGIN));
+        }, () -> {
+            mav.addObject("error", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+            mav.setViewName("redirect:/" + LOGIN);
+        });
         mav.setViewName("redirect:/admin/places");
         return mav;
     }

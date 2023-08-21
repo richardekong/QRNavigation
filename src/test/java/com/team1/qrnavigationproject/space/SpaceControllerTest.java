@@ -18,11 +18,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -72,8 +70,9 @@ class SpaceControllerTest {
 
     @Test
     void testCreateSubPlaceForm() {
-        int spaceId = 1;
-        int typeId = 2;
+        Map<String,String> params = Map.of("spaceIdParam" ,"1", "typeIdParam", "2");
+        int spaceId= Integer.parseInt(params.get("spaceIdParam"));
+        int typeId = Integer.parseInt(params.get("typeIdParam"));
         SubSpace mockSubSpace = new SubSpace();
         Space mockSpace = new Space();
         SpaceType mockSpaceType = new SpaceType();
@@ -89,8 +88,8 @@ class SpaceControllerTest {
         when(organizationService.update(mockOrganization)).thenReturn(mockOrganization);
 
         ModelAndView mockMav = mock(ModelAndView.class);
-
-        ModelAndView resultMav = spaceController.createSubPlaceForm(spaceId, typeId, mockSubSpace, mockMav, auth);
+        RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
+        ModelAndView resultMav = spaceController.createSubPlaceForm(params.get("spaceIdParam"), params.get("typeIdParam"), mockSubSpace, mockMav, redirectAttributes,auth);
 
         verify(spaceService).getSpaceById(spaceId);
         verify(spaceTypeService).getSpaceTypeById(typeId);
