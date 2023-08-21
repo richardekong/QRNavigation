@@ -65,20 +65,22 @@ public class EventController {
 
 //            model.addAttribute("events", events);
         // here new solution
-        List<Event> events = eventService.findAll(organizationId);
-        Map<Event, Map<Space, List<SubSpace>>> combinedMap = new HashMap<>();
+//        List<Event> events = eventService.findAll(organizationId);
+//        Map<Event, Map<Space, List<SubSpace>>> combinedMap = new HashMap<>();
+//
+//        for (Event e : events) {
+//            Map<Space, List<SubSpace>> spaceSubSpaceMap = new HashMap<>();
+//            List<Space> spaces = spaceService.findAllSpacesByEvent(e.getId());
+//            for (Space s : spaces) {
+//                List<SubSpace> subSpaces = subSpaceService.getSubSpaceByEvent(e.getId(), s.getId());
+//                spaceSubSpaceMap.put(s, subSpaces);
+//            }
+//            combinedMap.put(e, spaceSubSpaceMap);
+//        }
+//
+//        model.addAttribute("combinedMap", combinedMap);
+        // adjusted new solution
 
-        for (Event e : events) {
-            Map<Space, List<SubSpace>> spaceSubSpaceMap = new HashMap<>();
-            List<Space> spaces = spaceService.findAllSpacesByEvent(e.getId());
-            for (Space s : spaces) {
-                List<SubSpace> subSpaces = subSpaceService.getSubSpaceByEvent(e.getId(), s.getId());
-                spaceSubSpaceMap.put(s, subSpaces);
-            }
-            combinedMap.put(e, spaceSubSpaceMap);
-        }
-
-        model.addAttribute("combinedMap", combinedMap);
 
         return "eventManagementPage";
     }

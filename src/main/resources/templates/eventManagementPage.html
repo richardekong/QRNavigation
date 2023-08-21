@@ -65,23 +65,22 @@
                                 </td>
                                 <td>
                                     <select class="form-select">
-                                        <option style="text-align: center; ">Abacws 3.65</option>
-                                        <option style="text-align: center; ">Abacws 3.65</option>
+                                        <option style="text-align: center; " th:each="spaceSubSpaceEntry : ${eventEntry.value}" th:text="${spaceSubSpaceEntry.key.name}" th:attr="data-eventId=${eventEntry.key.id}"></option>
                                     </select>
                                 </td>
                                 <td>
-                                    <p style="text-align: center; " th:text="${#temporals.format(event.start, 'dd/MM/yyyy')}"></p>
+                                    <p style="text-align: center; " th:text="${#temporals.format(eventEntry.key.start, 'dd/MM/yyyy')}"></p>
                                 </td>
                                 <td>
-                                    <p style="text-align: center; " th:text="${#temporals.format(event.end, 'dd/MM/yyyy')}"></p>
+                                    <p style="text-align: center; " th:text="${#temporals.format(eventEntry.key.end, 'dd/MM/yyyy')}"></p>
                                 </td>
                                 <td class="centered-buttons">
                                     <form th:action="@{/admin/events/viewEvent}" th:method="POST">
-                                        <input type="hidden" name="eventId" th:value="${event.id}" />
+                                        <input type="hidden" name="eventId" th:value="${eventEntry.key.id}" />
                                         <button type="submit" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
                                     </form>
                                     <form th:action="@{/admin/events/deleteEvent}" th:method="POST">
-                                        <input type="hidden" name="eventId" th:value="${event.id}" />
+                                        <input type="hidden" name="eventId" th:value="${eventEntry.key.id}" />
                                         <button type="submit" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
                                     </form>
                                 </td>
