@@ -54,14 +54,14 @@
                         </div>
                         <div class="mb-2 col-md-7">
                             <input id="postcode" class="form-control border border-dark rounded-2" name="postcode"
-                                   placeholder="write the postcode">
+                                   placeholder="write the postcode" required pattern="^[A-Z]{1,2}[0-9Rr][0-9A-Za-z]? ?[0-9][A-Za-z]{2}$">
                         </div>
                         <div class="mb-2 col-md-5">
                             <label for="addresses" class="col-form-label">Addresses:</label>
                         </div>
                         <div class="mb-2 col-md-7">
                             <select id="addresses" name="description" class="form-select mb-2">
-                                <option>select an address</option>
+                                <option value="0" th:value="0">select an address</option>
                             </select>
                         </div>
                         <div class="mb-2 col-md-5">
@@ -69,7 +69,7 @@
                         </div>
                         <div class="mb-2 col-md-7">
                             <select id="space-type" name="typeId" class="form-select mb-2">
-                                <option>select space type</option>
+                                <option value="0" th:value="0">select space type</option>
                             </select>
                         </div>
                         <input id="latitude" type="hidden" name="latitude"/>
