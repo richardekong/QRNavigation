@@ -35,7 +35,7 @@ public class Space {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "space",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     List<SubSpace> subSpaces;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name="event_id")
     private Event event;
     public void add(SubSpace subSpace) {

@@ -59,9 +59,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="event:${events}">
+                            <tr th:each="eventEntry : ${combinedMap}">
                                 <td>
-                                    <p style="text-align: center; " th:text="${event.name}"></p>
+                                    <p style="text-align: center; " th:text="${eventEntry.key.name}"></p>
                                 </td>
                                 <td>
                                     <select class="form-select">

@@ -45,4 +45,6 @@ public class SubSpaceServiceImpl implements SubSpaceService {
 //        return subSpaceRepo.getSpaceAndSubspaceInfo(orgId);
 //    }
 
+    @Override
+    public List<SubSpace> getSubSpaceByEvent(int eventId , int spaceId){ return subSpaceRepo.getSubSpaceByEvent(eventId, spaceId); }
 }

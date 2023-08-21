@@ -51,21 +51,35 @@ public class EventController {
         }
         admin.getOrganization().getId();
         int organizationId = admin.getOrganization().getId();
-        /////////
-        Optional<List<Event>> unConfirmedEvents = Optional.of(eventService.findAll(organizationId));
-        unConfirmedEvents.ifPresentOrElse(
-                events -> model.addAttribute("events", events),
-                () -> {
-                    HttpStatus status = HttpStatus.NO_CONTENT;
-                    model.addAttribute("eventsLoadErrorDisplay", new Response(status.value(), status.getReasonPhrase(), System.currentTimeMillis()));
-                    throw new CustomException(HttpStatus.NO_CONTENT.getReasonPhrase(), HttpStatus.NO_CONTENT);
-                });
 
-        model.addAttribute(
-                "eventsLoadSuccessDisplay",
-                new Response(HttpStatus.OK.value(), "Events Loaded Successfully!", System.currentTimeMillis())
-        );
-        model.addAttribute("events", unConfirmedEvents.get());
+          // this is old version
+//        List<Event> events = eventService.findAll(organizationId);
+        // NOTHING
+//        for (Event event : events) {
+//            List<Space> spaces= spaceService.findAllSpacesByEvent(event.getId());
+//            for (Space space : spaces) {
+//                List<SubSpace> subSpaces = subSpaceService.getSubSpaceByEvent(event.getId(),space.getId());
+//
+//
+//        }
+
+//            model.addAttribute("events", events);
+        // here new solution
+        List<Event> events = eventService.findAll(organizationId);
+        Map<Event, Map<Space, List<SubSpace>>> combinedMap = new HashMap<>();
+
+        for (Event e : events) {
+            Map<Space, List<SubSpace>> spaceSubSpaceMap = new HashMap<>();
+            List<Space> spaces = spaceService.findAllSpacesByEvent(e.getId());
+            for (Space s : spaces) {
+                List<SubSpace> subSpaces = subSpaceService.getSubSpaceByEvent(e.getId(), s.getId());
+                spaceSubSpaceMap.put(s, subSpaces);
+            }
+            combinedMap.put(e, spaceSubSpaceMap);
+        }
+
+        model.addAttribute("combinedMap", combinedMap);
+
         return "eventManagementPage";
     }
     @GetMapping("/admin/events/createEvent")

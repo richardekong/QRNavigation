@@ -35,7 +35,7 @@ public class SubSpace {
     @JoinColumn(name = "main_space")
     private Space space;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name="event_id")
     private Event event;
 
