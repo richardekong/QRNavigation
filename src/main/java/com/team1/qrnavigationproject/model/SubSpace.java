@@ -36,12 +36,12 @@ public class SubSpace {
     private String photoURL;
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "main_space")
     private Space space;
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="event_id")
     private Event event;
 
@@ -55,8 +55,8 @@ public class SubSpace {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", photoURL='" + photoURL + '\'' +
-                ", spaceId=" + space.getId() +
-                ", eventId=" + event.getId() +
+//                ", spaceId=" + space +
+//                ", eventId=" + event+
                 ", typeId=" + typeId +
                 '}';
     }

@@ -32,14 +32,14 @@ public class Space {
     private String photoURLs;
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "org_id")
     private Organization organization;
 
     @Column(name="address_id")
     private int addressId;
 
-    @Column(name="type")
+    @Column(name="type_id")
     private int typeId;
 
     @JsonManagedReference
@@ -48,7 +48,7 @@ public class Space {
     List<SubSpace> subSpaces;
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="event_id")
     private Event event;
 

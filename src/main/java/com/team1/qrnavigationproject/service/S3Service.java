@@ -11,6 +11,8 @@ public interface S3Service {
 
    String putObjectInS3(File file) throws IOException;
 
+   void removeObjectFromS3(String fileName);
+
    public File download(String FileName, S3ObjectInputStream s3ObjectInputStream);
 
 }

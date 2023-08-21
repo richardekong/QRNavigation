@@ -2,7 +2,10 @@ package com.team1.qrnavigationproject.fullContainerTest;
 
 
 import com.team1.qrnavigationproject.configuration.QRNavigationPaths;
-import com.team1.qrnavigationproject.model.*;
+import com.team1.qrnavigationproject.model.Address;
+import com.team1.qrnavigationproject.model.Location;
+import com.team1.qrnavigationproject.model.Organization;
+import com.team1.qrnavigationproject.model.User;
 import com.team1.qrnavigationproject.repository.AddressRepo;
 import com.team1.qrnavigationproject.repository.LocationRepo;
 import com.team1.qrnavigationproject.repository.OrganizationRepo;
@@ -14,13 +17,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import static com.team1.qrnavigationproject.configuration.QRNavigationPaths.*;
 import static org.hamcrest.Matchers.containsString;
@@ -49,9 +48,6 @@ public class FullOrganizationContainerTest {
 
     @Autowired
     AddressRepo addressRepo;
-
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @Order(1)
     @WithMockUser(username = "Benjamin", password = "B@55w07d", roles = "ADMIN")

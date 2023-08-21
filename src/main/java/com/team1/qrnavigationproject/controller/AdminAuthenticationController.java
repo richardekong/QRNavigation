@@ -82,10 +82,9 @@ public class AdminAuthenticationController {
         try {
             return "loginPage";
         } catch (BadCredentialsException bce) {
-            model.addAttribute("error",
-                    new Response(HttpStatus.UNAUTHORIZED.value(),
-                            bce.getMessage(),
-                            System.currentTimeMillis())
+            model.addAttribute("error", "Error (%d):%s".formatted(
+                    HttpStatus.UNAUTHORIZED.value(),
+                    bce.getMessage())
             );
             return "loginPage";
         }
@@ -95,8 +94,7 @@ public class AdminAuthenticationController {
     @GetMapping("/login-error")
     public String loginError(Model model) {
         // login failed
-        model.addAttribute("error",
-                new Response(HttpStatus.UNAUTHORIZED.value(), "Wrong username or password", System.currentTimeMillis()));
+        model.addAttribute("error", "Error (401): Wrong username or password");
         return "loginPage";
     }
 

@@ -29,6 +29,15 @@ public class Location {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", address=" + address +
+                '}';
+    }
 }
 
 

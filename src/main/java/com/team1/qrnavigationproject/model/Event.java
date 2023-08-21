@@ -42,15 +42,15 @@ public class Event {
     private Organization organizer;
 
 
-//    @JsonManagedReference
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
-//            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-//    List<Space> spaces;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    List<Space> spaces;
 
-//    @JsonManagedReference
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
-//            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-//    List<SubSpace> subSpaces;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    List<SubSpace> subSpaces;
 
     @NotNull(message = "Please provide a start date and time")
     @Pattern(regexp = DATE_TIME_REGEX,
@@ -66,26 +66,26 @@ public class Event {
     @Column(columnDefinition = "json")
     private String imageUrls;
 
-//    public void addSpace(Space space){
-//        if (spaces == null){
-//            spaces = new ArrayList<>();
+    public void addSpace(Space space){
+        if (spaces == null){
+            spaces = new ArrayList<>();
+        }
+//        if (!spaces.contains(space)){
+            spaces.add(space);
+            space.setEvent(this);
 //        }
-////        if (!spaces.contains(space)){
-//            spaces.add(space);
-//            space.setEvent(this);
-////        }
-//    }
+    }
 
-//    public void addSubSpace(SubSpace subSpace){
-//        if (subSpaces == null){
-//            subSpaces = new ArrayList<>();
+    public void addSubSpace(SubSpace subSpace){
+        if (subSpaces == null){
+            subSpaces = new ArrayList<>();
+        }
+
+//        if (!subSpaces.contains(subSpace)){
+            subSpaces.add(subSpace);
+            subSpace.setEvent(this);
 //        }
-//
-////        if (!subSpaces.contains(subSpace)){
-//            subSpaces.add(subSpace);
-//            subSpace.setEvent(this);
-////        }
-//    }
+    }
 
     @Override
     public String toString() {

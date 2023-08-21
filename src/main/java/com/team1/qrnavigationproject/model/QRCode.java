@@ -23,14 +23,13 @@ public class QRCode {
     @Size(min = 2, message = "Characters must be at least 2")
     private String description;
 
-    @Column(name="content_id")
-    private int contentId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="space_id")
+    private Space space;
 
-    @Column(name="space_id")
-    private int spaceId;
-
-    @Column(name="subspace_id")
-    private int subSpaceId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="sub_space_id")
+    private SubSpace subSpace;
 
     @Column(name = "page_url")
     @NotBlank(message = "Please provide page url")
@@ -43,7 +42,7 @@ public class QRCode {
     private String imageURL;
 
     @Column(name="created_at")
-    @Pattern(regexp = DATE_TIME_REGEX, message = "Invalid datetime value")
+//    @Pattern(regexp = DATE_TIME_REGEX, message = "Invalid datetime value")
     private LocalDateTime createdAt;
 
 }

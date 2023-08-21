@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class QRCodeServiceImpl implements QRCodeService {
@@ -41,11 +44,18 @@ public class QRCodeServiceImpl implements QRCodeService {
         this.s3Service = s3Service;
     }
 
+    private static final Logger LOGGER = Logger.getLogger(QRCodeService.class.getSimpleName());
+
     @Override
     public QRCode save(QRCode qrCode) throws WriterException, IOException {
-        if (qrCodeRepo.existsById(qrCode.getId())) {
+        int id = qrCode.getId();
+        int spaceId = qrCode.getSpace().getId();
+        int subspaceId = qrCode.getSubSpace().getId();
+        if (qrCodeRepo.existsById(qrCode.getId()) || qrCodeRepo.existsQRCodeBySpaceIdAndSubSpaceId(spaceId, subspaceId)) {
             throw new CustomException("This QRCode exists Already", HttpStatus.CONFLICT);
         }
+
+        LOGGER.log(Level.INFO, "Saving QRCode for %s".formatted(qrCode.getSubSpace().getName()));
         //generate an image file from the qrCode data
         String imageName = UUID.randomUUID().toString();
         File qrImageFile = qrImageService.makeQRImage(imageName, qrCode.getPageURL());
@@ -65,13 +75,13 @@ public class QRCodeServiceImpl implements QRCodeService {
         }
         QRCode qrTobeUpdated = qrCodeRepo.findQRCodeById(qrCode.getId());
         //determine if there is a change in the space or subspace
-        boolean spaceOrSubSpaceIsTheSame = (qrCode.getSpaceId() == qrTobeUpdated.getSpaceId())
-                || (qrCode.getSubSpaceId() == qrTobeUpdated.getSubSpaceId());
+        boolean spaceOrSubSpaceIsTheSame = (qrCode.getSpace().getId() == qrTobeUpdated.getSpace().getId())
+                || (qrCode.getSubSpace().getId() == qrTobeUpdated.getSubSpace().getId());
         //if the space or subspace is not the same, replace QRCode image, and encode with a new pageURL
         if (!spaceOrSubSpaceIsTheSame) {
             //generate and overwrite the qrCode in s3 bucket
             String imageURL = qrTobeUpdated.getImageURL();
-            String imageFileName = imageURL.substring(imageURL.lastIndexOf("/"));
+            String imageFileName = imageURL.substring(imageURL.lastIndexOf("/") + 1);
             File qrImageFile = qrImageService.makeQRImage(imageFileName, qrCode.getPageURL());
             //upload the generated qr code to s3 bucket
             imageURL = s3Service.putObjectInS3(qrImageFile);
@@ -81,13 +91,20 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     @Override
-    public QRCode linkQRToSPace(QRCode qrCodeToLink) throws IOException{
+    public QRCode patchQRCode(QRCode qrCode) {
+        return qrCodeRepo.save(qrCode);
+    }
+
+    @Override
+    public QRCode linkQRToSPace(QRCode qrCodeToLink) throws IOException {
         //Determine the filename fn1 of the QR code q1 to link
-        String fn1 = qrCodeToLink.getImageURL().substring(qrCodeToLink.getImageURL().lastIndexOf("/"));
+        String fn1 = qrCodeToLink.getImageURL().substring(qrCodeToLink.getImageURL().lastIndexOf("/") + 1);
         //Determine the filename fn2 of the QR code q2 associate with the space, s1 and subspace sp1 to be linked
-        String fn2 = qrCodeRepo.findQRCodeBySpaceIdAndSubspaceId(qrCodeToLink.getSpaceId(), qrCodeToLink.getSubSpaceId())
+        int spaceId = qrCodeToLink.getSpace().getId();
+        int subspaceId = qrCodeToLink.getSubSpace().getId();
+        String fn2 = qrCodeRepo.findQRCodeBySpaceIdAndSubspaceId(spaceId, subspaceId)
                 .map(QRCode::getImageURL)
-                .map(url -> url.substring(url.lastIndexOf("/")))
+                .map(url -> url.substring(url.lastIndexOf("/") + 1))
                 .orElse("");
 
         //Download q2 image as input stream s1 from cloud through filename fn2
@@ -116,15 +133,22 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     @Override
+    public Optional<List<QRCode>> findQRCodesByOrganizationId(int id) {
+        return qrCodeRepo.findQRCodesByOrganizationId(id);
+    }
+
+    @Override
     public InputStreamResource download(int id) {
         //get the qrcode information from the database
         QRCode qrToDownload = qrCodeRepo.findQRCodeById(id);
-        if (qrToDownload == null){
+        if (qrToDownload == null) {
             throw new CustomException(HttpStatus.NOT_FOUND.getReasonPhrase(), HttpStatus.NOT_FOUND);
         }
+        LOGGER.log(Level.INFO, "Retrieving information to download QRCode for %s in %s"
+                .formatted(qrToDownload.getSubSpace().getName(), qrToDownload.getSpace().getName()));
         String imageURL = qrToDownload.getImageURL();
         //get the filename from the image URL after the last slash character
-        String imageFileName =  imageURL.substring(imageURL.lastIndexOf("/"));
+        String imageFileName = imageURL.substring(imageURL.lastIndexOf("/") + 1);
         S3ObjectInputStream s3Stream = s3Service.getS3Object(imageFileName);
         return new InputStreamResource(s3Stream);
     }
@@ -140,10 +164,6 @@ public class QRCodeServiceImpl implements QRCodeService {
         return qrCodeRepo.findQRCodeById(id);
     }
 
-    @Override
-    public QRCode findQRCodeByContentId(int id) {
-        return qrCodeRepo.findQRCodeByContentId(id);
-    }
 
     @Override
     public QRCode findQRCodeBySpaceId(int id) {
@@ -166,8 +186,30 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     @Override
-    public void deleteById(int id) {
-        qrCodeRepo.deleteById(id);
+    public void deleteById(int id) throws Exception{
+        LOGGER.log(Level.INFO, "Retrieving QRCode %d to delete".formatted(id));
+        if (!qrCodeRepo.existsById(id)) {
+            HttpStatus notFound = HttpStatus.NOT_FOUND;
+            throw new CustomException("Error(%d): Failed to delete QRCode %d".formatted(notFound.value(), id), notFound);
+        }
+        CompletableFuture.supplyAsync(() -> {
+            QRCode qrToDelete = qrCodeRepo.findQRCodeById(id);
+            String imageURL = qrToDelete.getImageURL();
+            String fileName = imageURL.substring(imageURL.lastIndexOf("/") + 1);
+            qrCodeRepo.deleteById(id);
+            return fileName;
+        }).thenApply(fileName -> {
+            if (!qrCodeRepo.existsById(id)) {
+                LOGGER.log(Level.INFO, "Begin deleting QRCode %d image from S3".formatted(id));
+                s3Service.removeObjectFromS3(fileName);
+            }
+            return "QRCode Image %s deleted".formatted(fileName);
+        }).handle((response, error) -> {
+            if (error != null) {
+                LOGGER.log(Level.INFO, "Could not delete QRCode %d image from S3".formatted(id));
+            }
+            return response;
+        });
     }
 }
 

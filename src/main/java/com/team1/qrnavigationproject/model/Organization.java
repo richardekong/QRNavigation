@@ -119,11 +119,11 @@ public class Organization {
         return "Organization{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", address=" + address +
+//                ", address=" + address +
                 ", phone='" + phone + '\'' +
                 ", logoURL='" + logoURL + '\'' +
                 ", websiteURL='" + websiteURL + '\'' +
-                ", user=" + user +
+//                ", user=" + user +
                 ", headerBackground='" + headerBackground + '\'' +
                 ", footerBackground='" + footerBackground + '\'' +
                 '}';

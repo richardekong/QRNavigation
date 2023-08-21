@@ -63,9 +63,8 @@ public interface TestData {
         return new QRCode(
                 1,
                 "QRCode for Abacws / 3.45",
-                1,
-                1,
-                1,
+                null,
+                null,
                 "https://www.cardiffuni.com",
                 "https://www.cardiffuni.com/qr.png",
                 LocalDateTime.of(2023, 7, 15, 14, 5, 0)
@@ -147,7 +146,7 @@ public interface TestData {
 
     static SubSpace createSubSpace(){
         return  new SubSpace(
-                1, "Abacws / 3.45", "room in Abacws", "img/1", new Space(), new Event(),1
+                1, "3.45", "room in Abacws", "img/1", new Space(), new Event(),1
         );
     }
 

@@ -1,7 +1,9 @@
 package com.team1.qrnavigationproject.service;
 
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
@@ -35,11 +37,22 @@ public class S3ServiceImpl implements S3Service {
         this.amazonS3Client = amazonS3Client;
     }
 
+    private static final Logger LOGGER = Logger.getLogger(S3Service.class.getSimpleName());
+
     @Override
     public S3ObjectInputStream getS3Object(String fileName) {
+        LOGGER.log(Level.INFO, "Started downloading QRCode image with file name %s from S3 Bucket".formatted(fileName));
         return CompletableFuture
                 .supplyAsync(() -> amazonS3Client.getObject(s3BucketName, fileName))
                 .thenApply(S3Object::getObjectContent)
+                .handle((response, error) -> {
+                    if (error != null) {
+                        LOGGER.log(Level.SEVERE, "Failed to retrieve input stream while downloading QRCode with file name %s from S3 Bucket. See details below:\n%s"
+                                .formatted(fileName,error.getMessage()));
+                    }
+                    LOGGER.log(Level.INFO, "Downloaded Input stream for QRCode with filename %s".formatted(fileName));
+                    return response;
+                })
                 .join();
     }
 
@@ -71,12 +84,39 @@ public class S3ServiceImpl implements S3Service {
                     while ((bytesRead = objectInputStream.read(buffer)) != -1) {
                         fileOutputStream.write(buffer, 0, bytesRead);
                     }
-                    logger.log(Level.FINE, "File %s downloaded successfully".formatted(fileName));
                     return file;
                 }
             } catch (Exception e) {
                 throw new CustomException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
+        }).handle((response, error)->{
+            if (error!=null){
+                logger.log(Level.SEVERE, "Failed to download QRCode image file %s".formatted(fileName));
+                logger.log(Level.SEVERE, "See details below: \n %s".formatted(error.getMessage()));
+            }
+            logger.log(Level.INFO, "QRCode image file %s downloaded successfully".formatted(fileName));
+            return response;
         }).join();
+    }
+
+    @Override
+    public void removeObjectFromS3(String fileName) {
+        LOGGER.log(Level.INFO, "Deleting QRCode image file name %s from S3 Bucket.".formatted(fileName));
+        CompletableFuture.supplyAsync(()->{
+            DeleteObjectRequest request = new DeleteObjectRequest(s3BucketName, fileName);
+            try {
+                amazonS3Client.deleteObject(request);
+                return HttpStatus.NO_CONTENT.getReasonPhrase();
+            }catch (AmazonServiceException e){
+                throw new AmazonServiceException(e.getMessage());
+            }
+        }).handle((response, error)->{
+            if(error != null){
+                LOGGER.log(Level.SEVERE, "Failed to delete QRCode image file name %s from S3 Bucket.".formatted(fileName));
+                throw new CustomException(error.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            LOGGER.log(Level.INFO, "QRCode image file name %s was Deleted from S3 Bucket.".formatted(fileName));
+            return response;
+        });
     }
 }

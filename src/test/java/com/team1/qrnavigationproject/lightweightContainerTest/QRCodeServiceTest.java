@@ -75,7 +75,6 @@ public class QRCodeServiceTest {
         QRCode updatedQRCode = new QRCode(
                 qr.getId(),
                 qr.getDescription(),
-                qr.getContent(),
                 qr.getSpace(),
                 qr.getSubSpace(),
                 qr.getPageURL(),

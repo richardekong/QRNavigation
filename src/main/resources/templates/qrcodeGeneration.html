@@ -42,21 +42,22 @@
 <header th:insert="adminHeader::adminHeader"></header>
 <nav th:insert="adminNavBar::adminNavBar"></nav>
 <main class="mt-5 mb-5">
+    <section th:insert="notification::notication"></section>
     <section class="container row p-5 m-auto">
         <div class="card col-xs-12 col-sm-12 col-md-6 col-lg-6 shadow p-5">
-            <form class="row">
-                <label class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mb-1" for="main-space">Link to main space:</label>
-                <select class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mb-1 rounded" name="spaceId" id="main-space">
-                    <option>Select a space</option>
+            <form class="row" th:action="@{/admin/qrcodes/generate/process}" th:method="POST">
+                <label class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mb-1" for="main-space">Main space:</label>
+                <select class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mb-1 form-select-sm" name="spaceId" id="main-space">
+                    <option value="0" th:value="0">Select a space</option>
                     <option th:each="mainSpaceOption:${spaces}"
                             th:value="${mainSpaceOption?.id}" th:text="${mainSpaceOption?.name}"></option>
                 </select>
-                <label class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mb-1" for="sub-space">Link to subSpace:</label>
-                <select id="sub-space" class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mb-3 rounded" name="subSpaceId">
-                    <option>Select subSpace</option>
+                <label class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mb-1" for="sub-space">Subspace:</label>
+                <select id="sub-space" class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mb-3 form-select-sm" name="subSpaceId">
+                    <option value="0" th:value="0">Select subSpace</option>
                 </select>
                 <label for="description"></label>
-                <textarea id="description" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-1 ms-1 h-50 rounded"
+                <textarea id="description" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-1 ms-1 h-50 form-control"
                           name="description" cols="30" rows="6" placeholder="Enter description"></textarea>
                 <button class="w-50 btn btn-primary alternate-btn shadow mt-4 m-auto">Generate QR code</button>
             </form>
@@ -67,7 +68,11 @@
                      alt="qr code">
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                <button class="btn btn-primary w-25 alternate-btn shadow">Download</button>
+                <form id="download-form" th:action="@{/admin/qrcodes/download}" th:method="POST">
+                    <input type="hidden" name="spaceId">
+                    <input type="hidden" name="subSpaceId">
+                    <button type="submit" class="btn btn-primary w-25 alternate-btn shadow">Download</button>
+                </form>
             </div>
         </div>
     </section>
@@ -76,18 +81,28 @@
 
 <script th:inline="javascript">
     const spaces = /*[[${spaces}]]*/ [];
-
-    console.log(spaces)
     const spaceSelectDropdown = document.querySelector("#main-space");
     const subspaceDropDown = document.querySelector("#sub-space");
+    const hiddenSpaceIdInput = document.querySelector("#download-form input[name='spaceId']");
+    const hiddenSubSpaceIdInput = document.querySelector("#download-form input[name='subSpaceId']");
+    console.log(spaces);
     spaceSelectDropdown.addEventListener("change", evt => {
-        let spacePos = evt.target.value;
-        let subspaces = spaces[spacePos - 1].subSpaces;
-        subspaces.forEach(subspace => console.log(subspace.name));
-        let subspaceOptionStr = subspaces.map(
-            subspace => `<option value="${subspace.name}" th:value="${subspace.id}" th:text="${subspace.name}">${subspace.name}</option>`
-        ).join("");
-        subspaceDropDown.innerHTML = subspaceOptionStr;
+        let spaceId = parseInt(evt.target.value);
+        let subspaces = spaces.find(space => space.id === spaceId).subSpaces;
+        subspaceDropDown.innerHTML = "<option value='0' th:value='0'>Select subspace</option>";
+        subspaceDropDown.innerHTML = subspaceDropDown.innerHTML
+            .concat(
+            subspaces.map(
+                subspace => `<option value="${subspace.id}" th:value="${subspace.id}" th:text="${subspace.name}">${subspace.name}</option>`).join("")
+        );
+
+        hiddenSpaceIdInput.value = parseInt(spaceId);
+        console.log(hiddenSpaceIdInput.value);
+    });
+
+    subspaceDropDown.addEventListener("change", evt => {
+        hiddenSubSpaceIdInput.value = parseInt(evt.target.value);
+        console.log(hiddenSubSpaceIdInput.value)
     });
 
 
