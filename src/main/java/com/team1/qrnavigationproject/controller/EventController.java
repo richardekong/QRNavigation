@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -83,15 +85,9 @@ public class EventController {
             List<SubSpace> subSpaceList = subSpaceService.getSubspacesBySpaceId(space.getId());
             List<Map<String, String>> subspaceInfoList = new ArrayList<>();  // Change the type to List<Map<String, String>>
 
-            Map<String, String> spaceInfo = new HashMap<>();
-            spaceInfo.put("type", "space");
-            spaceInfo.put("id", String.valueOf(space.getId()));  // Convert ID to String
-            spaceInfo.put("name", " " + space.getName());
-            subspaceInfoList.add(spaceInfo);
-
             for (SubSpace subSpace : subSpaceList) {
                 Map<String, String> subspaceInfo = new HashMap<>();  // Change the type to Map<String, String>
-                subspaceInfo.put("type", "Sub space");  // Change spaceInfo.put to subspaceInfo.put
+                subspaceInfo.put("type", "subSpace");  // Change spaceInfo.put to subspaceInfo.put
                 subspaceInfo.put("id", String.valueOf(subSpace.getId()));  // Convert ID to String
                 subspaceInfo.put("name", " " + subSpace.getName() + " / " + space.getName());
                 subspaceInfoList.add(subspaceInfo);
@@ -104,25 +100,20 @@ public class EventController {
 
 
 
-        for (Map.Entry<String, List<Map<String, String>>> entry : spaceSubspaceMap.entrySet()) {
-            String spaceName = entry.getKey();
-            List<Map<String, String>> subspaceInfoList = entry.getValue();
-
-            for (Map<String, String> subspaceInfo : subspaceInfoList) {
-                String subspaceName = subspaceInfo.get("name");
-                String subspaceId = subspaceInfo.get("id");
-                System.out.println("Space: " + spaceName + " (ID: " + subspaceId + ")");
-                System.out.println("Subspace: " + subspaceName + " (ID: " + subspaceId + ")");
-            }
-        }
-
-
-
 
         return "createEventPage";
     }
     @PostMapping("/admin/events/createNewEvent")
-    public String CreateNewEvent(@ModelAttribute Event event, @RequestParam Map<String, String> requestParams) {
+    public String CreateNewEvent(@ModelAttribute Event event, @RequestParam Map<String, String> requestParams, HttpServletRequest request, Authentication authentication) {
+        User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
+        if (admin == null){
+            return "redirect:/login";
+        }
+        admin.getOrganization().getId();
+        int organizationId = admin.getOrganization().getId();
+        //
+//        event.setOrganizer(admin.getOrganization());
+
 
         LocalDate event_start_date = LocalDate.parse(requestParams.get("event_start_date"));
         LocalTime event_start_time = LocalTime.parse(requestParams.get("event_start_time"));
@@ -135,6 +126,26 @@ public class EventController {
 
         LocalDateTime end = event_end_date.atTime(event_end_time);
         event.setEnd(end);
+
+        // Get the selected venues and subspaces from the request
+        String[] selectedVenues = request.getParameterValues("venue");
+        String[] selectedSubspaces = request.getParameterValues("subspace");
+
+        // Print selected venues
+        if (selectedVenues != null) {
+            System.out.println("*** Selected Venues:");
+            for (String venueId : selectedVenues) {
+                System.out.println(" *** Venue ID: " + venueId);
+            }
+        }
+
+        // Print selected subspaces
+        if (selectedSubspaces != null) {
+            System.out.println("Selected Subspaces:");
+            for (String subspaceId : selectedSubspaces) {
+                System.out.println("Subspace ID: " + subspaceId);
+            }
+        }
 
 
 
