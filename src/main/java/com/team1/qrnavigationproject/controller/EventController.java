@@ -109,10 +109,10 @@ public class EventController {
         if (admin == null){
             return "redirect:/login";
         }
-        admin.getOrganization().getId();
-        int organizationId = admin.getOrganization().getId();
+//        admin.getOrganization().getId();
+//        int organizationId = admin.getOrganization().getId();
         //
-//        event.setOrganizer(admin.getOrganization());
+       event.setOrganizer(admin.getOrganization());
 
 
         LocalDate event_start_date = LocalDate.parse(requestParams.get("event_start_date"));
@@ -128,24 +128,27 @@ public class EventController {
         event.setEnd(end);
 
         // Get the selected venues and subspaces from the request
-        String[] selectedVenues = request.getParameterValues("venue");
-        String[] selectedSubspaces = request.getParameterValues("subspace");
+        String[] selectedVenues = request.getParameterValues("space");
+        String[] selectedSubspaces = request.getParameterValues("subSpace");
 
-        // Print selected venues
+        // Assign the event  to the selected spaces
         if (selectedVenues != null) {
-            System.out.println("*** Selected Venues:");
             for (String venueId : selectedVenues) {
-                System.out.println(" *** Venue ID: " + venueId);
+                Space space = spaceService.findByName(venueId);
+                space.setEvent(event);
             }
         }
 
-        // Print selected subspaces
+        // Assign the event to the selectedSubspaces
         if (selectedSubspaces != null) {
-            System.out.println("Selected Subspaces:");
             for (String subspaceId : selectedSubspaces) {
-                System.out.println("Subspace ID: " + subspaceId);
+
+                int subspaceIdInt = Integer.parseInt(subspaceId);
+                SubSpace subSpace = subSpaceService.findById(subspaceIdInt);
+                subSpace.setEvent(event);
             }
         }
+
 
 
 

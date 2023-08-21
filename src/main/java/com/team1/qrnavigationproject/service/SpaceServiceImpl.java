@@ -35,5 +35,7 @@ public class SpaceServiceImpl implements SpaceService {
         return spaceRepo.findSpaceByName(name);
     }
     @Override
+    public Space findByName(String spaceName){ return spaceRepo.findByName(spaceName);}
+    @Override
     public Space findById(int id){ return spaceRepo.findById(id);}
 }

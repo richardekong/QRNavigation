@@ -63,7 +63,7 @@
                                                     </label>
                                                     <div th:each="subspaceInfo : ${spaceSubspace.value}">
                                                         <label class="dropdown-item text-black">
-                                                            <input type="checkbox" th:name="${subspaceInfo.get('type')}" th:value="${subspaceInfo.get('id')}" th:text="${subspaceInfo.get('name')}" th:attr="data-name=${subspaceInfo.get('name')}">
+                                                            <input type="checkbox" name=subSpace th:value="${subspaceInfo.get('id')}" th:text="${subspaceInfo.get('name')}" th:attr="data-name=${subspaceInfo.get('name')}">
                                                         </label>
                                                     </div>
                                                 </div>

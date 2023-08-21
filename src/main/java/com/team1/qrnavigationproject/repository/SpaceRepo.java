@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface SpaceRepo extends JpaRepository<Space, Integer> {
     Optional<Space> findSpaceByName(String spaceName);
+    Space findByName(String spaceName);
     Space findById(int id);
     @Query("SELECT s FROM Space s WHERE s.organization.id = :organizationId")
     List<Space> findAllSpaces(int organizationId);
