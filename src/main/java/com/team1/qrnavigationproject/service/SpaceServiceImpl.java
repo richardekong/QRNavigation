@@ -43,5 +43,12 @@ public class SpaceServiceImpl implements SpaceService {
         return spaceRepo.findSpaceByName(name);
     }
 
-    // Add other business logic methods if needed
+    @Override
+    public Space updateSpace(Space spaceUp) {
+        Space byId = spaceRepo.findById(spaceUp.getId()).get();
+        byId.setName(spaceUp.getName());
+        byId.setDescription(spaceUp.getDescription());
+        return spaceRepo.save(byId);
+    }
+
 }

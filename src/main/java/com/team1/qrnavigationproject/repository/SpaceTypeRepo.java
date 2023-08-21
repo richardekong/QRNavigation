@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SpaceTypeRepo extends JpaRepository<SpaceType, Integer> {
-    // You can add custom queries here if needed
+
 }

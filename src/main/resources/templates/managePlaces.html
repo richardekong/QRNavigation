@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Place Page</title>
+    <title>Manage Spaces</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <!-- Font Awesome Icons -->
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/static/css/adminFooter.css" th:href="@{/css/adminFooter.css}">
     <link rel="stylesheet" th:href="@{/css/adminNavBar.css}">
     <!--LINK TO CONTENT MANAGEMENT PAGE STYLE SHEET-->
-    <link rel="stylesheet" th:href="@{/css/contentManagementPage.css}" />
+    <link rel="stylesheet" th:href="@{/css/contentManagementPage.css}"/>
 
     <style>
         .bg-clr {
@@ -38,50 +38,42 @@
 <header th:insert="adminHeader::adminHeader"></header>
 <nav th:insert="adminNavBar::adminNavBar"></nav>
 <div class="container d-flex align-items-center justify-content-center my-5">
-    <div class="col-md-8">
+    <div class="col-md-8 mt-4">
         <div class="d-flex d-flex justify-content-between align-items-center">
-            <div class="d-flex mt-4 mb-3">
-                <h5 class="fw-bold">Manage your places</h5>
+            <img class="d-flex mt-4"  src="/static/images/qr_code_icon.svg" th:src="@{/images/place_black_icon.svg}" alt="house icon" style="width: 5%;">
+            <div class="d-flex mt-4 mb-3" style="margin-left: 5%;">
+                <h5 class="fw-bold" >Manage your spaces</h5>
             </div>
             <div class="d-flex mt-4">
-                <a class="btn" href="/admin/subPlace/createSubPlace"
+                <a class="btn" th:href="@{/admin/places/create/subspace}"
                    style="background-color:#3cc494; border:1px solid #3cc494; color: #FFFFFF;">
-                    <i class="fas fa-plus me-2"></i>Create new place
+                    <i class="fas fa-plus me-2"></i>Create Space
                 </a>
             </div>
         </div>
         <!--py-3-->
-        <div class="card shadow p-3 mt-2">
+        <div class="card shadow p-3 mb-5">
             <div class="card-body">
                 <table class="table table-hover table-bordered table-responsive">
                     <thead class="table-light">
                     <tr>
-                        <th scope="col" style="text-align: center; ">Id</th>
-                        <th scope="col" style="text-align: center; ">Place Name</th>
+                        <th scope="col" style="text-align: center; ">Space</th>
+                        <th scope="col" style="text-align: center;">Subspaces</th>
                         <th scope="col" class="text-center">Make Decision</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>abacws/3.65</td>
-                        <td class="text-center">
-                            <a href="/admin/places/updates">
-                                <button type="button" class="btn btn-primary shadow btn-blue me-2">View</button>
-                            </a>
-                            <a href="">
-                                <button type="button" class="btn btn-danger shadow">Delete</button>
-                            </a>
+                    <tr th:each="space : ${spaces}">
+                        <td th:text="${space.name}"></td>
+                        <td>
+                            <select class="form-select border border-dark rounded-2 form-select-sm subspacesDropdown text-center"></select>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>abacws/5.48</td>
                         <td class="text-center">
-                            <a href="/admin/places/updates">
+                            <a th:href="@{/admin/places/update/{id}(id=${space.id})}">
+                                <input type="hidden" name="spaceId" th:value="${space.id}"/>
                                 <button type="button" class="btn btn-primary shadow btn-blue me-2">View</button>
                             </a>
-                            <a href="">
+                            <a th:href="@{/admin/spaces/delete/{id}(id=${space.id})}">
                                 <button type="button" class="btn btn-danger shadow">Delete</button>
                             </a>
                         </td>
@@ -93,6 +85,12 @@
         </div>
     </div>
 </div>
-</body>
 <footer th:insert="adminFooter::adminFooter"></footer>
+<script th:inline="javascript">
+    const groupedSpaces = /*[[${groupedSpaces}]]*/ [];
+    const selectElements = document.querySelectorAll('.subspacesDropdown');
+    groupedSpaces.forEach((subspaces, index)=>
+        selectElements[index].innerHTML = (subspaces.map(subspace =>`<option value="${subspace.name}" th:value="${subspace.name}">${subspace.name}</option>`).join("")));
+</script>
+</body>
 </html>

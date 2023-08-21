@@ -18,6 +18,8 @@ public interface QRNavigationPaths {
 
     String ADMIN_MAIN_PAGE = "/admin/main";
 
+    String ADMIN_SPACES_PAGE = "/admin/places";
+
     String ADMIN_ORG_REG_PAGE = "/admin/organization/register";
 
     String ADMIN_ORG_UPDATE_PAGE = "/admin/organization/update";
@@ -46,4 +48,6 @@ public interface QRNavigationPaths {
     };
     String ADMIN_ORG_REG_PROCESS = "/admin/organization/register/process";
     String ADMIN_ORG_UPDATE_PROCESS = "/admin/organization/update/process";
+    String ADMIN_SPACES_CREATE = "/admin/spaces/create";
+    String ADMIN_SPACES_CREATE_PROCESS = "/admin/spaces/create/process";
 }

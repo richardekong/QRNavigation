@@ -1,5 +1,7 @@
 package com.team1.qrnavigationproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,14 +36,17 @@ public class Event {
     @Size(min = 2, message = "Characters must be at least 2")
     private String description;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="organizer")
     private Organization organizer;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     List<Space> spaces;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     List<SubSpace> subSpaces;
@@ -87,7 +92,7 @@ public class Event {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", organizer=" + organizer.getId() +
+                ", organizer=" + organizer+
                 ", start=" + start +
                 ", end=" + end +
                 ", imageUrls='" + imageUrls + '\'' +

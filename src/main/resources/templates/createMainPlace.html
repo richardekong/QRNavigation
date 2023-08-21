@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Place Page</title>
+    <title>Create Main Space</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <!-- Font Awesome Icons -->
@@ -16,11 +16,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
     <style>
+        body{
+            font-family: 'Merriweather', serif;
+        }
         .bg-clr {
             background-color: #f2f2f2;
         }
+
         .btn-blue {
             background-color: #1d99d7;
+        }
+        label{
+            font-weight: bolder;
         }
     </style>
 </head>
@@ -28,32 +35,64 @@
 <body class="bg-clr">
 <header th:insert="adminHeader::adminHeader"></header>
 <nav th:insert="adminNavBar::adminNavBar"></nav>
-    <div class="container d-flex align-items-center justify-content-center my-5">
-        <div class="col-md-8">
-            <div class="card shadow py-5 mt-5">
-                <div class="card-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="place" class="form-label fw-bold">Create new main place:</label>
-                            <input type="place" class="form-control border border-dark rounded-2" id=" "
-                                placeholder="  Write the name of the new main place here">
+<div class="container d-flex align-items-center justify-content-center my-5">
+    <div class="col-md-8">
+        <div class="card shadow mb-5 mt-5">
+            <div class="card-body py-3">
+                <h3>Create Main Space</h3>
+                <form class="p-5" th:action="@{/admin/spaces/create/process}" th:method="POST">
+                    <div class="row mb-3">
+                        <div class="mb-2 col-md-5">
+                            <label for="space" class="form-label fw-bold">Create main space:</label>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2 col-md-7">
+                            <input id="space" class="form-control border border-dark rounded-2" name="name"
+                                   placeholder="  Write the name of the new main place here">
+                        </div>
+                        <div class="mb-2 col-md-5">
                             <label for="postcode" class="form-label fw-bold">Postcode:</label>
-                            <input type="postcode" class="form-control border border-dark rounded-2" id=""
-                                placeholder="write the postcode">
                         </div>
+                        <div class="mb-2 col-md-7">
+                            <input id="postcode" class="form-control border border-dark rounded-2" name="postcode"
+                                   placeholder="write the postcode" required pattern="^[A-Z]{1,2}[0-9Rr][0-9A-Za-z]? ?[0-9][A-Za-z]{2}$">
+                        </div>
+                        <div class="mb-2 col-md-5">
+                            <label for="addresses" class="col-form-label">Addresses:</label>
+                        </div>
+                        <div class="mb-2 col-md-7">
+                            <select id="addresses" name="description" class="form-select mb-2">
+                                <option value="0" th:value="0">select an address</option>
+                            </select>
+                        </div>
+                        <div class="mb-2 col-md-5">
+                            <label for="space-type" class="col-form-label">Space Type:</label>
+                        </div>
+                        <div class="mb-2 col-md-7">
+                            <select id="space-type" name="typeId" class="form-select mb-2">
+                                <option value="0" th:value="0">select space type</option>
+                            </select>
+                        </div>
+                        <input id="latitude" type="hidden" name="latitude"/>
+                        <input id="longitude" type="hidden" name="longitude"/>
                         <div class="text-center mt-4">
-                            <a href="/admin/places">
-                                <button type="button" class="btn btn-primary btn-blue px-4 mt-3 shadow">Create</button>
-
-                            </a>
+                            <button type="submit" class="btn btn-primary btn-blue px-4 mt-3 shadow">Create</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</body>
+</div>
+<script th:src="@{/script/postcodeLookup.js}"></script>
+<script th:inline="javascript">
+    const spaceTypes = /*[[${spaceTypes}]]*/ [];
+    const spaceTypeSelect = document.querySelector("#space-type");
+    spaceTypeSelect.innerHTML = spaceTypes.map(spaceType => {
+        let typeId = parseInt(spaceType.id);
+        return `<option value="${typeId}" th:value="${typeId}" th:text="${spaceType.name}">${spaceType.name}</option>`
+    })
+        .join("");
+</script>
 <footer th:insert="adminFooter::adminFooter"></footer>
+</body>
 </html>

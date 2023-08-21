@@ -1,5 +1,6 @@
 package com.team1.qrnavigationproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -45,9 +46,11 @@ public class Organization {
             message = "Invalid website URL")
     private String websiteURL;
 
+    @JsonBackReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization")
     private List<Space> spaces;
 
+    @JsonBackReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "organizer")
     private List<Event> events;
 
