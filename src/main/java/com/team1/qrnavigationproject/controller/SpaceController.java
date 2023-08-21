@@ -86,13 +86,24 @@ public class SpaceController {
             );
             return "redirect:/login";
         }
-        List<Space> spaces = spaceService.getAllSpaces();
-        List<List<SubSpace>> groupedOfSubspaces = spaces
-                .stream()
-                .map(Space::getSubSpaces)
-                .toList();
-        model.addAttribute("spaces", spaces);
-        model.addAttribute("groupedSpaces",groupedOfSubspaces);
+
+        userService.findUserByUsername(auth.getName()).map(User::getOrganization)
+                .map(Organization::getId)
+                .ifPresentOrElse(organizationId -> {
+                            List<Space> spaces = spaceService.getAllSpaces()
+                                    .stream()
+                                    .filter(space -> space.getOrganization().getId() == organizationId)
+                                    .toList();
+                            List<List<SubSpace>> groupedOfSubspaces = spaces
+                                    .stream()
+                                    .map(Space::getSubSpaces)
+                                    .toList();
+                            model.addAttribute("spaces", spaces);
+                            model.addAttribute("groupedSpaces", groupedOfSubspaces);
+                        }, () ->
+                                attributes.addFlashAttribute("warning", "No Spaces has been registered")
+                );
+
         return "managePlaces";
 
     }
@@ -140,9 +151,9 @@ public class SpaceController {
 
 
     @GetMapping("/admin/places/update/{id}")
-    public String viewPlacePage(@PathVariable Integer id, Model mav) {
-        Optional<Space> space = spaceService.getSpaceById(id);
-        mav.addAttribute("space", space.get());
+    public String viewPlacePage(@PathVariable Integer id, Model mav, RedirectAttributes attributes) {
+       spaceService.getSpaceById(id).ifPresentOrElse(space -> mav.addAttribute("space", space),
+               ()-> attributes.addFlashAttribute("error", "Error (%d): Space not found".formatted(HttpStatus.NOT_FOUND.value())));
         return "placeUpdates";
     }
 
