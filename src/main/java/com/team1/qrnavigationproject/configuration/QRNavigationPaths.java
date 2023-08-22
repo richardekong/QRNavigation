@@ -48,11 +48,10 @@ public interface QRNavigationPaths {
             LOGIN,
             LOGIN_ERROR,
             SIGN_UP_PAGE,
-            LOGIN_PAGE,
-            ERROR_PAGE,
             AUTH_SIGN_UP,
             AUTH_LOGIN,
-            QRCODE_PAGE_URL
+            QRCODE_PAGE_URL,
+            ERROR_PAGE
     };
 
 }

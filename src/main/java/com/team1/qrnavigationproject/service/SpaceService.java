@@ -17,4 +17,5 @@ public interface SpaceService {
     public Optional<Space> getSpaceByName(String name);
 
     Space updateSpace(Space spaceUp);
+    Space findById(int id);
 }

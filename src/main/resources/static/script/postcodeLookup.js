@@ -2,9 +2,11 @@ const postcodeInput = document.querySelector("#postcode");
 const selectElement = document.getElementById('addresses');
 const hiddenLatitude = document.getElementById('latitude');
 const hiddenLongitude = document.getElementById('longitude');
+
 const headers = new Headers({
     'Key': '8kP47Rng9GF2irjYDuwzmtvJsJgdSaXW3cJtoLvAXw'
 });
+
 
 const options = {
     method: 'GET',
@@ -24,8 +26,6 @@ selectElement.addEventListener("change", (evt)=>{
    hiddenLongitude.value = locations[1];
    selectElement.innerHTML = `<option value="${evt.target.value}">${evt.target.value}</option>`;
 });
-
-
 
 // Fetch the address data
 const loadAddresses = (postcode) => {

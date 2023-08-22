@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 
 import static com.team1.qrnavigationproject.model.Constant.DATE_TIME_REGEX;
 
@@ -20,9 +21,8 @@ import static com.team1.qrnavigationproject.model.Constant.DATE_TIME_REGEX;
 @Getter
 @Setter
 @Entity
-@Table(name="event")
+@Table(name = "event")
 public class Event {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -35,9 +35,10 @@ public class Event {
     @Size(min = 2, message = "Characters must be at least 2")
     private String description;
 
+
     @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name="organizer")
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "organizer")
     private Organization organizer;
 
     @JsonManagedReference
@@ -50,39 +51,38 @@ public class Event {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     List<SubSpace> subSpaces;
 
+
     @NotNull(message = "Please provide a start date and time")
     @Pattern(regexp = DATE_TIME_REGEX,
             message = "Invalid datetime value")
     @Future(message = "Start date and time must be latter than now")
     private LocalDateTime start;
 
+
     @NotNull(message = "Please provide an end date and time")
     @Pattern(regexp = DATE_TIME_REGEX,
             message = "Invalid datetime value")
     private LocalDateTime end;
 
+
     @Column(columnDefinition = "json")
     private String imageUrls;
 
-    public void addSpace(Space space){
-        if (spaces == null){
+    public void addSpace(Space space) {
+        if (spaces == null) {
             spaces = new ArrayList<>();
         }
-//        if (!spaces.contains(space)){
-            spaces.add(space);
-            space.setEvent(this);
-//        }
+        spaces.add(space);
+        space.setEvent(this);
     }
 
-    public void addSubSpace(SubSpace subSpace){
-        if (subSpaces == null){
+    public void addSubSpace(SubSpace subSpace) {
+        if (subSpaces == null) {
             subSpaces = new ArrayList<>();
         }
 
-//        if (!subSpaces.contains(subSpace)){
-            subSpaces.add(subSpace);
-            subSpace.setEvent(this);
-//        }
+        subSpaces.add(subSpace);
+        subSpace.setEvent(this);
     }
 
     @Override
@@ -99,3 +99,5 @@ public class Event {
                 '}';
     }
 }
+
+

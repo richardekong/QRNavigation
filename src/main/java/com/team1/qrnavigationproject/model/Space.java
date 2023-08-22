@@ -21,14 +21,12 @@ public class Space {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @NotBlank(message = "Name of space must be provided")
     private String name;
-
     @NotBlank(message = "Description of space must be provided")
     private String description;
 
-    @Column(name="photo_urls", columnDefinition = "json")
+    @Column(name = "photo_urls", columnDefinition = "json")
     private String photoURLs;
 
     @JsonBackReference
@@ -36,10 +34,10 @@ public class Space {
     @JoinColumn(name = "org_id")
     private Organization organization;
 
-    @Column(name="address_id")
+    @Column(name = "address_id")
     private int addressId;
 
-    @Column(name="type_id")
+    @Column(name = "type_id")
     private int typeId;
 
     @JsonManagedReference
@@ -48,18 +46,16 @@ public class Space {
     List<SubSpace> subSpaces;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="event_id")
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "event_id")
     private Event event;
 
     public void add(SubSpace subSpace) {
         if (subSpaces == null) {
             subSpaces = new LinkedList<>();
         }
-//        if (!subSpaces.contains(subSpace)) {
-            subSpaces.add(subSpace);
-            subSpace.setSpace(this);
-//        }
+        subSpaces.add(subSpace);
+        subSpace.setSpace(this);
     }
 
     @Override
