@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Service
 public class SpaceServiceImpl implements SpaceService {
-
     private final SpaceRepo spaceRepo;
 
     @Autowired
@@ -25,7 +24,7 @@ public class SpaceServiceImpl implements SpaceService {
 
     @Override
     public Optional<Space> getSpaceById(int id) {
-        return spaceRepo.findById(id);
+        return Optional.ofNullable(spaceRepo.findById(id));
     }
 
     @Override
@@ -45,10 +44,15 @@ public class SpaceServiceImpl implements SpaceService {
 
     @Override
     public Space updateSpace(Space spaceUp) {
-        Space byId = spaceRepo.findById(spaceUp.getId()).get();
+        Space byId = spaceRepo.findById(spaceUp.getId());
         byId.setName(spaceUp.getName());
         byId.setDescription(spaceUp.getDescription());
         return spaceRepo.save(byId);
+    }
+
+    @Override
+    public Space findById(int id) {
+        return spaceRepo.findById(id);
     }
 
 }

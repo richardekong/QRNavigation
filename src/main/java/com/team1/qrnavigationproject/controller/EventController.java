@@ -1,19 +1,21 @@
 package com.team1.qrnavigationproject.controller;
 
+import com.team1.qrnavigationproject.configuration.AuthenticatedUser;
 import com.team1.qrnavigationproject.model.Event;
+import com.team1.qrnavigationproject.model.User;
 import com.team1.qrnavigationproject.response.CustomException;
 import com.team1.qrnavigationproject.response.Response;
 import com.team1.qrnavigationproject.service.EventService;
+import com.team1.qrnavigationproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,16 +26,23 @@ import java.util.Optional;
 @Controller
 public class EventController {
     private EventService eventService;
-
+    private UserService userService;
     @Autowired
     public void setEventService(EventService eventService){
         this.eventService = eventService;
     }
-
-
+    @Autowired
+    public void setUserService(UserService userService){ this.userService = userService;}
     @GetMapping("/admin/events")
-    public String ShowEventManagementPage(Model model) {
-        Optional<List<Event>> unConfirmedEvents = Optional.of(eventService.findAll());
+    public String ShowEventManagementPage(Model model, Authentication authentication) {
+        User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
+        if (admin == null){
+            return "redirect:/login";
+        }
+        admin.getOrganization().getId();
+        int organizationId = admin.getOrganization().getId();
+        /////////
+        Optional<List<Event>> unConfirmedEvents = Optional.of(eventService.findAll(organizationId));
         unConfirmedEvents.ifPresentOrElse(
                 events -> model.addAttribute("events", events),
                 () -> {
@@ -49,13 +58,10 @@ public class EventController {
         model.addAttribute("events", unConfirmedEvents.get());
         return "eventManagementPage";
     }
-
-
     @GetMapping("/admin/events/createEvent")
     public String ViewCreateEventPage() {
         return "createEventPage";
     }
-
     @PostMapping("/admin/events/createNewEvent")
     public String CreateNewEvent(@ModelAttribute Event event, @RequestParam Map<String, String> requestParams) {
 
@@ -75,21 +81,17 @@ public class EventController {
 
         return "redirect:/admin/events";
     }
-
-
     @PostMapping("/admin/events/deleteEvent")
     public String deleteEvent(@RequestParam("eventId") int eventId) {
         eventService.deleteEventById(eventId);
         return "redirect:/admin/events";
     }
-
     @PostMapping("/admin/events/viewEvent")
     public String viewEventPage(@RequestParam("eventId") int eventId,  Model model) {
         Event event = eventService.findEventById(eventId);
         model.addAttribute("event", event);
         return "eventUpdate";
     }
-
     @PostMapping("/admin/events/updateEvent")
     public String UpdateEvent(@ModelAttribute Event event, @RequestParam Map<String, String> requestParams) {
 
@@ -108,5 +110,4 @@ public class EventController {
         eventService.updateEvent(event);
         return "redirect:/admin/events";
     }
-
 }

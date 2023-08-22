@@ -4,29 +4,23 @@ import com.team1.qrnavigationproject.model.Event;
 import com.team1.qrnavigationproject.repository.EventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class EventServiceImpl implements EventService{
-
     private EventRepo eventRepo;
-
     @Autowired
     void setEventRepo(EventRepo eventRepo){
-
         this.eventRepo = eventRepo;
     }
     @Override
-    public List<Event> findAll(){
-        return eventRepo.findAllEvents();
+    public List<Event> findAll(int organizationId){
+        return eventRepo.findAllEvents(organizationId);
     }
-
     @Override
     public Event saveEvent(Event event) {
         return eventRepo.save(event);
     }
-
     @Override
     public Event findEventByName(String eventName) {
         return eventRepo.findByEventName(eventName);
@@ -42,7 +36,6 @@ public class EventServiceImpl implements EventService{
             eventRepo.delete(event);
         }
     }
-
     @Override
     public Event updateEvent(Event event) {
         Event existingEvent = eventRepo.findByEventId(event.getId());
@@ -55,5 +48,9 @@ public class EventServiceImpl implements EventService{
         } else {
             throw new IllegalArgumentException("Event with name " + event.getName() + " not found." + existingEvent.getName());
         }
+    }
+    @Override
+    public List<Object[]> findEventNamesAndIdsByIds(List<Integer> eventIds) {
+        return eventRepo.findEventNamesAndIdsByIds(eventIds);
     }
 }

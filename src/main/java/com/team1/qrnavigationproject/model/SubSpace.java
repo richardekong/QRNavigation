@@ -6,11 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-
 import static com.team1.qrnavigationproject.model.Constant.IMAGE_URL_REGEX;
 
 @NoArgsConstructor
@@ -20,7 +18,6 @@ import static com.team1.qrnavigationproject.model.Constant.IMAGE_URL_REGEX;
 @Entity
 @Table(name = "subspace")
 public class SubSpace {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -59,4 +56,5 @@ public class SubSpace {
                 ", typeId=" + typeId +
                 '}';
     }
+
 }
