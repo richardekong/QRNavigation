@@ -69,11 +69,10 @@ public class Space {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", photoURLs='" + photoURLs + '\'' +
-                ", organization=" + organization +
                 ", addressId=" + addressId +
                 ", typeId=" + typeId +
                 ", subSpaces=" + subSpaces +
-                ", event=" + event +
                 '}';
     }
 }
+

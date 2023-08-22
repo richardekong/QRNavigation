@@ -34,5 +34,5 @@ public class SpaceTypeServiceImpl implements SpaceTypeService {
         spaceTypeRepo.deleteById(id);
     }
 
-    // Add other business logic methods if needed
+
 }

@@ -12,7 +12,6 @@ import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
 
 import static com.team1.qrnavigationproject.model.Constant.DATE_TIME_REGEX;
 
@@ -40,7 +39,6 @@ public class Event {
     @ManyToOne
     @JoinColumn(name="organizer")
     private Organization organizer;
-
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
@@ -93,7 +91,8 @@ public class Event {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", organizer=" + organizer.getId() +
+                ", spaces=" + spaces +
+                ", subSpaces=" + subSpaces +
                 ", start=" + start +
                 ", end=" + end +
                 ", imageUrls='" + imageUrls + '\'' +

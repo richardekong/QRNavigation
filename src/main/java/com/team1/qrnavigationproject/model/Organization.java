@@ -1,8 +1,8 @@
 package com.team1.qrnavigationproject.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -119,11 +119,13 @@ public class Organization {
         return "Organization{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-//                ", address=" + address +
+                ", address=" + address +
                 ", phone='" + phone + '\'' +
                 ", logoURL='" + logoURL + '\'' +
                 ", websiteURL='" + websiteURL + '\'' +
-//                ", user=" + user +
+                ", spaces=" + spaces +
+                ", events=" + events +
+                ", user=" + user +
                 ", headerBackground='" + headerBackground + '\'' +
                 ", footerBackground='" + footerBackground + '\'' +
                 '}';

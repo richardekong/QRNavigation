@@ -26,23 +26,6 @@ public class DemoController {
         return "adminMainPage";
     }
 
-    @GetMapping("admin/places")
-    public String viewManagePlacePage() {
-        return "managePlaces";
-    }
-
-    @GetMapping("admin/places/updates")
-    public String viewEditPlacesPage() {return "placeUpdates";
-    }
-    @GetMapping("admin/subPlace/createSubPlace")
-    public String viewCreatePlacesPage() {
-        return "createSubPlace";
-    }
-
-    @GetMapping("admin/places/createPlace")
-    public String viewCreateMainPlacePage() {
-        return "createMainPlace";
-    }
 
     @GetMapping("/admin/contents")
     public String ViewContentManagementPage() {

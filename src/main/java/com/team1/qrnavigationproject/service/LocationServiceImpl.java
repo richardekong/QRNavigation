@@ -38,6 +38,11 @@ public class LocationServiceImpl implements LocationService {
         locationRepo.deleteById(id);
     }
 
-    // Add other business logic methods if needed
+    @Override
+    public Location updateLocation(Location locationUp) {
+        return null;
+    }
+
+
 
 }

@@ -18,6 +18,8 @@ public interface QRNavigationPaths {
 
     String ADMIN_MAIN_PAGE = "/admin/main";
 
+    String ADMIN_SPACES_PAGE = "/admin/places";
+
     String ADMIN_ORG_REG_PAGE = "/admin/organization/register";
 
     String ADMIN_ORG_UPDATE_PAGE = "/admin/organization/update";
@@ -27,7 +29,6 @@ public interface QRNavigationPaths {
     String LOGIN = "/login";
 
     String LOGIN_ERROR = "/login-error";
-
     String LOGOUT = "/logout";
     String ADMIN_ORG_REG_PROCESS = "/admin/organization/register/process";
     String ADMIN_ORG_UPDATE_PROCESS = "/admin/organization/update/process";
@@ -38,6 +39,8 @@ public interface QRNavigationPaths {
     String ADMIN_QRCODES_UPDATE_PROCESS = "/admin/qrcodes/update/process";
     String ADMIN_QRCODES_DOWNLOAD = "/admin/qrcodes/download";
     String QRCODE_PAGE_URL = "/{organization}/qrnavigation/qrcodes/{space}/{subspace}";
+    String ADMIN_SPACES_CREATE = "/admin/spaces/create";
+    String ADMIN_SPACES_CREATE_PROCESS = "/admin/spaces/create/process";
     String[] PERMITTED_PATHS = {
             WELCOME_PAGE,
             LANDING_PAGE,
@@ -51,4 +54,6 @@ public interface QRNavigationPaths {
             AUTH_LOGIN,
             QRCODE_PAGE_URL
     };
+
 }
+
