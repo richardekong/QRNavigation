@@ -12,7 +12,6 @@ import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
 
 import static com.team1.qrnavigationproject.model.Constant.DATE_TIME_REGEX;
 
@@ -69,10 +68,10 @@ public class Event {
         if (spaces == null){
             spaces = new ArrayList<>();
         }
-        if (!spaces.contains(space)){
+//        if (!spaces.contains(space)){
             spaces.add(space);
             space.setEvent(this);
-        }
+//        }
     }
 
     public void addSubSpace(SubSpace subSpace){
@@ -80,10 +79,10 @@ public class Event {
             subSpaces = new ArrayList<>();
         }
 
-        if (!subSpaces.contains(subSpace)){
+//        if (!subSpaces.contains(subSpace)){
             subSpaces.add(subSpace);
             subSpace.setEvent(this);
-        }
+//        }
     }
 
     @Override
@@ -92,7 +91,8 @@ public class Event {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", organizer=" + organizer+
+                ", spaces=" + spaces +
+                ", subSpaces=" + subSpaces +
                 ", start=" + start +
                 ", end=" + end +
                 ", imageUrls='" + imageUrls + '\'' +

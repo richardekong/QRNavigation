@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -15,6 +16,12 @@ public class ExceptionHandler {
     public ResponseEntity<Response> handleException(CustomException ce) {
         Response res = new Response();
         return createErrorResponse(res, ce.getStatus(), ce.getMessage());
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler
+    public ResponseEntity<Response> handleException(NumberFormatException ne) {
+        Response res = new Response();
+        return createErrorResponse(res, HttpStatus.BAD_REQUEST, ne.getMessage());
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler
@@ -39,5 +46,6 @@ public class ExceptionHandler {
         res.setTime(System.currentTimeMillis());
         return new ResponseEntity<>(res, status);
     }
+
 }
 

@@ -1,14 +1,8 @@
 package com.team1.qrnavigationproject.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.relational.core.mapping.Column;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
@@ -16,7 +10,8 @@ import static com.team1.qrnavigationproject.model.Constant.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 public class QRCode {
 
@@ -28,28 +23,26 @@ public class QRCode {
     @Size(min = 2, message = "Characters must be at least 2")
     private String description;
 
-    @Column("content_id")
-    private int contentId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="space_id")
+    private Space space;
 
-    @Column("space_id")
-    private int spaceId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="sub_space_id")
+    private SubSpace subSpace;
 
-    @Column("sub_space_id")
-    private int subSpaceId;
-
-    @Column(value = "page_url")
+    @Column(name = "page_url")
     @NotBlank(message = "Please provide page url")
     @Pattern(regexp = WEBSITE_URL_REGEX, message = "Invalid URL")
     private String pageURL;
 
-    @Column("image_URL")
+    @Column(name="image_URL")
     @NotBlank(message = "Image URL must be provided")
     @Pattern(regexp = IMAGE_URL_REGEX, message = "Invalid image URL")
     private String imageURL;
 
-
-    @Column("created_at")
-    @Pattern(regexp = DATE_TIME_REGEX, message = "Invalid datetime value")
+    @Column(name="created_at")
+//    @Pattern(regexp = DATE_TIME_REGEX, message = "Invalid datetime value")
     private LocalDateTime createdAt;
 
 }

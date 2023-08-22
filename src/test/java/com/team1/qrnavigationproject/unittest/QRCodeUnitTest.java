@@ -1,6 +1,7 @@
 package com.team1.qrnavigationproject.unittest;
 
 import com.team1.qrnavigationproject.model.QRCode;
+import com.team1.qrnavigationproject.model.Space;
 import com.team1.qrnavigationproject.stub.TestData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +19,8 @@ class QRCodeUnitTest {
 
     private void init() {
         qrCode = TestData.createQRCode();
+        qrCode.setSpace(TestData.createSpace());
+        qrCode.setSubSpace(TestData.createSubSpace());
     }
 
     @BeforeEach
@@ -49,21 +52,12 @@ class QRCodeUnitTest {
     }
 
     @Test
-    void testContentId() {
-        int id = 3;
-        qrCode.setContentId(id);
-        assertEquals(qrCode.getContentId(), id);
-        init();
-        assertNotEquals(qrCode.getContentId(), id);
-    }
-
-    @Test
     void testSpaceId() {
         int id = 10;
-        qrCode.setSpaceId(id);
-        assertEquals(qrCode.getSpaceId(), id);
+        qrCode.getSpace().setId(id);
+        assertEquals(qrCode.getSpace().getId(), id);
         init();
-        assertNotEquals(qrCode.getSpaceId(), id);
+        assertNotEquals(qrCode.getSpace().getId(), id);
     }
 
     @Test
@@ -101,37 +95,5 @@ class QRCodeUnitTest {
         assertNotEquals(qrCode.getCreatedAt(), createdAt);
     }
 
-    @Test
-    void testEquals() {
-        QRCode similarQRCode = new QRCode(
-                qrCode.getId(),
-                qrCode.getDescription(),
-                qrCode.getContentId(),
-                qrCode.getSpaceId(),
-                qrCode.getSubSpaceId(),
-                qrCode.getPageURL(),
-                qrCode.getImageURL(),
-                qrCode.getCreatedAt()
-        );
-        assertEquals(qrCode, similarQRCode);
-        assertEquals(qrCode.hashCode(), similarQRCode.hashCode());
-        qrCode.setId(0);
-        assertNotEquals(qrCode, similarQRCode);
-        assertNotEquals(qrCode.hashCode(), similarQRCode.hashCode());
-    }
 
-    @Test
-    void testToString() {
-
-        String qrcodeString = "QRCode(id=1, " +
-                "description=QRCode for Abacws / 3.45, contentId=1, " +
-                "spaceId=1, subSpaceId=1, pageURL=https://www.cardiffuni.com, " +
-                "imageURL=https://www.cardiffuni.com/qr.png," +
-                " createdAt=2023-07-15T14:05)";
-
-        QRCode anotherQRCode = new QRCode();
-        assertEquals(qrCode.toString(), qrcodeString);
-        assertNotNull(qrCode.toString());
-        assertNotEquals(qrCode.toString(), anotherQRCode.toString());
-    }
 }

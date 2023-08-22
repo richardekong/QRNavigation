@@ -42,34 +42,23 @@
 <header th:insert="adminHeader::adminHeader"></header>
 <nav th:insert="adminNavBar::adminNavBar"></nav>
 <main class="mt-5 mb-5">
+    <section th:insert="notification::notication"></section>
     <section class="container row p-5 m-auto">
         <div class="card col-xs-12 col-sm-12 col-md-6 col-lg-6 shadow p-5">
-            <form class="row">
-                <label class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mb-1" for="qrCode">Choose a QR Code:</label>
-                <select class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mb-1 rounded" name="qrCode" id="qrCode">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                </select>
-                <label class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mb-1" for="main-space">Link to main space:</label>
-                <select class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mb-1 rounded" name="main-space" id="main-space">
-                    <option>Abacws</option>
-                    <option>Student Union</option>
-                    <option>Queens Building</option>
-                    <option>Spark Building</option>
-                </select>
-                <label class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mb-1" for="sub-space">Link to subspace:</label>
-                <select id="sub-space" class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mb-3 rounded" name="sub-space">
-                    <option>3.45</option>
-                    <option>4.45</option>
-                    <option>5.45</option>
-                    <option>6.12</option>
-                </select>
+            <form class="row" th:action="@{/admin/qrcodes/update/process}" th:method="POST">
+                <div class="card shadow col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2 mt-1" th:text="'QR code '+ ${qrcode.id} + ': '+${qrcode.space.name}+' / '+${qrcode.subSpace.name}"
+                     style="background-color: #1E98D7; border-radius:5px; color: white; text-shadow: 1px 2px 2px #888;padding: 5px;"></div>
+                <input type="hidden" th:value="${qrcode.id}" name="id"/>
+                <label class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mb-1" for="main-space">Main space:</label>
+                <input type="text" readonly class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mb-1 rounded form-control" id="main-space" th:value="${qrcode.space.name}">
+                <input type="hidden" th:value="${qrcode.space.id}" name="spaceId"/>
+                <input type="hidden" th:value="${qrcode.subSpace.id}" name="spaceId"/>
+                <label class="col-xs-12 col-sm-12 col-md-5 col-lg-5 mb-1" for="subspace-name">Subspace:</label>
+                <input  id="subspace-name" class="form-control col-xs-12 col-sm-12 col-md-7 col-lg-7 mb-3" readonly th:value="${qrcode.subSpace.name}">
                 <label for="description"></label>
-                <textarea id="description" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-1 ms-1 h-50 rounded"
-                          name="description" cols="30" rows="6" placeholder="Enter description"></textarea>
-                <button class="w-25 btn btn-primary alternate-btn shadow mt-4 m-auto">Edit</button>
+                <textarea id="description" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-1 ms-1 h-25 rounded form-control"
+                          name="description" cols="30" rows="4" placeholder="Enter description" th:text="${qrcode.description}"></textarea>
+                <button class="w-25 btn btn-primary alternate-btn shadow mt-4 m-auto" type="submit">Edit</button>
             </form>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 row">
@@ -77,12 +66,28 @@
                 <img class="w-50 h-50 mt-2" src="/static/images/qr_code_icon.svg" th:src="@{/images/qr_code_icon.svg}"
                      alt="qr code">
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                <button class="btn btn-primary w-25 alternate-btn shadow">Download</button>
-            </div>
+            <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" th:action="@{/admin/qrcodes/download}" th:method="POST">
+                <input type="hidden" th:value="${qrcode.space.id}" name="spaceId">
+                <input type="hidden" th:value="${qrcode.subSpace.id}" name="subSpaceId">
+                <button id="download-btn" class="btn btn-primary w-25 alternate-btn shadow" type="submit">Download</button>
+            </form>
         </div>
     </section>
 </main>
 <footer th:insert="adminFooter::adminFooter"></footer>
+<script th:inline="javascript">
+    const downloadBtn = document.querySelector("#download-btn");
+    const error = document.querySelector("#error");
+    const subspaceDropDown = document.querySelector("#sub-space");
+    downloadBtn.addEventListener("click", evt=>{
+        if(parseInt(subspaceDropDown.value) < 1){
+            evt.preventDefault();
+            error.style.display = "block";
+        }else{
+            error.style.display = "none";
+            this.click();
+        }
+    });
+</script>
 </body>
 </html>

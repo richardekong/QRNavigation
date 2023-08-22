@@ -18,35 +18,35 @@ import static com.team1.qrnavigationproject.model.Constant.IMAGE_URL_REGEX;
 @Getter
 @Setter
 @Entity
-@Table(name="subspace")
+@Table(name = "subspace")
 public class SubSpace {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank(message="Name of this place must be provided")
+    @NotBlank(message = "Name of this place must be provided")
     private String name;
 
-    @NotBlank(message="Description of this place must be provided")
+    @NotBlank(message = "Description of this place must be provided")
     private String description;
 
     @NotBlank(message = "Photo url must not be blank")
-    @Pattern(regexp=IMAGE_URL_REGEX)
-    @Column(name="photo_url")
+    @Pattern(regexp = IMAGE_URL_REGEX)
+    @Column(name = "photo_url")
     private String photoURL;
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "main_space")
     private Space space;
 
     @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name="event_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "event_id")
     private Event event;
 
-    @Column(name="type")
+    @Column(name = "type")
     private int typeId;
 
     @Override
@@ -56,8 +56,6 @@ public class SubSpace {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", photoURL='" + photoURL + '\'' +
-                ", spaceId=" + space +
-                ", eventId=" + event+
                 ", typeId=" + typeId +
                 '}';
     }

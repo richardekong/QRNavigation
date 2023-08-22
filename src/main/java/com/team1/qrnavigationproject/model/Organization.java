@@ -1,8 +1,8 @@
 package com.team1.qrnavigationproject.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -46,11 +46,11 @@ public class Organization {
             message = "Invalid website URL")
     private String websiteURL;
 
-    @JsonBackReference
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "organization")
     private List<Space> spaces;
 
-    @JsonBackReference
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "organizer")
     private List<Event> events;
 
@@ -67,20 +67,20 @@ public class Organization {
         if (spaces == null) {
             spaces = new LinkedList<>();
         }
-        if (!spaces.contains(space)) {
+//        if (!spaces.contains(space)) {
             spaces.add(space);
             space.setOrganization(this);
-        }
+//        }
     }
 
     public void add(Event event) {
         if (events == null) {
             events = new LinkedList<>();
         }
-        if (!events.contains(event)) {
+//        if (!events.contains(event)) {
             events.add(event);
             event.setOrganizer(this);
-        }
+//        }
     }
 
     public void setUser(User user) {
@@ -123,6 +123,8 @@ public class Organization {
                 ", phone='" + phone + '\'' +
                 ", logoURL='" + logoURL + '\'' +
                 ", websiteURL='" + websiteURL + '\'' +
+                ", spaces=" + spaces +
+                ", events=" + events +
                 ", user=" + user +
                 ", headerBackground='" + headerBackground + '\'' +
                 ", footerBackground='" + footerBackground + '\'' +

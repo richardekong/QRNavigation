@@ -61,6 +61,7 @@
 <header th:insert="adminHeader::adminHeader"></header>
 <nav th:insert="adminNavBar::adminNavBar"></nav>
 <main class="container">
+    <section th:insert="notification::notication"></section>
     <section id="top-section" class="p-1">
         <div class="row">
             <img class="col-xs-12 col-sm-12 col-md-3 col-lg-3" src="/static/images/qr_code_icon.svg" th:src="@{/images/qr_code_icon.svg}" alt="QR code icon image">
@@ -77,38 +78,22 @@
                 class="table table-hover table-bordered table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-responsive-xxl">
             <thead class="table-light">
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Assigned Space</th>
-                <th scope="col">Assigned Content ID</th>
+                <th scope="col">Created On</th>
                 <th scope="col">Make Decision</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>Abacws / 3.65</td>
-                <td>11</td>
+            <tr th:each="qrcode : ${qrcodes}">
+                <th th:data-qrcode-id="${qrcode?.id}" style="display: none;"></th>
+                <td th:text="${qrcode?.space?.name}+'/'+${qrcode?.subSpace?.name}" style="text-align: left;">---------------</td>
+                <td th:text="${#temporals.format(qrcode?.createdAt, 'dd/MM/yyyy HH:mm')}">----------------------------</td>
                 <td>
-                    <a class="btn btn-primary custom-btn shadow m-1 w-25" th:href="@{/admin/qrcodes/update}">View</a>
-                    <button class="btn btn-danger shadow m-1 w-25">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Abacws / 5.48</td>
-                <td>12</td>
-                <td>
-                    <a class="btn btn-primary custom-btn shadow m-1 w-25" th:href="@{/admin/qrcodes/update}">View</a>
-                    <button class="btn btn-danger shadow m-1 w-25">Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Abacws / 4.88</td>
-                <td>13</td>
-                <td>
-                    <a class="btn btn-primary custom-btn shadow m-1 w-25" th:href="@{/admin/qrcodes/update}">View</a>
-                    <button class="btn btn-danger shadow m-1 w-25">Delete</button>
+                    <form th:action="@{/admin/qrcodes}" th:method="POST">
+                        <input type="hidden" name="id" th:value="${qrcode?.id}">
+                        <a class="btn btn-primary custom-btn shadow m-1" th:href="@{/admin/qrcodes/update/{id}(id=${qrcode?.id})}">View</a>
+                        <button class="btn btn-danger shadow m-1 delete-btn" type="submit" th:attr="data-qrcodeId=${qrcode?.id}">Delete</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

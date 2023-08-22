@@ -23,14 +23,20 @@ public class OrganizationThemeControllerAdvice {
 
     @ModelAttribute("organizationTheme")
     public OrganizationTheme organizationTheme() {
-        Authentication auth = SecurityContextHolder
-                .getContext()
-                .getAuthentication();
-        System.out.println(auth.getName()+" ===========================================================================");
+        OrganizationTheme theme = null;
+        Authentication auth = null;
+        if (SecurityContextHolder.getContext().getAuthentication() != null) {
+            auth = SecurityContextHolder.getContext().getAuthentication();
+        }
 
-        return userService.findUserByUsername(auth.getName())
-                .map(User::getOrganization)
-                .map(OrganizationTheme::new)
-                .orElse(new OrganizationTheme(new Organization()));
+        if (auth != null) {
+            theme = userService.findUserByUsername(auth.getName())
+                    .map(User::getOrganization)
+                    .map(OrganizationTheme::new)
+                    .orElse(new OrganizationTheme(new Organization()));
+
+            System.out.println(auth.getName() + " ===========================================================================");
+        }
+        return theme;
     }
 }

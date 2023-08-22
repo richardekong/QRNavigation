@@ -25,7 +25,7 @@ public class Address {
     @NotBlank(message = "Please provide a description")
     private String description;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 
@@ -33,7 +33,7 @@ public class Address {
     @Pattern(regexp = POSTCODE_REGEX, message = "Invalid UK postcode")
     private String postcode;
 
-    @OneToOne(mappedBy = "address", cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = "address",fetch = FetchType.LAZY ,cascade = CascadeType.PERSIST)
     private Organization organization;
 
     public void setOrganization(Organization organization) {
@@ -65,7 +65,7 @@ public class Address {
         return "Address{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-                ", location=" + location +
+//                ", location=" + location +
                 ", postcode='" + postcode + '\'' +
                 '}';
     }

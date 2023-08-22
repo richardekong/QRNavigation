@@ -1,6 +1,7 @@
 package com.team1.qrnavigationproject.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.data.relational.core.mapping.Column;
@@ -51,7 +52,7 @@ public class User implements UserDetails, Serializable {
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
     private Organization organization;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Role> roles;
 
@@ -127,4 +128,7 @@ public class User implements UserDetails, Serializable {
     public boolean isEnabled() {
         return isAccountEnabled;
     }
+
+
+
 }
