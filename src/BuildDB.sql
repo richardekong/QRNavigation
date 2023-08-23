@@ -14,8 +14,8 @@ drop table if exists location;
 create table location
 (
     id        int auto_increment primary key,
-    latitude  decimal(10, 2),
-    longitude decimal(10, 2)
+    latitude  decimal(4,6 ),
+    longitude decimal(4, 6)
 );
 
 create table address
