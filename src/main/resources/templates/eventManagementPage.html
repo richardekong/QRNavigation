@@ -65,7 +65,18 @@
                                 </td>
                                 <td>
                                     <select class="form-select">
-                                        <option style="text-align: center; " th:each="spaceSubSpaceEntry : ${eventEntry.value}" th:text="${spaceSubSpaceEntry.key.name}" th:attr="data-eventId=${eventEntry.key.id}"></option>
+                                        <option style="text-align: center; " disabled selected>Show Venues</option>
+                                        <th:block th:each="eventEntry : ${combinedMap}">
+                                            <th:block th:each="spaceSubSpaceEntry : ${eventEntry.value}">
+                                                <option th:with="spaceName=${spaceSubSpaceEntry.key}"
+                                                        th:attr="data-eventId=${eventEntry.key.id}, data-spaceName=${spaceName}"
+                                                        th:text="${spaceName}" class="space-option"></option>
+                                                <th:block th:each="subSpaceName : ${spaceSubSpaceEntry.value}">
+                                                    <option th:attr="data-eventId=${eventEntry.key.id}, data-spaceName=${spaceName}"
+                                                            th:text="${subSpaceName}" class="subspace-option"></option>
+                                                </th:block>
+                                            </th:block>
+                                        </th:block>
                                     </select>
                                 </td>
                                 <td>

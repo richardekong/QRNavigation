@@ -52,8 +52,25 @@
                                 <!-- Second row -->
                                 <div class="row mb-1">
                                     <div class="col-md-5">
-                                        <label for="eventName1">Event Name:</label>
-                                        <input type="text" class="form-control" id="eventName1"  th:value="${event.id}" placeholder="Write the new name"  required size="28">
+                                        <label for="venue">Venues:</label>
+                                        <div class="dropdown" style="width: 100%;" id="venue" required>
+                                            <button class="btn btn-secondary dropdown-toggle bg-white text-black border" type="button" id="venueDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
+                                                Selected venues
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="venueDropdown">
+                                                <div th:each="spaceSubspace : ${spaceSubspaceMap}">
+                                                    <label class="dropdown-item text-black">
+                                                        <input type="checkbox" name="space" th:value="${spaceSubspace.key}" th:text="${spaceSubspace.key}">
+                                                    </label>
+                                                    <div th:each="subspaceInfo : ${spaceSubspace.value}">
+                                                        <label class="dropdown-item text-black">
+                                                            <input type="checkbox" name=subSpace th:value="${subspaceInfo.get('id')}" th:text="${subspaceInfo.get('name')}" th:attr="data-name=${subspaceInfo.get('name')}">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="eventEndDate">To:</label>
@@ -67,18 +84,6 @@
                                     </div>
                                 </div>
                                 <!-- Third row -->
-                                <div class="row mb-1">
-                                    <div class="col-md-5">
-                                        <label for="venue2">Venues:</label>
-                                        <select class="form-select" id="venue2" required>
-                                            <option value="" selected>Select a venue</option>
-                                            <option value="venue1">Venue 1</option>
-                                            <option value="venue2">Venue 2</option>
-                                            <!-- Add more venues as needed -->
-                                        </select>
-                                    </div>
-                                </div>
-                                <!-- Fourth row -->
                                 <div class="mb-1">
                                     <label for="eventDescription">Event Description:</label>
                                     <textarea class="form-control h-50" id="eventDescription" rows="3" placeholder="Enter event description" name="description" th:text="${event.description}"></textarea>
