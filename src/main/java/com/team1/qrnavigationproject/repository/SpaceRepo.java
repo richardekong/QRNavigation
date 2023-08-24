@@ -17,4 +17,7 @@ public interface SpaceRepo extends JpaRepository<Space, Integer> {
     List<Space> findAllSpaces(int organizationId);
     @Query("SELECT s FROM Space s WHERE s.event.id = :eventId")
     List<Space> findAllSpacesByEvent(int eventId);
+
+    @Query("SELECT CASE WHEN COUNT(s) > 0 THEN true ELSE false END FROM Space s WHERE s.event.id = :eventId AND s.id = :spaceId")
+    boolean isSpaceIncludedInEvent(int eventId, int spaceId);
 }

@@ -13,4 +13,6 @@ public interface SpaceService {
     Space findByName(String spaceName);
     Space findById(int id);
     public List<Space>findAllSpacesByEvent(int eventId);
+    boolean isSpaceIncludedInEvent(int eventId, int spaceId);
+
 }

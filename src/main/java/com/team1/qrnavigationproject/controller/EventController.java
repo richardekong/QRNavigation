@@ -54,19 +54,14 @@ public class EventController {
 
         List<Event> events = eventService.findAll(organizationId);
         Map<Event, Map<String, List<String>>> combinedMap = new HashMap<>();
-        int counter = 1;
 
         for (Event e : events) {
-            System.out.println("-" + counter +" EVENT NAME :" + e.getName());
-            counter++;
             Map<String, List<String>> spaceSubSpaceMap = new HashMap<>();
             List<Space> spaces = spaceService.findAllSpacesByEvent(e.getId());
             for (Space s : spaces) {
-                System.out.println(" EVENT NAME :" + e.getName() + " AND THE SPACE NAME :"+ s.getName());
                 List<SubSpace> subSpaces = subSpaceService.getSubSpaceByEvent(e.getId(), s.getId());
                 List<String> subSpaceNames = new ArrayList<>();
                 for (SubSpace subSpace : subSpaces) {
-                    System.out.println(" EVENT NAME :" + e.getName() + " AND THE SPACE NAME :"+ s.getName() + "  AND THE SUBSPACE NAME: " + subSpace.getName());
                     String subSpaceName = subSpace.getName() + " / " + s.getName();
                     subSpaceNames.add(subSpaceName);
                 }
@@ -76,11 +71,36 @@ public class EventController {
         }
 
         model.addAttribute("combinedMap", combinedMap);
+        System.out.println("============================");
+        // Printing the content of combinedMap
+        // Loop through the combinedMap and print its content
+        for (Map.Entry<Event, Map<String, List<String>>> entry : combinedMap.entrySet()) {
+            Event event = entry.getKey();
+            System.out.println("Event: " + event.getName() + " (ID: " + event.getId() + ")");
+
+            Map<String, List<String>> spaceSubSpaceMap = entry.getValue();
+
+            for (Map.Entry<String, List<String>> spaceEntry : spaceSubSpaceMap.entrySet()) {
+                String spaceName = spaceEntry.getKey();
+                List<String> subSpaceNames = spaceEntry.getValue();
+
+                System.out.println("  Space: " + spaceName);
+                if (subSpaceNames.isEmpty()) {
+                    System.out.println("    No subspaces");
+                } else {
+                    System.out.println("    Subspaces: " + subSpaceNames);
+                }
+            }
+        }
+
+
 
 
 
         return "eventManagementPage";
     }
+
+
     @GetMapping("/admin/events/createEvent")
     public String ViewCreateEventPage(Model model, Authentication authentication) {
         User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
@@ -170,33 +190,84 @@ public class EventController {
         eventService.deleteEventById(eventId);
         return "redirect:/admin/events";
     }
+//    @PostMapping("/admin/events/viewEvent")
+//    public String viewEventPage(@RequestParam("eventId") int eventId,  Model model, Authentication authentication) {
+//        Event event = eventService.findEventById(eventId);
+//        model.addAttribute("event", event);
+//        // here
+//
+//        User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
+//        if (admin == null){
+//            return "redirect:/login";
+//        }
+//        admin.getOrganization().getId();
+//        int organizationId = admin.getOrganization().getId();
+//
+//
+//        List<Space> spaceList = spaceService.getAllSpaces(organizationId);
+//        Map<String, List<Map<String, String>>> spaceSubspaceMap = new LinkedHashMap<>();
+//
+//        for (Space space : spaceList) {
+//            boolean isSpaceIncludedInEvent = spaceService.isSpaceIncludedInEvent(event.getId(), space.getId());
+//            List<SubSpace> subSpaceList = subSpaceService.getSubspacesBySpaceId(space.getId());
+//            List<Map<String, String>> subspaceInfoList = new ArrayList<>();  // Change the type to List<Map<String, String>>
+//
+//            for (SubSpace subSpace : subSpaceList) {
+//                boolean isSubSpaceIncludedInEvent = subSpaceService.isSubSpaceIncludedInEvent(event.getId(), subSpace.getId());
+//                Map<String, String> subspaceInfo = new HashMap<>();  // Change the type to Map<String, String>
+//                subspaceInfo.put("type", "subSpace");  // Change spaceInfo.put to subspaceInfo.put
+//                subspaceInfo.put("id", String.valueOf(subSpace.getId()));  // Convert ID to String
+//                subspaceInfo.put("name", " " + subSpace.getName() + " / " + space.getName());
+//                subspaceInfoList.add(subspaceInfo);
+//            }
+//
+//            spaceSubspaceMap.put(space.getName(), subspaceInfoList);
+//        }
+//
+//        model.addAttribute("spaceSubspaceMap", spaceSubspaceMap);
+//
+//
+//        return "eventUpdate";
+//    }
+
     @PostMapping("/admin/events/viewEvent")
-    public String viewEventPage(@RequestParam("eventId") int eventId,  Model model, Authentication authentication) {
+    public String viewEventPage(@RequestParam("eventId") int eventId, Model model, Authentication authentication) {
         Event event = eventService.findEventById(eventId);
         model.addAttribute("event", event);
-        // here
+        int counter = 1;
 
         User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
-        if (admin == null){
+        if (admin == null) {
             return "redirect:/login";
         }
-        admin.getOrganization().getId();
         int organizationId = admin.getOrganization().getId();
-
 
         List<Space> spaceList = spaceService.getAllSpaces(organizationId);
         Map<String, List<Map<String, String>>> spaceSubspaceMap = new LinkedHashMap<>();
 
         for (Space space : spaceList) {
             List<SubSpace> subSpaceList = subSpaceService.getSubspacesBySpaceId(space.getId());
-            List<Map<String, String>> subspaceInfoList = new ArrayList<>();  // Change the type to List<Map<String, String>>
+            List<Map<String, String>> subspaceInfoList = new ArrayList<>();
 
             for (SubSpace subSpace : subSpaceList) {
-                Map<String, String> subspaceInfo = new HashMap<>();  // Change the type to Map<String, String>
-                subspaceInfo.put("type", "subSpace");  // Change spaceInfo.put to subspaceInfo.put
-                subspaceInfo.put("id", String.valueOf(subSpace.getId()));  // Convert ID to String
+                boolean isSpaceIncludedInEvent = spaceService.isSpaceIncludedInEvent(event.getId(), space.getId());
+                boolean isSubSpaceIncluded = subSpaceService.isSubSpaceIncludedInEvent(event.getId(), subSpace.getId());
+
+                Map<String, String> subspaceInfo = new HashMap<>();
+                subspaceInfo.put("type", "subSpace");
+                subspaceInfo.put("id", String.valueOf(subSpace.getId()));
                 subspaceInfo.put("name", " " + subSpace.getName() + " / " + space.getName());
-                subspaceInfoList.add(subspaceInfo);
+                subspaceInfo.put("isSpaceIncludedInEvent", String.valueOf(isSpaceIncludedInEvent));
+                subspaceInfo.put("isSubSpaceIncludedInEvent", String.valueOf(isSubSpaceIncluded));
+                if (isSpaceIncludedInEvent) {
+                    System.out.println("((((((((( " +counter+"   *****£££££££ the space: " + space.getName());
+                    counter++;
+                }
+                if (isSubSpaceIncluded) {
+                    System.out.println("((((((((( " +counter+"    *******£££££££ the space: " + space.getName() + " AND THE SUBSPACE :" + subSpace.getName());
+                    counter++;
+                }
+                    subspaceInfoList.add(subspaceInfo);
             }
 
             spaceSubspaceMap.put(space.getName(), subspaceInfoList);
@@ -204,9 +275,9 @@ public class EventController {
 
         model.addAttribute("spaceSubspaceMap", spaceSubspaceMap);
 
-
         return "eventUpdate";
     }
+
     @PostMapping("/admin/events/updateEvent")
     public String UpdateEvent(@ModelAttribute Event event, @RequestParam Map<String, String> requestParams) {
 

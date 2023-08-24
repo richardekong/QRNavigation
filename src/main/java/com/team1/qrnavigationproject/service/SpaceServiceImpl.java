@@ -40,4 +40,7 @@ public class SpaceServiceImpl implements SpaceService {
     public Space findById(int id){ return spaceRepo.findById(id);}
     @Override
     public List<Space>findAllSpacesByEvent(int eventId){ return spaceRepo.findAllSpacesByEvent(eventId); }
+    @Override
+    public boolean isSpaceIncludedInEvent(int eventId, int spaceId){ return spaceRepo.isSpaceIncludedInEvent(eventId, spaceId); }
+
 }

@@ -17,5 +17,7 @@ public interface SubSpaceRepo extends JpaRepository<SubSpace, Integer>{
 //    List<Object[]> getSpaceAndSubspaceInfo(int orgId);
     @Query("SELECT s FROM SubSpace s WHERE s.event.id = :eventId AND s.space.id = :spaceId")
     List<SubSpace> getSubSpaceByEvent(int eventId, int spaceId);
+    @Query("SELECT CASE WHEN COUNT(ss) > 0 THEN true ELSE false END FROM SubSpace ss WHERE ss.event.id = :eventId AND ss.id = :subSpaceId")
+    boolean isSubSpaceIncludedInEvent(int eventId, int subSpaceId);
 
 }
