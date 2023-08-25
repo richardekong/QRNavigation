@@ -12,8 +12,4 @@ public interface SubSpaceService {
     List<SubSpace> getSubspacesBySpaceId(Integer spaceId);
     SubSpace findById(int id);
 //    List<Object[]> getSpaceAndSubspaceInfo(int orgId);
-    List<SubSpace> getSubSpaceByEvent(int eventId, int spaceId);
-
-    boolean isSubSpaceIncludedInEvent(int eventId, int subSpaceId);
-
 }

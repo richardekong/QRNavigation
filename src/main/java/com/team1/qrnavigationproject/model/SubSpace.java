@@ -19,26 +19,17 @@ public class SubSpace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @NotBlank(message="Name of this place must be provided")
     private String name;
-
     @NotBlank(message="Description of this place must be provided")
     private String description;
-
     @NotBlank(message = "Photo url must not be blank")
     @Pattern(regexp=IMAGE_URL_REGEX)
     @Column(name="photo_url")
     private String photoURL;
-
     @ManyToOne
     @JoinColumn(name = "main_space")
     private Space space;
-
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name="event_id")
-    private Event event;
-
     @Column(name="type")
     private int typeId;
 

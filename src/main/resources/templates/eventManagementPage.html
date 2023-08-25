@@ -59,39 +59,30 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="eventEntry : ${combinedMap}">
+                            <tr th:each="event : ${events}">
                                 <td>
-                                    <p style="text-align: center; " th:text="${eventEntry.key.name}"></p>
+                                    <p style="text-align: center; " th:text="${event.name}"></p>
                                 </td>
                                 <td>
                                     <select class="form-select">
-                                        <option style="text-align: center; " disabled selected>Show Venues</option>
-                                        <th:block th:each="eventEntry : ${combinedMap}">
-                                            <th:block th:each="spaceSubSpaceEntry : ${eventEntry.value}">
-                                                <option th:with="spaceName=${spaceSubSpaceEntry.key}"
-                                                        th:attr="data-eventId=${eventEntry.key.id}, data-spaceName=${spaceName}"
-                                                        th:text="${spaceName}" class="space-option"></option>
-                                                <th:block th:each="subSpaceName : ${spaceSubSpaceEntry.value}">
-                                                    <option th:attr="data-eventId=${eventEntry.key.id}, data-spaceName=${spaceName}"
-                                                            th:text="${subSpaceName}" class="subspace-option"></option>
-                                                </th:block>
-                                            </th:block>
-                                        </th:block>
+                                        <option style="text-align: center;" disabled selected>Show Venues</option>
                                     </select>
+
+
                                 </td>
                                 <td>
-                                    <p style="text-align: center; " th:text="${#temporals.format(eventEntry.key.start, 'dd/MM/yyyy')}"></p>
+                                    <p style="text-align: center; " th:text="${#temporals.format(event.start, 'dd/MM/yyyy')}"></p>
                                 </td>
                                 <td>
-                                    <p style="text-align: center; " th:text="${#temporals.format(eventEntry.key.end, 'dd/MM/yyyy')}"></p>
+                                    <p style="text-align: center; " th:text="${#temporals.format(event.end, 'dd/MM/yyyy')}"></p>
                                 </td>
                                 <td class="centered-buttons">
                                     <form th:action="@{/admin/events/viewEvent}" th:method="POST">
-                                        <input type="hidden" name="eventId" th:value="${eventEntry.key.id}" />
+                                        <input type="hidden" name="eventId" th:value="${event.id}" />
                                         <button type="submit" class="btn btn-primary" style="background-color: #1E98D7; margin-right:10px;">View</button>
                                     </form>
                                     <form th:action="@{/admin/events/deleteEvent}" th:method="POST">
-                                        <input type="hidden" name="eventId" th:value="${eventEntry.key.id}" />
+                                        <input type="hidden" name="eventId" th:value="${event.id}" />
                                         <button type="submit" class="btn btn-danger" style="background-color: #E01818;">Delete</button>
                                     </form>
                                 </td>

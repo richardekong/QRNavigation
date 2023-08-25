@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Column;
 import static com.team1.qrnavigationproject.model.Constant.DATE_TIME_REGEX;
@@ -31,12 +31,6 @@ public class Event {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name="organizer")
     private Organization organizer;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    List<Space> spaces;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    List<SubSpace> subSpaces;
     @NotNull(message = "Please provide a start date and time")
     @Pattern(regexp = DATE_TIME_REGEX,
             message = "Invalid datetime value")
@@ -48,25 +42,6 @@ public class Event {
     private LocalDateTime end;
     @Column(columnDefinition = "json")
     private String imageUrls;
-    public void addSpace(Space space){
-        if (spaces == null){
-            spaces = new ArrayList<>();
-        }
-        if (!spaces.contains(space)){
-            spaces.add(space);
-            space.setEvent(this);
-        }
-    }
-    public void addSubSpace(SubSpace subSpace){
-        if (subSpaces == null){
-            subSpaces = new ArrayList<>();
-        }
-
-        if (!subSpaces.contains(subSpace)){
-            subSpaces.add(subSpace);
-            subSpace.setEvent(this);
-        }
-    }
     @Override
     public String toString() {
         return "Event{" +
@@ -80,6 +55,19 @@ public class Event {
                 '}';
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    List<Venue> venues;
+
+    public void add(Venue venue) {
+        if (venues == null) {
+            venues = new LinkedList<>();
+        }
+        if (!venues.contains(venue)) {
+            venues.add(venue);
+            venue.setEvent(this);
+        }
+    }
 }
 
 

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.relational.core.mapping.Column;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.LinkedList;
@@ -28,16 +27,13 @@ public class Space {
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "org_id")
     private Organization organization;
-    @Column("address_id")
+    @Column(name="address_id")
     private int addressId;
-    @Column("type")
+    @Column(name="type")
     private int typeId;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "space",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     List<SubSpace> subSpaces;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name="event_id")
-    private Event event;
     public void add(SubSpace subSpace) {
         if (subSpaces == null) {
             subSpaces = new LinkedList<>();
@@ -57,7 +53,6 @@ public class Space {
                 ", organizationId=" + organization.getId() +
                 ", addressId=" + addressId +
                 ", typeId=" + typeId +
-                ", eventId=" + event.getId() +
                 '}';
     }
 }
