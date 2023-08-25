@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home</title>
     <meta charset="UTF-8">
@@ -17,7 +17,10 @@
             integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
             crossorigin="anonymous">
     </script>
+
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
     <!--LINK TO HEADER STYLE SHEET-->
     <link rel="stylesheet" th:href="@{/css/userHeader.css}"/>
     <!--LINK TO FOOTER STYLE SHEET-->
@@ -26,8 +29,7 @@
     <link rel="stylesheet" th:href="@{/css/screen.css}">
     <!--LINK TO HEADER SCRIPT FILE-->
     <script th:src="@{/script/scanner.js}"></script>
-    <!--google maps api integration    -->
-    <script src="/static/script/map.js" th:src="@{/script/map.js}"></script>
+
     <title>Title</title>
     <style>
         :root {
@@ -58,7 +60,7 @@
 
         #map {
             height: 320px;
-            border: 1px solid black;
+            border: 1px solid #cccccc;
             box-shadow: var(--shadows);
             margin: var(--margin);
             padding: var(--padding);
@@ -75,7 +77,7 @@
             padding: var(--padding);
         }
 
-        #see-more a{
+        #see-more a {
             color: #FFFFFF;
             text-decoration: none;
         }
@@ -88,26 +90,56 @@
 </head>
 <body>
 <header th:insert="userHeader::userHeader"></header>
-<main class="col-xs-12 col-sm-12 col-md-12">
-    <label for="space_list"></label>
-    <select id="space_list">
-        <option selected>Pick a space</option>
-        <option>Abacws</option>
-        <option>Student Union</option>
-        <option>Queens Building</option>
-        <option>Spark Building</option>
+<main class="container card col-xs-12 col-sm-12 col-md-12">
+    <label for="spaces"></label>
+    <select class="form-select" id="spaces" name="spaceId" style="width: 95%;">
+        <option value="0" th:value="0">Pick a space</option>
+        <option th:each="space : ${spaces}" th:value="${space?.id}" th:text="${space?.name}"></option>
     </select>
-    <div id="map">
+    <div id="map" style="border-radius: 5px;">
+        <script th:inline="javascript">
+            let logoURL = /*[[${organizationTheme?.logoURL}]]*/ '';
+            let locations = /*[[${locations}]]*/ [];
+            locations = locations.map(location => {
+                return {lat: location.latitude, lng: location.longitude};
+            });
+        </script>
+        <!--google maps api integration    -->
+        <script src="/static/script/map.js" th:src="@{/script/map.js}"></script>
     </div>
-    <label for="sub_space_list"></label>
-    <select id="sub_space_list">
-        <option selected>Pick a sub space</option>
-        <option>Abacws / 1.45</option>
-        <option>Abacws / 2.45</option>
-        <option>Abacws / 3.45</option>
+    <label for="subspaces"></label>
+    <select class="form-select" id="subspaces" name="subspaceId" style="width: 95%;">
+        <option value="0" th:value="0">Pick a sub space</option>
     </select>
-    <button class="col-xs-12 col-sm-12 col-md-12" id="see-more"><a th:href ="@{/content}">See More</a></button>
+    <button class="col-xs-12 col-sm-12 col-md-12" id="see-more">See More</button>
 </main>
 <footer th:insert="userFooter::userFooter"></footer>
+<script th:inline="javascript">
+
+    const spaces = /*[[${spaces}]]*/ [];
+    const organizationName = /*[[${organizationName}]]*/ '';
+    const spacesDropDown = document.querySelector("#spaces");
+    const subspacesDropDown = document.querySelector("#subspaces");
+    const seeMoreBtn = document.querySelector("#see-more");
+
+    spacesDropDown.addEventListener("change", _evt => {
+        let selectedSpaceId = parseInt(spacesDropDown.value);
+        let subspaces = spaces.find(space => space.id === selectedSpaceId).subSpaces;
+        let defaultOptionString = `<option value="0" th:value="0">Pick a subspace</option>`;
+        subspacesDropDown.innerHTML = defaultOptionString.concat(
+            subspaces.map(subspace => `<option value="${subspace.id}" th:value="${subspace.id}" th:text="${subspace.name}">${subspace.name}</option>`).join("")
+        );
+    });
+
+    seeMoreBtn.addEventListener("click", _evt => {
+        const spaceName = spacesDropDown.options[spacesDropDown.selectedIndex].text;
+        const subspaceName = subspacesDropDown.options[subspacesDropDown.selectedIndex].text;
+        const link = document.createElement("a");
+        link.href = `/${organizationName}/qrnavigation/qrcodes/${spaceName}/${subspaceName}`;
+        link.click();
+    });
+
+
+</script>
 </body>
 </html>

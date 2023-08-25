@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface OrganizationRepo extends JpaRepository<Organization, Integer> {
 
     Optional<Organization> findOrganizationById(int id);
+
+    @Query("SELECT o FROM Organization o WHERE o.name = :name")
     Optional<Organization> findOrganizationByName(String name);
     Optional<Organization> findOrganizationByAddressId(int id);
 

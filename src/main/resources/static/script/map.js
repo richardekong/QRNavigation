@@ -22,26 +22,43 @@
 let map;
 
 async function initMap() {
-    // The location
-    const position = { lat: 53.4921187, lng: -2.0605509 };
+    // pass a list locations from thymeleaf template
+    const positions = locations;
     // Request needed libraries.
     //@ts-ignore
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const {Map} = await google.maps.importLibrary("maps");
+    const {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
 
-    // The map, centered at Uluru
+
+    // The map, centered at a location
     map = new Map(document.getElementById("map"), {
-        zoom: 16,
-        center: position,
+        zoom: 15,
+        center: findCenter(positions),
         mapId: "DEMO_MAP_ID",
         disableDefaultUI: true,
     });
 
-    // The marker, positioned at Uluru
-    const marker = new AdvancedMarkerElement({
-        map: map,
-        position: position
+    // The markers, positioned at desired locations
+    positions.forEach(position => {
+        const logo = document.createElement("img");
+        logo.src = logoURL;
+        logo.style.width = '15%';
+        logo.style.height = '15%';
+        logo.style.borderRadius = '5px';
+        new AdvancedMarkerElement({
+            map: map,
+            position: position,
+            content: logo
+        });
+
     });
 }
+
+const findCenter = (locs) => {
+    let averageLatitude = locs.reduce((total, location) => total + location.lat, 0) / locs.length;
+    let averageLongitude = locs.reduce((total, location) => total + location.lng, 0) / locs.length;
+    return {lat: averageLatitude, lng: averageLongitude};
+};
+
 
 initMap();

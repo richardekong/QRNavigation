@@ -2,6 +2,7 @@ package com.team1.qrnavigationproject.controller;
 
 import com.team1.qrnavigationproject.model.Location;
 import com.team1.qrnavigationproject.service.LocationService;
+import com.team1.qrnavigationproject.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,16 @@ public class LocationController {
 
     private final LocationService locationService;
 
+    private OrganizationService organizationService;
+
     @Autowired
     public LocationController(LocationService locationService) {
         this.locationService = locationService;
+    }
+
+    @Autowired
+    public void setOrganizationService(OrganizationService organizationService) {
+        this.organizationService = organizationService;
     }
 
     @GetMapping
@@ -32,6 +40,15 @@ public class LocationController {
         return locationService.getLocationById(id)
                 .map(location -> new ResponseEntity<>(location, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/{organizationName}")
+    public ResponseEntity<List<Location>> getLocationsByOrganization(@PathVariable String organizationName) {
+        List<Location> locations = locationService.findLocationByOrganizationId(organizationService.findByName(organizationName).getId());
+        if (locations.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(locations, HttpStatus.OK);
     }
 
     @PostMapping

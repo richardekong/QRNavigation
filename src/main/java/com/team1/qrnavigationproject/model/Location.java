@@ -1,6 +1,7 @@
 package com.team1.qrnavigationproject.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Location {
 
     private double longitude;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "location", cascade = CascadeType.REFRESH)
     private Address address;
     public void setAddress(Address address) {

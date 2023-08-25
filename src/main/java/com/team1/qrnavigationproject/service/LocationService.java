@@ -12,4 +12,6 @@ public interface LocationService {
     public void deleteLocation(int id);
     Location updateLocation(Location location);
 
+    List <Location> findLocationByOrganizationId(int organizationId);
+
 }
