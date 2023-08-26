@@ -97,10 +97,10 @@ create table space
     photo_urls    json default null,
     org_id        int default null,
     address_id    int default null,
-    type_id       int default null,
+    type       int default null,
     foreign key (org_id) references organization (id),
     foreign key (address_id) references address (id),
-    foreign key (type_id) references space_type (id)
+    foreign key (type) references space_type (id)
 );
 
 create table subspace
@@ -110,9 +110,9 @@ create table subspace
     `description` text,
     photo_url     text default null,
     main_space    int  default null,
-    type_id       int  default null,
+    `type`      int  default null,
     foreign key (main_space) references space (id),
-    foreign key (type_id) references space_type (id)
+    foreign key (`type`) references space_type (id)
 );
 
 

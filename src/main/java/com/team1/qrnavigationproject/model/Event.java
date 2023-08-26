@@ -9,7 +9,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
-
+import java.util.LinkedList;
+import java.util.List;
+import javax.persistence.Column;
 import static com.team1.qrnavigationproject.model.Constant.DATE_TIME_REGEX;
 
 @NoArgsConstructor
@@ -53,6 +55,20 @@ public class Event {
     @Column(columnDefinition = "json")
     private String imageUrls;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    List<Venue> venues;
+
+    public void add(Venue venue) {
+        if (venues == null) {
+            venues = new LinkedList<>();
+        }
+        if (!venues.contains(venue)) {
+            venues.add(venue);
+            venue.setEvent(this);
+        }
+    }
+
     @Override
     public String toString() {
         return "Event{" +
@@ -62,6 +78,7 @@ public class Event {
                 ", start=" + start +
                 ", end=" + end +
                 ", imageUrls='" + imageUrls + '\'' +
+                ", venues=" + venues +
                 '}';
     }
 }

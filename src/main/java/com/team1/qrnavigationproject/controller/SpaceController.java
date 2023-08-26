@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,14 +15,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static com.team1.qrnavigationproject.configuration.QRNavigationPaths.*;
 import static java.lang.String.format;
 
 @Controller
 public class SpaceController {
+    private UserService userService;
 
     private SpaceService spaceService;
 
@@ -31,16 +29,12 @@ public class SpaceController {
 
     private LocationService locationService;
 
-    private SubSpaceService subSpaceService;
-
-    private UserService userService;
-
     private OrganizationService organizationService;
 
     private SpaceTypeService spaceTypeService;
 
     @Autowired
-    public SpaceController(SpaceTypeService spaceTypeService) {
+    public void setSpaceType(SpaceTypeService spaceTypeService) {
         this.spaceTypeService = spaceTypeService;
     }
 
@@ -65,16 +59,15 @@ public class SpaceController {
     }
 
     @Autowired
+    public SpaceController(SpaceService spaceService) {
+        this.spaceService = spaceService;
+    }
+
+
+    @Autowired
     public void setLocationService(LocationService locationService) {
         this.locationService = locationService;
     }
-
-    @Autowired
-    public void setSubSpaceService(SubSpaceService subSpaceService) {
-        this.subSpaceService = subSpaceService;
-    }
-
-    private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
     @GetMapping(ADMIN_SPACES_PAGE)
     public String getAllSpaces(Model model, RedirectAttributes attributes, Authentication auth) {
@@ -152,25 +145,15 @@ public class SpaceController {
 
     @GetMapping("/admin/places/update/{id}")
     public String viewPlacePage(@PathVariable Integer id, Model mav, RedirectAttributes attributes) {
-       spaceService.getSpaceById(id).ifPresentOrElse(space -> mav.addAttribute("space", space),
-               ()-> attributes.addFlashAttribute("error", "Error (%d): Space not found".formatted(HttpStatus.NOT_FOUND.value())));
+        spaceService.getSpaceById(id).ifPresentOrElse(space -> mav.addAttribute("space", space),
+                () -> attributes.addFlashAttribute("error", "Error (%d): Space not found".formatted(HttpStatus.NOT_FOUND.value())));
         return "placeUpdates";
     }
 
     @PostMapping("/admin/spaces/update/process")
     public ModelAndView editPlaceForm(
-            @Valid @ModelAttribute("space") Space space, ModelAndView mav
-           /* @Valid @ModelAttribute Address addressUp,
-            @ModelAttribute Location locationUp,
-            ModelAndView mav, BindingResult bindingResult,
-            Authentication auth*/) {
-      /*  if (bindingResult.hasErrors()) {
-            bindingResult.getAllErrors().forEach(error -> logger.log(Level.SEVERE, error.getDefaultMessage()));
-            mav.addObject("error", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
-        }*/
-        Space updatedSpace = spaceService.updateSpace(space);
-
-
+            @Valid @ModelAttribute("space") Space space, ModelAndView mav) {
+        spaceService.updateSpace(space);
         mav.addObject("success", "Changes saved!");
         mav.setViewName("redirect:/admin/places");
         return mav;
@@ -180,7 +163,6 @@ public class SpaceController {
     public String deleteSpace(@PathVariable int id) {
         spaceService.deleteSpace(id);
         return "redirect:/admin/places";
-
     }
 
     @GetMapping("/admin/places/create/subspace")
@@ -265,5 +247,4 @@ public class SpaceController {
 
 
 }
-
 

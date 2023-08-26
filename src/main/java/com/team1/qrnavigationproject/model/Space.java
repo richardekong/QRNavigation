@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.LinkedList;
@@ -34,10 +33,10 @@ public class Space {
     @JoinColumn(name = "org_id")
     private Organization organization;
 
-    @Column(name = "address_id")
+    @Column(name="address_id")
     private int addressId;
 
-    @Column(name = "type")
+    @Column(name="type")
     private int typeId;
 
     @JsonManagedReference

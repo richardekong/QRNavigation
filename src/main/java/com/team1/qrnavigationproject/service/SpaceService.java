@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface SpaceService {
     public List<Space> getAllSpaces();
 
+    public List<Space> getAllSpaces(int organizationId);
+
     public Optional<Space> getSpaceById(int id);
 
     public Space saveSpace(Space space);
@@ -17,6 +19,9 @@ public interface SpaceService {
     public Optional<Space> getSpaceByName(String name);
 
     Space updateSpace(Space spaceUp);
+
+    Space findByName(String spaceName);
+
     Space findById(int id);
 
     Optional<Space> findSpaceByName(String name);

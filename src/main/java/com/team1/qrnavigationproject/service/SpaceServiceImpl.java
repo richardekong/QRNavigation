@@ -18,8 +18,8 @@ public class SpaceServiceImpl implements SpaceService {
     }
 
     @Override
-    public List<Space> getAllSpaces() {
-        return spaceRepo.findAll();
+    public List<Space> getAllSpaces(int organizationId) {
+        return spaceRepo.findAllSpaces(organizationId);
     }
 
     @Override
@@ -43,10 +43,10 @@ public class SpaceServiceImpl implements SpaceService {
     }
 
     @Override
-    public Space updateSpace(Space spaceUp) {
-        Space byId = spaceRepo.findById(spaceUp.getId());
-        byId.setName(spaceUp.getName());
-        byId.setDescription(spaceUp.getDescription());
+    public Space updateSpace(Space space) {
+        Space byId = spaceRepo.findById(space.getId());
+        byId.setName(space.getName());
+        byId.setDescription(space.getDescription());
         return spaceRepo.save(byId);
     }
 
@@ -59,4 +59,11 @@ public class SpaceServiceImpl implements SpaceService {
     public Optional<Space> findSpaceByName(String name) {
         return spaceRepo.findSpaceByName(name);
     }
+    public Space findByName(String spaceName){ return spaceRepo.findByName(spaceName);}
+
+    @Override
+    public List<Space> getAllSpaces() {
+        return spaceRepo.findAll();
+    }
+
 }

@@ -37,8 +37,6 @@ class ContentUnitTest {
         assertNotEquals(content.getDescription(), "Content pages for Open day");
     }
 
-
-
     @Test
     void getEventId() {
         int eventId = 1;
@@ -51,7 +49,7 @@ class ContentUnitTest {
     void getSpaceId() {
         int spaceId = 1;
         content.setSpace(TestData.createSpace());
-        assertEquals(content.getSpace().getId(), spaceId );
+        assertEquals(content.getSpace().getId(), spaceId);
         assertNotEquals(content.getSpace().getId(), -1);
     }
 
@@ -124,5 +122,5 @@ class ContentUnitTest {
         System.out.println(content.toString());
     }
 
-
 }
+

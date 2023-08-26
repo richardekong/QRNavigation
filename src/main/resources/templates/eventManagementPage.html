@@ -59,15 +59,22 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="event:${events}">
+                            <tr th:each="event : ${events}">
                                 <td>
                                     <p style="text-align: center; " th:text="${event.name}"></p>
                                 </td>
                                 <td>
                                     <select class="form-select">
-                                        <option style="text-align: center; ">Abacws 3.65</option>
-                                        <option style="text-align: center; ">Abacws 3.65</option>
+                                        <option style="text-align: center;" disabled selected>Show Venues</option>
+                                        <th:block th:each="eventInfo : ${eventVenueInfoMap}">
+                                            <th:block th:if="${eventInfo.key.id == event.id}">
+                                                <th:block th:each="venueInfo : ${eventInfo.value}">
+                                                    <option style="text-align: center;" th:text="${venueInfo.venueName}" th:value="${venueInfo.venueId}"></option>
+                                                </th:block>
+                                            </th:block>
+                                        </th:block>
                                     </select>
+
                                 </td>
                                 <td>
                                     <p style="text-align: center; " th:text="${#temporals.format(event.start, 'dd/MM/yyyy')}"></p>
@@ -95,3 +102,5 @@
             <footer th:insert="adminFooter::adminFooter"></footer>
         </body>
     </html>
+
+

@@ -11,4 +11,5 @@ public interface SubSpaceService {
     Optional<SubSpace> getSubSpaceByName(String subSpaceName);
     List<SubSpace> getSubspacesBySpaceId(Integer spaceId);
     SubSpace findById(int id);
+//    List<Object[]> getSpaceAndSubspaceInfo(int orgId);
 }
