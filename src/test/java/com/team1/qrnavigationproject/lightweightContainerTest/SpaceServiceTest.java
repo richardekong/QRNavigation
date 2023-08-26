@@ -60,7 +60,7 @@ public class SpaceServiceTest {
 
         given(this.spaceRepo.findAll()).willReturn(spacesToFetch);
 
-        List<Space> resultSpaces = this.spaceService.getAllSpaces();
+        List<Space> resultSpaces = this.spaceService.getAllSpaces(1);
 
         verify(this.spaceRepo, times(1)).findAll();
 

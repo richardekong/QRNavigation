@@ -116,7 +116,7 @@ public class ContentController {
         // passing the list events objects to view ( createContentPage )
         model.addAttribute("events", events);
         // getting list of spaces
-        List<Space> spaces = spaceService.getAllSpaces();
+        List<Space> spaces = spaceService.getAllSpaces(organizationId);
         // passing the list spaces to view ( createContentPage )
         model.addAttribute("spaces", spaces);
 
@@ -170,7 +170,6 @@ public class ContentController {
 
     @PostMapping("/admin/contents/viewContent")
     public String viewContentPage(@RequestParam Map<String, String> requestParams, Model model , Authentication authentication) {
-        System.out.println("************ HERE *************");
         User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
         if (admin == null){
             return "redirect:/login";
@@ -198,7 +197,7 @@ public class ContentController {
         // passing the list events to view ( createContentPage )
         model.addAttribute("events", events);
 
-        List<Space> spaces = spaceService.getAllSpaces();
+        List<Space> spaces = spaceService.getAllSpaces(organizationId);
         // passing the list spaces to view ( createContentPage )
         model.addAttribute("spaces", spaces);
 

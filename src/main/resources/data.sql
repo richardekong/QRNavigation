@@ -1,4 +1,3 @@
-
 insert into location(latitude, longitude)
 values (51.4891719, -3.1811802);
 
@@ -74,23 +73,23 @@ values ('Park');
 insert into Space_type(name)
 values ('Countryside trail');
 
-insert into space(name, description, photo_urls, org_id, address_id, type_id)
+insert into space(name, description, photo_urls, org_id, address_id, type)
 values ('Abacws Building', 'Building for school of computer science and informatics', '[]', 1, 1,  1);
 
-insert into space(name, description, photo_urls, org_id, address_id,  type_id)
+insert into space(name, description, photo_urls, org_id, address_id,  type)
 values ('Cardiff Student Union', 'Building for Cardiff University Student Union', '[]', 1, 2,  1);
 
-insert into space(name, description, photo_urls, org_id, address_id, type_id)
+insert into space(name, description, photo_urls, org_id, address_id, type)
 values ('Senghennydd Court', 'Cardiff University Hostel', '[]', 1, 3,  1);
 
 
-insert into subspace(name, description, photo_url, main_space,type_id)
+insert into subspace(name, description, photo_url, main_space,`type`)
 values ('Room 3.65', 'Bookable room containing tables, chairs and white board','', 1,2);
 
-insert into subspace(name, description, photo_url, main_space,type_id )
+insert into subspace(name, description, photo_url, main_space,`type` )
 values ('Reception', 'Room for receptionist in student union building','', 2,2);
 
-insert into subspace(name, description, photo_url, main_space,type_id)
+insert into subspace(name, description, photo_url, main_space,`type`)
 values ('Reception', ' Room for receptionist in Senghennydd court','', 3,2);
 
 
@@ -107,4 +106,5 @@ insert into qrcode(space_id, sub_space_id, description, image_url,page_url, crea
 values (3, 3, 'QR code for reception @ Senghennydd court', 'qr3.png', 'https://www.qrnavigation.com/content', '2023-05-16 10:00:00');
 
 select u.*,r.name as ROLE from app_user u right outer join Role r on u.id=r.id;
+
 

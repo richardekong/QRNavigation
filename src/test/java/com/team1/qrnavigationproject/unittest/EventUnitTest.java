@@ -100,7 +100,7 @@ class EventUnitTest {
     void setOrganizer() {
 
         Organization organization = new Organization(
-                2, "National Health Services",null,
+                2, "National Health Services", null,
                 "0734634523623",
                 "https://www.nhs.gov.uk/logo.png",
                 "https://www.nhs.gov.uk",
@@ -126,32 +126,32 @@ class EventUnitTest {
 
     @Test
     void setStart() {
-        LocalDateTime start = LocalDateTime.of(2023,7,18,8,0);
+        LocalDateTime start = LocalDateTime.of(2023, 7, 18, 8, 0);
         String startString = start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         String startString2 = start.format(DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss"));
         String pattern = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}";
         Matcher patternMatcher = Pattern.compile(pattern).matcher(startString);
         Matcher patternMatcher2 = Pattern.compile(pattern).matcher(startString2);
         event.setStart(start);
-        assertEquals(event.getStart(), LocalDateTime.of(2023,7,18,8,0));
+        assertEquals(event.getStart(), LocalDateTime.of(2023, 7, 18, 8, 0));
         init();
-        assertNotEquals(event.getStart(), LocalDateTime.of(2023,7,18,8,0));
+        assertNotEquals(event.getStart(), LocalDateTime.of(2023, 7, 18, 8, 0));
         assertTrue(patternMatcher.matches());
         assertFalse(patternMatcher2.matches());
     }
 
     @Test
     void setEnd() {
-        LocalDateTime end = LocalDateTime.of(2023,7,18,12,0);
+        LocalDateTime end = LocalDateTime.of(2023, 7, 18, 12, 0);
         String endString = end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         String endString2 = end.format(DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss"));
         String pattern = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}";
         Matcher patternMatcher = Pattern.compile(pattern).matcher(endString);
         Matcher patternMatcher2 = Pattern.compile(pattern).matcher(endString2);
         event.setStart(end);
-        assertEquals(event.getStart(), LocalDateTime.of(2023,7,18,12,0));
+        assertEquals(event.getStart(), LocalDateTime.of(2023, 7, 18, 12, 0));
         init();
-        assertNotEquals(event.getStart(), LocalDateTime.of(2023,7,18,12,0));
+        assertNotEquals(event.getStart(), LocalDateTime.of(2023, 7, 18, 12, 0));
         assertTrue(patternMatcher.matches());
         assertFalse(patternMatcher2.matches());
     }
@@ -167,7 +167,8 @@ class EventUnitTest {
                 event.getOrganizer(),
                 event.getStart(),
                 event.getEnd(),
-                event.getImageUrls()
+                event.getImageUrls(),
+                event.getVenues()
         );
         assertEquals(event, similarEvent);
         assertEquals(event.hashCode(), similarEvent.hashCode());
@@ -181,3 +182,4 @@ class EventUnitTest {
         assertFalse(event.toString().isEmpty());
     }
 }
+
