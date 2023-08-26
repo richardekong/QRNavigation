@@ -1,7 +1,6 @@
 package com.team1.qrnavigationproject.unittest;
 
 import com.team1.qrnavigationproject.model.QRCode;
-import com.team1.qrnavigationproject.model.Space;
 import com.team1.qrnavigationproject.stub.TestData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

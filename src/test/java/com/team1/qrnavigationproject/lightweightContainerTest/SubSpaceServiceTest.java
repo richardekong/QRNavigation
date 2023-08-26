@@ -73,7 +73,7 @@ public class SubSpaceServiceTest {
     public void testFetchSubSpaceByIdNumber() {
         SubSpace subSpaceToFetch = this.subSpace;
 
-        given(this.subSpaceRepo.findById(subSpaceToFetch.getId())).willReturn(Optional.of(subSpaceToFetch));
+        given(this.subSpaceRepo.findById(subSpaceToFetch.getId())).willReturn(subSpaceToFetch);
 
         Optional<SubSpace> subSpace = this.subSpaceService.getSubSpaceById(subSpaceToFetch.getId());
 

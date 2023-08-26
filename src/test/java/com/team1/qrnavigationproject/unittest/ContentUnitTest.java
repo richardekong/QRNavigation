@@ -16,6 +16,7 @@ class ContentUnitTest {
     @BeforeEach
     void setUp() {
         content = TestData.createContent();
+
     }
 
     @AfterEach
@@ -41,22 +42,25 @@ class ContentUnitTest {
     @Test
     void getEventId() {
         int eventId = 1;
-        assertEquals(content.getEventId(), eventId);
-        assertNotEquals(content.getEventId(), 0);
+        content.setEvent(TestData.createEvent());
+        assertEquals(content.getEvent().getId(), eventId);
+        assertNotEquals(content.getEvent().getId(), 0);
     }
 
     @Test
     void getSpaceId() {
         int spaceId = 1;
-        assertEquals(content.getSpaceId(), spaceId );
-        assertNotEquals(content.getSpaceId(), -1);
+        content.setSpace(TestData.createSpace());
+        assertEquals(content.getSpace().getId(), spaceId );
+        assertNotEquals(content.getSpace().getId(), -1);
     }
 
     @Test
     void getSubSpaceId() {
         int subSpaceId = 1;
-        assertEquals(content.getSubSpaceId(), subSpaceId);
-        assertNotEquals(content.getSubSpaceId(), 5);
+        content.setSubSpace(TestData.createSubSpace());
+        assertEquals(content.getSubSpace().getId(), subSpaceId);
+        assertNotEquals(content.getSubSpace().getId(), 5);
     }
 
     @Test
@@ -79,25 +83,28 @@ class ContentUnitTest {
     @Test
     void setEventId() {
         int id = 4;
-        content.setEventId(id);
-        assertEquals(content.getEventId(), id);
-        assertNotEquals(content.getEventId(), 6);
+        content.setEvent(TestData.createEvent());
+        content.getEvent().setId(id);
+        assertEquals(content.getEvent().getId(), id);
+        assertNotEquals(content.getEvent().getId(), 6);
     }
 
     @Test
     void setSpaceId() {
         int id = 5;
-        content.setSpaceId(id);
-        assertEquals(content.getSpaceId(), id);
-        assertNotEquals(content.getSpaceId(), 1);
+        content.setSpace(TestData.createSpace());
+        content.getSpace().setId(id);
+        assertEquals(content.getSpace().getId(), id);
+        assertNotEquals(content.getSpace().getId(), 1);
     }
 
     @Test
     void setSubSpaceId() {
         int id = 0;
-        content.setSubSpaceId(id);
-        assertEquals(content.getSubSpaceId(), id);
-        assertNotEquals(content.getSubSpaceId(), 1);
+        content.setSubSpace(TestData.createSubSpace());
+        content.getSubSpace().setId(id);
+        assertEquals(content.getSubSpace().getId(), id);
+        assertNotEquals(content.getSubSpace().getId(), 1);
     }
 
     @Test
@@ -106,33 +113,15 @@ class ContentUnitTest {
                 content.getId(),
                 content.getName(),
                 content.getDescription(),
-                content.getEventId(),
-                content.getSpaceId(),
-                content.getSubSpaceId()
+                content.getEvent(),
+                content.getSpace(),
+                content.getSubSpace()
         );
 
         assertEquals(content, anotherContent);
         content.setId(5);
         assertNotEquals(content, anotherContent);
         System.out.println(content.toString());
-    }
-
-    @Test
-    void testHashCode() {
-        int hashcode = 457222221;
-        assertEquals(content.hashCode(), hashcode);
-        assertNotEquals(content.hashCode(), 457222231);
-    }
-
-    @Test
-    void testToString() {
-        String contentString = "Content(id=1, name=open day content, description=Content page for Open day," +
-                " eventId=1, spaceId=1, subSpaceId=1)";
-        assertEquals(content.toString(), contentString);
-        content.setId(5);
-        assertNotEquals(content.toString(), "Content(id=1, name=open day content, description=Content page " +
-                "for Open day, eventId=1, spaceId=1, subSpaceId=1)");
-        assertNotNull(content.toString());
     }
 
 

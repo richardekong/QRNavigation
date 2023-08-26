@@ -1,12 +1,10 @@
 package com.team1.qrnavigationproject.stub;
 
-import com.beust.ah.A;
 import com.team1.qrnavigationproject.model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public interface TestData {
 
@@ -16,7 +14,7 @@ public interface TestData {
 
     static Content createContent() {
         return new Content(1, "open day content", "Content page for Open day"
-                , 1, 1, 1);
+                , null, null, null);
     }
 
     static Event createEvent() {
@@ -25,8 +23,6 @@ public interface TestData {
                  "Open day",
                  "An event for open day",
                 new Organization(),
-                new ArrayList<>(),
-                new ArrayList<>(),
                  LocalDateTime.of(2023, 7, 10, 0, 0),
                  LocalDateTime.of(2023, 7, 18, 0, 0),
                 "event1/img1"
@@ -138,7 +134,7 @@ public interface TestData {
                new Organization(),
                 1,
                 1,
-                new ArrayList<>(), new Event()
+                new ArrayList<>()
         );
         space.add(createSubSpace());
         return space;
@@ -146,7 +142,7 @@ public interface TestData {
 
     static SubSpace createSubSpace(){
         return  new SubSpace(
-                1, "3.45", "room in Abacws", "img/1", new Space(), new Event(),1
+                1, "3.45", "room in Abacws", "img/1", new Space(),1
         );
     }
 

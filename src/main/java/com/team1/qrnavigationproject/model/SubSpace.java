@@ -38,10 +38,6 @@ public class SubSpace {
     @JoinColumn(name = "main_space")
     private Space space;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "event_id")
-    private Event event;
 
     @Column(name = "type")
     private int typeId;

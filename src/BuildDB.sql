@@ -14,8 +14,8 @@ drop table if exists location;
 create table location
 (
     id        int auto_increment primary key,
-    latitude  decimal(4,6 ),
-    longitude decimal(4, 6)
+    latitude  decimal(10,6 ),
+    longitude decimal(10,6)
 );
 
 create table address
@@ -94,15 +94,13 @@ create table space
     id            int auto_increment primary key,
     `name`        varchar(30) unique not null,
     `description` text,
-    photo_urls    json               null,
+    photo_urls    json default null,
     org_id        int default null,
     address_id    int default null,
-    event_id      int default null,
     type_id       int default null,
     foreign key (org_id) references organization (id),
     foreign key (address_id) references address (id),
-    foreign key (type_id) references space_type (id),
-    foreign key (event_id) references event (id)
+    foreign key (type_id) references space_type (id)
 );
 
 create table subspace
@@ -113,9 +111,7 @@ create table subspace
     photo_url     text default null,
     main_space    int  default null,
     `type`       int  default null,
-    event_id      int  default null,
     foreign key (main_space) references space (id),
-    foreign key (event_id) references event (id),
     foreign key (`type`) references space_type (id)
 );
 
