@@ -19,14 +19,14 @@ public class Venue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "eventId")
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "event_id")
     private Event event;
 
-    @Column(name = "spaceId")
+    @Column(name = "space_id")
     private int spaceId;
 
-    @Column(name = "subspaceId")
+    @Column(name = "subspace_id")
     private int subspaceId;
 
 }

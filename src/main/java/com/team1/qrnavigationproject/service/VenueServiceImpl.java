@@ -5,6 +5,8 @@ import com.team1.qrnavigationproject.repository.VenueRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VenueServiceImpl implements VenueService {
     private final VenueRepo venueRepo;
@@ -18,5 +20,7 @@ public class VenueServiceImpl implements VenueService {
     public Venue save(Venue venue) {
         return venueRepo.save(venue);
     }
+    @Override
+    public List<Venue> findAllByEventVenuesByEventId(int eventId){ return venueRepo.findAllByEventVenuesByEventId(eventId); }
 
 }

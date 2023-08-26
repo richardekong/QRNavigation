@@ -45,9 +45,56 @@ public class EventController {
         admin.getOrganization().getId();
         int organizationId = admin.getOrganization().getId();
 
+        // creating the map
+        Map<Event, List<HashMap<String, String>>> eventVenueInfoMap = new HashMap<>();
+
+
+        // Here retrieving all events by organization id
         List<Event> events = eventService.findAll(organizationId);
+        // Here loop through the event list
+        for (Event event : events){
+            // here getting list of venues of each event
+            List<Venue> venues = venueService.findAllByEventVenuesByEventId(event.getId());
+            // map fot the info
+            List<HashMap<String, String>> venueInfoList = new ArrayList<>();
+            for ( Venue venue : venues){
+                // here getting the space for each venue
+                Space space = spaceService.findById(venue.getSpaceId());
+                String venueName = space.getName();
+                String venueId = Integer.toString(space.getId());
+                //here check if there is subspace for that venue
+                if ( venue.getSubspaceId() != 0){
+                    // here if there is subspace in the  venue , retrieve it
+                    SubSpace subSpace = subSpaceService.findById(venue.getSubspaceId());
+                    venueName = venueName +" / "+ subSpace.getName();
+                    venueId = Integer.toString(subSpace.getId());
+                }
+
+                HashMap<String, String> venueInfo = new HashMap<>();
+                venueInfo.put("venueName", venueName);
+                venueInfo.put("venueId", venueId);
+                venueInfoList.add(venueInfo);
+                System.out.println(" ******** "+venueName+ " // "+ venueId);
+            }
+
+            eventVenueInfoMap.put(event, venueInfoList);
+
+        }
 
         model.addAttribute("events", events);
+        model.addAttribute("eventVenueInfoMap", eventVenueInfoMap);
+
+        // Print the contents of the eventVenueInfoMap
+        for (Map.Entry<Event, List<HashMap<String, String>>> entry : eventVenueInfoMap.entrySet()) {
+            Event event = entry.getKey();
+            List<HashMap<String, String>> venueInfoList = entry.getValue();
+
+            System.out.println("Event: " + event.getName());
+            for (HashMap<String, String> venueInfo : venueInfoList) {
+                System.out.println("Venue Name: " + venueInfo.get("venueName") + ", Venue ID: " + venueInfo.get("venueId"));
+            }
+        }
+
 
 
 
@@ -112,7 +159,7 @@ public class EventController {
         LocalDateTime end = event_end_date.atTime(event_end_time);
         event.setEnd(end);
 
-
+        eventService.saveEvent(event);
 
         // Get the selected venues and subspaces from the request
         String[] selectedVenues = request.getParameterValues("space");
@@ -124,8 +171,8 @@ public class EventController {
                 Venue venue = new Venue();
                 venue.setEvent(event);
                 venue.setSpaceId(space.getId());
-                Venue venue1 = venueService.save(venue);
-                event.add(venue1);
+                venueService.save(venue);
+                event.add(venue);
                 System.out.println("$$$ venue :" + venue.getId());
             }
         }
@@ -138,13 +185,13 @@ public class EventController {
                 venue.setSubspaceId(subspaceIdInt);
                 SubSpace subSpace = subSpaceService.findById(subspaceIdInt);
                 venue.setSpaceId(subSpace.getSpace().getId());
-                Venue venue1 = venueService.save(venue);
-                event.add(venue1);
+                venueService.save(venue);
+                event.add(venue);
                 System.out.println("$$$ venue :" + venue.getId());
             }
         }
 
-        eventService.saveEvent(event);
+
 
         return "redirect:/admin/events";
     }
