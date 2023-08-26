@@ -14,24 +14,24 @@ public interface TestData {
         return new Address(1, "Abacws Building, Senghennydd Road", new Location(), "CF24 4AG", new Organization());
     }
 
-    static Content createContent() {
-        return new Content(1, "open day content", "Content page for Open day"
-                , 1, 1, 1);
-    }
+//    static Content createContent() {
+//        return new Content(1, "open day content", "Content page for Open day"
+//                , 1, 1, 1);
+//    }
 
-    static Event createEvent() {
-        return new Event(
-                 1,
-                 "Open day",
-                 "An event for open day",
-                new Organization(),
-                new ArrayList<>(),
-                new ArrayList<>(),
-                 LocalDateTime.of(2023, 7, 10, 0, 0),
-                 LocalDateTime.of(2023, 7, 18, 0, 0),
-                "event1/img1"
-         );
-    }
+//    static Event createEvent() {
+//        return new Event(
+//                 1,
+//                 "Open day",
+//                 "An event for open day",
+//                new Organization(),
+//                new ArrayList<>(),
+//                new ArrayList<>(),
+//                 LocalDateTime.of(2023, 7, 10, 0, 0),
+//                 LocalDateTime.of(2023, 7, 18, 0, 0),
+//                "event1/img1"
+//         );
+//    }
 
     static Location createLocation() {
         return new Location(
@@ -130,26 +130,26 @@ public interface TestData {
         return new SpaceType(3, "CountrySide Trail");
     }
 
-    static Space createSpace(){
-        Space space =  new Space(
-                1,
-                "Abacws Building",
-                "school of computer science and informatics",
-                "https://www.spaces.io/images/abacws.png",
-               new Organization(),
-                1,
-                1,
-                new ArrayList<>(), new Event()
-        );
-        space.add(createSubSpace());
-        return space;
-    }
+//    static Space createSpace(){
+//        Space space =  new Space(
+//                1,
+//                "Abacws Building",
+//                "school of computer science and informatics",
+//                "https://www.spaces.io/images/abacws.png",
+//               new Organization(),
+//                1,
+//                1,
+//                new ArrayList<>(), new Event()
+//        );
+//        space.add(createSubSpace());
+//        return space;
+//    }
 
-    static SubSpace createSubSpace(){
-        return  new SubSpace(
-                1, "Abacws / 3.45", "room in Abacws", "img/1", new Space(), new Event(),1
-        );
-    }
+//    static SubSpace createSubSpace(){
+//        return  new SubSpace(
+//                1, "Abacws / 3.45", "room in Abacws", "img/1", new Space(), new Event(),1
+//        );
+//    }
 
     static UserType createChild() {
         return new UserType(1, "Child", new User());

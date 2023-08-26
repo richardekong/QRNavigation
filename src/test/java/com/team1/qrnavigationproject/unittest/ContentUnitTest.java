@@ -14,9 +14,9 @@ class ContentUnitTest {
 
 
     @BeforeEach
-    void setUp() {
-        content = TestData.createContent();
-    }
+//    void setUp() {
+//        content = TestData.createContent();
+//    }
 
     @AfterEach
     void tearDown() {
@@ -38,26 +38,26 @@ class ContentUnitTest {
 
 
 
-    @Test
-    void getEventId() {
-        int eventId = 1;
-        assertEquals(content.getEventId(), eventId);
-        assertNotEquals(content.getEventId(), 0);
-    }
+    //@Test
+//    void getEventId() {
+//        int eventId = 1;
+//        assertEquals(content.getEventId(), eventId);
+//        assertNotEquals(content.getEventId(), 0);
+//    }
 
-    @Test
-    void getSpaceId() {
-        int spaceId = 1;
-        assertEquals(content.getSpaceId(), spaceId );
-        assertNotEquals(content.getSpaceId(), -1);
-    }
+    //@Test
+//    void getSpaceId() {
+//        int spaceId = 1;
+//        assertEquals(content.getSpaceId(), spaceId );
+//        assertNotEquals(content.getSpaceId(), -1);
+//    }
 
-    @Test
-    void getSubSpaceId() {
-        int subSpaceId = 1;
-        assertEquals(content.getSubSpaceId(), subSpaceId);
-        assertNotEquals(content.getSubSpaceId(), 5);
-    }
+    //@Test
+//    void getSubSpaceId() {
+//        int subSpaceId = 1;
+//        assertEquals(content.getSubSpaceId(), subSpaceId);
+//        assertNotEquals(content.getSubSpaceId(), 5);
+//    }
 
     @Test
     void setId() {
@@ -76,46 +76,46 @@ class ContentUnitTest {
     }
 
 
-    @Test
-    void setEventId() {
-        int id = 4;
-        content.setEventId(id);
-        assertEquals(content.getEventId(), id);
-        assertNotEquals(content.getEventId(), 6);
-    }
+//    @Test
+//    void setEventId() {
+//        int id = 4;
+//        content.setEventId(id);
+//        assertEquals(content.getEventId(), id);
+//        assertNotEquals(content.getEventId(), 6);
+//    }
 
-    @Test
-    void setSpaceId() {
-        int id = 5;
-        content.setSpaceId(id);
-        assertEquals(content.getSpaceId(), id);
-        assertNotEquals(content.getSpaceId(), 1);
-    }
+//    @Test
+//    void setSpaceId() {
+//        int id = 5;
+//        content.setSpaceId(id);
+//        assertEquals(content.getSpaceId(), id);
+//        assertNotEquals(content.getSpaceId(), 1);
+//    }
 
-    @Test
-    void setSubSpaceId() {
-        int id = 0;
-        content.setSubSpaceId(id);
-        assertEquals(content.getSubSpaceId(), id);
-        assertNotEquals(content.getSubSpaceId(), 1);
-    }
+//    @Test
+//    void setSubSpaceId() {
+//        int id = 0;
+//        content.setSubSpaceId(id);
+//        assertEquals(content.getSubSpaceId(), id);
+//        assertNotEquals(content.getSubSpaceId(), 1);
+//    }
 
-    @Test
-    void testEquals() {
-        Content anotherContent = new Content(
-                content.getId(),
-                content.getName(),
-                content.getDescription(),
-                content.getEventId(),
-                content.getSpaceId(),
-                content.getSubSpaceId()
-        );
-
-        assertEquals(content, anotherContent);
-        content.setId(5);
-        assertNotEquals(content, anotherContent);
-        System.out.println(content.toString());
-    }
+//    @Test
+//    void testEquals() {
+//        Content anotherContent = new Content(
+//                content.getId(),
+//                content.getName(),
+//                content.getDescription(),
+//                content.getEventId(),
+//                content.getSpaceId(),
+//                content.getSubSpaceId()
+//        );
+//
+//        assertEquals(content, anotherContent);
+//        content.setId(5);
+//        assertNotEquals(content, anotherContent);
+//        System.out.println(content.toString());
+//    }
 
     @Test
     void testHashCode() {

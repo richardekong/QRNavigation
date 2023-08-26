@@ -1,14 +1,8 @@
 package com.team1.qrnavigationproject.controller;
 
 import com.team1.qrnavigationproject.configuration.AuthenticatedUser;
-import com.team1.qrnavigationproject.model.Event;
-import com.team1.qrnavigationproject.model.Space;
-import com.team1.qrnavigationproject.model.SubSpace;
-import com.team1.qrnavigationproject.model.User;
-import com.team1.qrnavigationproject.service.EventService;
-import com.team1.qrnavigationproject.service.SpaceService;
-import com.team1.qrnavigationproject.service.SubSpaceService;
-import com.team1.qrnavigationproject.service.UserService;
+import com.team1.qrnavigationproject.model.*;
+import com.team1.qrnavigationproject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -29,6 +23,7 @@ public class EventController {
     private UserService userService;
     private SpaceService spaceService;
     private SubSpaceService subSpaceService;
+    private VenueService venueService;
     @Autowired
     public void setEventService(EventService eventService){
         this.eventService = eventService;
@@ -39,6 +34,8 @@ public class EventController {
     public void setSpaceService(SpaceService spaceService){ this.spaceService = spaceService;}
     @Autowired
     public void setSubSpaceService(SubSpaceService subSpaceService){ this.subSpaceService = subSpaceService;}
+    @Autowired
+    public void setVenueService(VenueService venueService){ this.venueService = venueService; }
     @GetMapping("/admin/events")
     public String ShowEventManagementPage(Model model, Authentication authentication) {
         User admin = AuthenticatedUser.requestCurrentUser(authentication, userService);
@@ -100,7 +97,7 @@ public class EventController {
             return "redirect:/login";
         }
 
-       event.setOrganizer(admin.getOrganization());
+        event.setOrganizer(admin.getOrganization());
 
 
         LocalDate event_start_date = LocalDate.parse(requestParams.get("event_start_date"));
@@ -115,38 +112,39 @@ public class EventController {
         LocalDateTime end = event_end_date.atTime(event_end_time);
         event.setEnd(end);
 
-        eventService.saveEvent(event);
 
 
-        List<Integer> selectedSpacesIds = new ArrayList<>();
-        List<Integer> selectedSubSpacesIds = new ArrayList<>();
+        // Get the selected venues and subspaces from the request
+        String[] selectedVenues = request.getParameterValues("space");
+        String[] selectedSubspaces = request.getParameterValues("subSpace");
 
-        for (Map.Entry<String, String> param : requestParams.entrySet()) {
-            String paramName = param.getKey();
-            String paramValue = param.getValue();
-
-            if (paramName.startsWith("space")) {
-                // Retrieve selected spaces
-                Space selectedSpace = spaceService.findByName(paramValue);
-                selectedSpacesIds.add(selectedSpace.getId());
-                System.out.println("Selected Space: "+ paramValue + " ID: "+ selectedSpace.getId());
-            } else if (paramName.startsWith("subSpace-")) {
-                // Extract space name and subspace ID from the paramName
-                String[] parts = paramName.split("-");
-                String spaceName = parts[1];
-                int subspaceId = Integer.parseInt(parts[2]);
-                selectedSubSpacesIds.add(subspaceId);
-                System.out.println("Selected Sub Space: " + spaceName + " ID:" + subspaceId);
+        if (selectedVenues != null) {
+            for (String venueId : selectedVenues) {
+                Space space = spaceService.findByName(venueId);
+                Venue venue = new Venue();
+                venue.setEvent(event);
+                venue.setSpaceId(space.getId());
+                Venue venue1 = venueService.save(venue);
+                event.add(venue1);
+                System.out.println("$$$ venue :" + venue.getId());
             }
         }
 
-        // Now you have lists of selected space IDs and selected subspace IDs
-        System.out.println("Selected Space IDs: " + selectedSpacesIds);
-        System.out.println("Selected Subspace IDs: " + selectedSubSpacesIds);
+        if (selectedSubspaces != null) {
+            for (String subspaceId : selectedSubspaces) {
+                int subspaceIdInt = Integer.parseInt(subspaceId);
+                Venue venue = new Venue();
+                venue.setEvent(event);
+                venue.setSubspaceId(subspaceIdInt);
+                SubSpace subSpace = subSpaceService.findById(subspaceIdInt);
+                venue.setSpaceId(subSpace.getSpace().getId());
+                Venue venue1 = venueService.save(venue);
+                event.add(venue1);
+                System.out.println("$$$ venue :" + venue.getId());
+            }
+        }
 
-
-
-
+        eventService.saveEvent(event);
 
         return "redirect:/admin/events";
     }

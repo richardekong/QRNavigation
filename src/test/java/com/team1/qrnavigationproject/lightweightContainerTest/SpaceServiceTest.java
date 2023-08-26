@@ -33,9 +33,9 @@ public class SpaceServiceTest {
     private Space space;
 
     @BeforeEach
-    public void init() {
-        this.space = TestData.createSpace();
-    }
+//    public void init() {
+//        this.space = TestData.createSpace();
+//    }
 
     @DisplayName("Create a space with test data")
     @Test

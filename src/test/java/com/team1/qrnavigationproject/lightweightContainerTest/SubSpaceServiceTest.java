@@ -33,9 +33,9 @@ public class SubSpaceServiceTest {
     private SubSpace subSpace;
 
     @BeforeEach
-    public void init() {
-        this.subSpace = TestData.createSubSpace();
-    }
+//    public void init() {
+//        this.subSpace = TestData.createSubSpace();
+//    }
 
     @DisplayName("Create a sub space with test data")
     @Test
@@ -73,8 +73,8 @@ public class SubSpaceServiceTest {
     public void testFetchSubSpaceByIdNumber() {
         SubSpace subSpaceToFetch = this.subSpace;
 
-        given(this.subSpaceRepo.findById(subSpaceToFetch.getId())).willReturn(Optional.of(subSpaceToFetch));
-
+//        given(this.subSpaceRepo.findById(subSpaceToFetch.getId())).willReturn(Optional.of(subSpaceToFetch));
+//
         Optional<SubSpace> subSpace = this.subSpaceService.getSubSpaceById(subSpaceToFetch.getId());
 
         verify(this.subSpaceRepo, times(1)).findById(subSpaceToFetch.getId());

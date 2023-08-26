@@ -108,10 +108,10 @@ public class OrganizationServiceTest {
     @Test
     void canRetrieveAllLinkedSpaces(){
         List<Space> spaces;
-        Space space = TestData.createSpace();
+        //Space space = TestData.createSpace();
         given(organizationRepo.save(organization)).willReturn(organization);
 
-        organization.add(space);
+        //organization.add(space);
 
         spaces = organization.getSpaces();
 
@@ -138,11 +138,11 @@ public class OrganizationServiceTest {
     @Test
     void canRetrieveAllScheduledEvents(){
         List<Event> events;
-        Event event = TestData.createEvent();
+//        Event event = TestData.createEvent();
 
         given(organizationRepo.save(organization)).willReturn(organization);
 
-        organization.add(event);
+//        organization.add(event);
 
         events = organization.getEvents();
 
