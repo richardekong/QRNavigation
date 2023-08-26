@@ -6,13 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <header class="userHeader" id="userHeader" th:fragment = "userHeader">
+        <header class="userHeader header-footer" id="userHeader" th:fragment = "userHeader">
             <div class="userHeader-top-section">
-                <div class="userHeader-logo-container">
-                    <a th:href="@{/home}"><img class="userHeader-logo" th:src="@{/images/cardiff_uni_logo.png}" src="/static/images/cardiff_uni_logo.png" alt="Organization Logo"></a>
+                <div id="userHeader-logo-container" class="userHeader-logo-container logo">
+                    <a class="home-link" th:href="@{/home}">
+                        <img id="userHeader-logo" class="userHeader-logo header-footer-logo" th:src="@{/images/cardiff_uni_logo.png}" src="/static/images/cardiff_uni_logo.png" alt="Organization Logo">
+                    </a>
                 </div>
                 <div class="userHeader-org-name-container">
-                    <a class="userHeader-org-name-link" th:href="@{/home}"><p class="userHeader-org-name">Cardiff Univeristy</p></a>
+                    <a class="userHeader-org-name-link home-link" th:href="@{/home}"><p id="userHeader-org-name" class="userHeader-org-name org-name">Cardiff Univeristy</p></a>
                 </div>
             </div>
             <div class="userHeader-bottom-section">

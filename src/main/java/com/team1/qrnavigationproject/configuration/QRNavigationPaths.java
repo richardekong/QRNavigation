@@ -41,6 +41,8 @@ public interface QRNavigationPaths {
     String QRCODE_PAGE_URL = "/{organization}/qrnavigation/qrcodes/{space}/{subspace}";
     String ADMIN_SPACES_CREATE = "/admin/spaces/create";
     String ADMIN_SPACES_CREATE_PROCESS = "/admin/spaces/create/process";
+    String QRNAVIGATION_LANDING_PAGE = "/{organizationName}/qrnavigation/home";
+    String QRNAVIGATION_CONTENT = "/{organizationName}/qrnavigation/content";
     String[] PERMITTED_PATHS = {
             WELCOME_PAGE,
             LANDING_PAGE,
@@ -51,6 +53,8 @@ public interface QRNavigationPaths {
             AUTH_SIGN_UP,
             AUTH_LOGIN,
             QRCODE_PAGE_URL,
+            QRNAVIGATION_LANDING_PAGE,
+            QRNAVIGATION_CONTENT,
             ERROR_PAGE
     };
 

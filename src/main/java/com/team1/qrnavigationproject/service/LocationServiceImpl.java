@@ -39,10 +39,12 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public Location updateLocation(Location locationUp) {
-        return null;
+    public Location updateLocation(Location location) {
+        return locationRepo.save(location);
     }
 
-
-
+    @Override
+    public List<Location> findLocationByOrganizationId(int organizationId) {
+        return locationRepo.findLocationByOrganizationId(organizationId);
+    }
 }

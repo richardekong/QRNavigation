@@ -1,3 +1,4 @@
+
 insert into location(latitude, longitude)
 values (51.4891719, -3.1811802);
 
@@ -74,13 +75,13 @@ insert into Space_type(name)
 values ('Countryside trail');
 
 insert into space(name, description, photo_urls, org_id, address_id, type_id)
-values ('Abacws Building', 'Building for school of computer science and informatics', '', 1, 1,  1);
+values ('Abacws Building', 'Building for school of computer science and informatics', '[]', 1, 1,  1);
 
 insert into space(name, description, photo_urls, org_id, address_id,  type_id)
-values ('Cardiff Student Union', 'Building for Cardiff University Student Union', '', 1, 2,  1);
+values ('Cardiff Student Union', 'Building for Cardiff University Student Union', '[]', 1, 2,  1);
 
 insert into space(name, description, photo_urls, org_id, address_id, type_id)
-values ('Senghennydd Court', 'Cardiff University Hostel', '', 1, 3,  1);
+values ('Senghennydd Court', 'Cardiff University Hostel', '[]', 1, 3,  1);
 
 
 insert into subspace(name, description, photo_url, main_space,type_id)

@@ -28,6 +28,7 @@ public class Organization {
 
     private String name;
 
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;

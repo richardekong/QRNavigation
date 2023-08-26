@@ -6,23 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<footer class="userFooter" id="userFooter" th:fragment = "userFooter">
+<footer class="userFooter header-footer" id="userFooter" th:fragment="userFooter">
     <div class="userFooter-top-section">
         <div class="userFooter-logo-container">
-            <a th:href="@{/home}"><img class="userFooter-logo" th:src="@{/images/cardiff_uni_logo.png}" src="/static/images/cardiff_uni_logo.png" alt="Organization Logo"></a>
+            <a class="home-link" th:href="@{/home}">
+                <img id="userFooter-logo" class="userFooter-logo header-footer-logo" th:src="@{/images/cardiff_uni_logo.png}" src="/static/images/cardiff_uni_logo.png" alt="Organization Logo">
+            </a>
         </div>
         <div class="userFooter-org-name-container">
-            <a class="userFooter-org-name-link" th:href="@{/home}"><p class="userFooter-org-name">Cardiff Univeristy</p></a>
+            <a id="user-org-name-link" class="userFooter-org-name-link home-link" th:href="@{/home}">
+                <p class="userFooter-org-name org-name">Cardiff University</p>
+            </a>
         </div>
     </div>
     <div class="userFooter-bottom-section">
         <div class="userFooter-website-icon-container">
-            <a href="https://www.cardiff.ac.uk/"><img class="userFooter-icon" th:src="@{/images/website-icon.svg}" src="/static/images/website-icon.svg" alt="Organization website"></a>
+            <a class="website-link" href="https://www.cardiff.ac.uk/">
+                <img class="userFooter-icon" th:src="@{/images/website-icon.svg}" src="/static/images/website-icon.svg" alt="Organization website">
+            </a>
         </div>
         <div class="userFooter-org-website-container">
-            <a class="userFooter-org-website-link" href="https://www.cardiff.ac.uk/"><p class="userFooter-website-name">Website</p></a>
+            <a class="userFooter-org-website-link website-link" href="https://www.cardiff.ac.uk/">
+                <p class="userFooter-website-name">Website</p>
+            </a>
         </div>
     </div>
+    <script th:inline="javascript">
+        const theme = /*[[${organizationTheme}]]*/ {};
+        //user header variable declaration
+        const userHeader = document.querySelector("#userHeader");
+
+        //user footer variable declaration
+        const userFooter = document.querySelector("#userFooter");
+        const userWebsiteElements = document.querySelectorAll(".website-link");
+
+        //declare variables common in both header and footer
+        const headerFooterOrgNameElements = document.querySelectorAll(".org-name");
+        const headerFooterLogoElements = document.querySelectorAll(".header-footer-logo");
+        const homeLinkElements = document.querySelectorAll(".home-link");
+
+        //set the organization's theme as soon as the window loads
+        window.onload = (_e) => {
+            //set organization name in header and footer
+            headerFooterOrgNameElements.forEach(element => element.textContent = `${theme?.name}` ?? element.textContent)
+            //set the backgrounds
+            userHeader.style.backgroundColor = `${theme?.headerBackground}` ?? userHeader.style.backgroundColor;
+            userFooter.style.backgroundColor = `${theme?.footerBackground}` ?? userFooter.style.backgroundColor;
+
+            //set the home links
+            homeLinkElements.forEach(elements => elements.href = `/${organizationName}/qrnavigation/home`);
+
+            //set website links
+            userWebsiteElements.forEach(element => element.href = `${theme?.websiteURL}` ?? element.href);
+
+            //set logos
+            headerFooterLogoElements.forEach(element => element.src = `${theme?.logoURL}` ?? element.src);
+        };
+    </script>
 </footer>
 </body>
 </html>

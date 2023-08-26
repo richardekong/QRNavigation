@@ -37,18 +37,13 @@ public class Space {
     @Column(name = "address_id")
     private int addressId;
 
-    @Column(name = "type_id")
+    @Column(name = "type")
     private int typeId;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "space",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     List<SubSpace> subSpaces;
-
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "event_id")
-    private Event event;
 
     public void add(SubSpace subSpace) {
         if (subSpaces == null) {

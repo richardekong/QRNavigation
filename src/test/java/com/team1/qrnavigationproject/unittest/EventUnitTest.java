@@ -156,30 +156,6 @@ class EventUnitTest {
         assertFalse(patternMatcher2.matches());
     }
 
-    @Test
-    void addSpaces(){
-        Space space = TestData.createSpace();
-        event.addSpace(space);
-        assertNotNull(event.getSpaces());
-        assertFalse(event.getSpaces().isEmpty());
-        assertEquals(event.getSpaces().get(0), space);
-        assertEquals(space.getEvent(), event);
-    }
-
-    @Test
-    void addSubSpaces(){
-        Space space = TestData.createSpace();
-        SubSpace subSpace = TestData.createSubSpace();
-        space.add(subSpace);
-        event.addSpace(space);
-        event.addSubSpace(subSpace);
-        assertNotNull(event.getSubSpaces());
-        assertFalse(event.getSubSpaces().isEmpty());
-        assertEquals(event.getSubSpaces().get(0), subSpace);
-        assertEquals(subSpace.getEvent(), event);
-    }
-
-
 
     @Test
     void testEquals() {
@@ -189,8 +165,6 @@ class EventUnitTest {
                 event.getName(),
                 event.getDescription(),
                 event.getOrganizer(),
-                event.getSpaces(),
-                event.getSubSpaces(),
                 event.getStart(),
                 event.getEnd(),
                 event.getImageUrls()

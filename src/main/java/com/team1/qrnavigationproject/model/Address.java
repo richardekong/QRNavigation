@@ -1,6 +1,8 @@
 package com.team1.qrnavigationproject.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,6 +27,7 @@ public class Address {
     @NotBlank(message = "Please provide a description")
     private String description;
 
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
@@ -33,6 +36,7 @@ public class Address {
     @Pattern(regexp = POSTCODE_REGEX, message = "Invalid UK postcode")
     private String postcode;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "address",fetch = FetchType.LAZY ,cascade = CascadeType.PERSIST)
     private Organization organization;
 

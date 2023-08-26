@@ -12,10 +12,7 @@ public class DemoController {
         return "welcomePage";
     }
 
-    @RequestMapping("/home")
-    public String showHomePage() {
-        return "landingPage";
-    }
+
     @GetMapping("/content")
     public String viewContentPage() {
         return "contentPage";

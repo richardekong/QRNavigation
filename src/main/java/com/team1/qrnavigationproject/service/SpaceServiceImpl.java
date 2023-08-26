@@ -55,4 +55,8 @@ public class SpaceServiceImpl implements SpaceService {
         return spaceRepo.findById(id);
     }
 
+    @Override
+    public Optional<Space> findSpaceByName(String name) {
+        return spaceRepo.findSpaceByName(name);
+    }
 }

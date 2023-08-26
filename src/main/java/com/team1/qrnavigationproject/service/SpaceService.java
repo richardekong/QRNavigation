@@ -18,4 +18,6 @@ public interface SpaceService {
 
     Space updateSpace(Space spaceUp);
     Space findById(int id);
+
+    Optional<Space> findSpaceByName(String name);
 }

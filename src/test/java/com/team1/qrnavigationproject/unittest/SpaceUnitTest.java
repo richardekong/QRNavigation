@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,11 +28,10 @@ class SpaceUnitTest {
                 null,
                 1,
                 1,
-                null,
-                event
+                null
         );
         SubSpace subSpace = new SubSpace(
-                1, "Abacws / 3.45", "room in Abacws", "", null,event,  1
+                1, "Abacws / 3.45", "room in Abacws", "", null,  1
         );
         space.add(subSpace);
     }
@@ -103,8 +103,9 @@ class SpaceUnitTest {
     @Test
     void testSubSpaces() {
         SubSpace subSpace = space.getSubSpaces().get(0);
+        List<SubSpace> subSpaces = space.getSubSpaces();
         assertNotNull(space.getSubSpaces());
-        assertTrue(space.getSubSpaces().size() > 0);
+        assertFalse(subSpaces.isEmpty());
         assertNotNull(subSpace);
         assertEquals(subSpace.getSpace(), space);
     }
