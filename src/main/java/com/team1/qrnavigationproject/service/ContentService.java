@@ -1,6 +1,8 @@
 package com.team1.qrnavigationproject.service;
 
 import com.team1.qrnavigationproject.model.Content;
+import com.team1.qrnavigationproject.model.Event;
+
 import java.util.List;
 
 public interface ContentService {
@@ -12,4 +14,5 @@ public interface ContentService {
     Content findContentById(int contentId);
     Content updateContent(Content content);
     void deleteContentById(int contentId);
+    List<Content> getContentByEventAndSpaceAndSubSpace(List<Event> events , int spaceId , int subSpaceId);
 }
