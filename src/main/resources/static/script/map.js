@@ -43,8 +43,8 @@ async function initMap() {
     positions.forEach(position => {
         const logo = document.createElement("img");
         logo.src = logoURL;
-        logo.style.width = '15%';
-        logo.style.height = '15%';
+        logo.style.width = '10%';
+        logo.style.height = '10%';
         logo.style.borderRadius = '5px';
         new AdvancedMarkerElement({
             map: map,

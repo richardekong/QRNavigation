@@ -35,8 +35,8 @@
 <!-- HERE THE HEADER FRAGMENT INSERTED -->
 <header th:insert="userHeader::userHeader"></header>
 
-<main class="container my-2 me-auto ms-auto flex-grow-1">
-    <div class="row me-auto ms-auto">
+<main class="container my-2 me-auto ms-auto mb-5 flex-grow-1">
+    <div class="row me-auto ms-auto mb-auto">
         <!-- Card Header -->
         <div class="card-header vw-500 mt-3">
             <div class="border border-1 p-3 text-center fw-bold" style="border-radius: 5px 5px 0 0;">
@@ -48,7 +48,7 @@
             <!-- Card Images -->
             <div class="card-body">
                 <!-- Single Image -->
-                <img th:src="${sub.photoURL}" class="img-fluid">
+                <img th:src="${sub.photoURL}" class="img-fluid w-100">
                 <div id="card-description" class="mt-3 mb-3">
                     <!-- Description Content -->
                     <div class="border border-1 p-1 text-center fw-bold " style="border-radius: 5px 5px 0 0;">
@@ -80,11 +80,12 @@
     </div>
 
     <!-- Check if events list is not empty and loop through events -->
-    <div th:if="${not #lists.isEmpty(events)}" th:each="event : ${events}" class="row me-auto ms-auto">
+    <div th:if="${not #lists.isEmpty(events)}" th:each="event : ${events}" class="row me-auto ms-auto mb-auto">
         <!-- Card Header -->
         <div class="card-header vw-100 mt-3 shadow">
             <div class="border border-1 p-3 text-center fw-bold" style="border-radius: 5px 5px 0 0;">
-                <h4>EVENT :</h4>
+                <h4>Event</h4>
+                <hr>
                 <h6 class="card-title" th:text="${event.name}" ></h6>
             </div>
         </div>
@@ -127,7 +128,8 @@
         </div>
     </div>
 </main>
-
-<footer th:insert="userFooter::userFooter" style="margin-top: 5%;"></footer>
+<!--Note: The organization's theme is passed to the footer fragment from the UserContentController.java. -->
+<!--The logic behind how the theme is used can be found in the userFooter.html fragment-->
+<footer th:insert="userFooter::userFooter" style="margin-bottom: 5%;"></footer>
 </body>
 </html>
