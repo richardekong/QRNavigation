@@ -11,7 +11,6 @@ public interface AddressService {
     Optional<Address> getAddressById(int id);
     Address saveAddress(Address address);
     void deleteAddress(int id);
-
     Address updateAddress(Address addressUp);
     Address findAddressById(int AddressId);
 }
