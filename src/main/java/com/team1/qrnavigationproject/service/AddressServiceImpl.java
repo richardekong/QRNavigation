@@ -42,6 +42,8 @@ public class AddressServiceImpl implements AddressService {
     public Address updateAddress(Address addressUp) {
         return null;
     }
+    @Override
+    public Address findAddressById(int AddressId){ return addressRepo.findAddressById(AddressId); }
 
 
 }

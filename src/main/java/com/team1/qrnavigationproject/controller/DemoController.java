@@ -13,10 +13,7 @@ public class DemoController {
     }
 
 
-    @GetMapping("/content")
-    public String viewContentPage() {
-        return "contentPage";
-    }
+
 
     @GetMapping("/admin/main")
     public String viewAdminMainPage(){

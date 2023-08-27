@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -18,5 +20,14 @@ public interface EventRepo extends JpaRepository<Event, Integer> {
     Event findByEventId(@Param("eventId") int eventId);
     @Query("SELECT e.id as eventId, e.name as eventName FROM Event e WHERE e.id IN :eventIds")
     List<Object[]> findEventNamesAndIdsByIds(@Param("eventIds") List<Integer> eventIds);
+
+
+
+    @Query("SELECT e FROM Event e " +
+            "JOIN Venue v ON e.id = v.event.id " +
+            "JOIN SubSpace s ON v.subspaceId = s.id " +
+            "WHERE s.id = :subspaceId " +
+            "AND e.start BETWEEN :nowMinus7Days AND :nowPlus7Days")
+    List<Event> findEventsWithin7Days(int subspaceId, LocalDateTime nowMinus7Days, LocalDateTime nowPlus7Days);
 }
 

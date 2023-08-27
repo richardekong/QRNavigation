@@ -1,5 +1,6 @@
 package com.team1.qrnavigationproject.repository;
 
+import com.team1.qrnavigationproject.model.Space;
 import com.team1.qrnavigationproject.model.SubSpace;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +16,6 @@ public interface SubSpaceRepo extends JpaRepository<SubSpace, Integer>{
     SubSpace findById(int id);
 //    @Query("SELECT ss.space.name, ss.space.id, ss.name, ss.id FROM SubSpace ss WHERE ss.space.organization.id = :orgId ORDER BY ss.space.name, ss.name")
 //    List<Object[]> getSpaceAndSubspaceInfo(int orgId);
+
+    SubSpace findByName(String SubSpaceName);
 }
