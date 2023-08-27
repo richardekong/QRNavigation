@@ -42,14 +42,14 @@
             --footer-height: 15%;
         }
 
-        main {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 100%;
-            height: fit-content;
-            overflow-x: hidden;
-        }
+        /*main {*/
+        /*    display: flex;*/
+        /*    flex-direction: column;*/
+        /*    justify-content: space-around;*/
+        /*    width: 100%;*/
+        /*    height: fit-content;*/
+        /*    overflow-x: hidden;*/
+        /*}*/
 
         select {
             border-radius: var(--radius);
@@ -90,29 +90,36 @@
 </head>
 <body>
 <header th:insert="userHeader::userHeader"></header>
-<main class="container card col-xs-12 col-sm-12 col-md-12">
-    <label for="spaces"></label>
-    <select class="form-select" id="spaces" name="spaceId" style="width: 95%;">
-        <option value="0" th:value="0">Pick a space</option>
-        <option th:each="space : ${spaces}" th:value="${space?.id}" th:text="${space?.name}"></option>
-    </select>
-    <div id="map" style="border-radius: 5px;">
-        <script th:inline="javascript">
-            let logoURL = /*[[${organizationTheme?.logoURL}]]*/ '';
-            let locations = /*[[${locations}]]*/ [];
-            locations = locations.map(location => {
-                return {lat: location.latitude, lng: location.longitude};
-            });
+<section th:insert="notification"></section>
+<main>
+    <div class="container card col-xs-12 col-sm-12 col-md-12">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <label for="spaces"></label>
+            <select class="m-auto form-select" id="spaces" name="spaceId" style="width: 95%;">
+                <option value="0" th:value="0">Pick a space</option>
+                <option th:each="space : ${spaces}" th:value="${space?.id}" th:text="${space?.name}"></option>
+            </select>
+        </div>
+        <div id="map" class="col-xs-12 col-sm-12 col-md-12" style="border-radius: 5px;">
+            <script th:inline="javascript">
+                let logoURL = /*[[${organizationTheme?.logoURL}]]*/ '';
+                let locations = /*[[${locations}]]*/ [];
+                locations = locations.map(location => {
+                    return {lat: location.latitude, lng: location.longitude};
+                });
 
-        </script>
-        <!--google maps api integration    -->
-        <script src="/static/script/map.js" th:src="@{/script/map.js}"></script>
+            </script>
+            <!--google maps api integration    -->
+            <script src="/static/script/map.js" th:src="@{/script/map.js}"></script>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <label for="subspaces"></label>
+            <select class="m-auto form-select" id="subspaces" name="subspaceId" style="width: 95%;">
+                <option value="0" th:value="0">Pick a subspace</option>
+            </select>
+        </div>
+        <button class="col-xs-12 col-sm-12 col-md-12" id="see-more">See More</button>
     </div>
-    <label for="subspaces"></label>
-    <select class="form-select" id="subspaces" name="subspaceId" style="width: 95%;">
-        <option value="0" th:value="0">Pick a sub space</option>
-    </select>
-    <button class="col-xs-12 col-sm-12 col-md-12" id="see-more">See More</button>
 </main>
 <footer th:insert="userFooter::userFooter"></footer>
 <script th:inline="javascript">
@@ -133,10 +140,16 @@
     });
 
     seeMoreBtn.addEventListener("click", _evt => {
+        const defaultSpaceName = "Pick a space";
+        const defaultSubspaceName = "Pick a subspace";
         const spaceName = spacesDropDown.options[spacesDropDown.selectedIndex].text;
         const subspaceName = subspacesDropDown.options[subspacesDropDown.selectedIndex].text;
         const link = document.createElement("a");
-        link.href = `/${organizationName}/qrnavigation/qrcodes/${spaceName}/${subspaceName}`;
+        if (spaceName === defaultSpaceName || subspaceName === defaultSubspaceName){
+            link.href = `/${organizationName}/qrnavigation/home`
+        }else {
+            link.href = `/${organizationName}/qrnavigation/qrcodes/${spaceName}/${subspaceName}`;
+        }
         link.click();
     });
 

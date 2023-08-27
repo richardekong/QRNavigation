@@ -22,6 +22,8 @@ public interface SpaceService {
 
     Space findByName(String spaceName);
 
+    Space findByNameAndSubspaceName(String spaceName, String subspaceName);
+
     Space findById(int id);
 
     Optional<Space> findSpaceByName(String name);

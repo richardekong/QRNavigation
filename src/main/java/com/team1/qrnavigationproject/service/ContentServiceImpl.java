@@ -1,6 +1,7 @@
 package com.team1.qrnavigationproject.service;
 
 import com.team1.qrnavigationproject.model.Content;
+import com.team1.qrnavigationproject.model.Event;
 import com.team1.qrnavigationproject.repository.ContentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,5 +62,10 @@ public class ContentServiceImpl implements ContentService{
         } else {
             throw new IllegalArgumentException("Content with name " + content.getName() + " not found." + existingContent.getName());
         }
+    }
+
+    @Override
+    public List<Content> getContentByEventAndSpaceAndSubSpace(List<Event> events , int spaceId , int subSpaceId){
+        return contentRepo.getContentByEventAndSpaceAndSubSpace(events,spaceId,subSpaceId);
     }
 }

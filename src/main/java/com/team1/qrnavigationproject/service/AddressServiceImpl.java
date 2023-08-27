@@ -37,11 +37,12 @@ public class AddressServiceImpl implements AddressService {
     public void deleteAddress(int id) {
         addressRepo.deleteById(id);
     }
-
     @Override
     public Address updateAddress(Address addressUp) {
         return null;
     }
+    @Override
+    public Address findAddressById(int AddressId){ return addressRepo.findAddressById(AddressId); }
 
 
 }

@@ -4,6 +4,8 @@ import com.team1.qrnavigationproject.model.Event;
 import com.team1.qrnavigationproject.repository.EventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -53,4 +55,13 @@ public class EventServiceImpl implements EventService{
     public List<Object[]> findEventNamesAndIdsByIds(List<Integer> eventIds) {
         return eventRepo.findEventNamesAndIdsByIds(eventIds);
     }
+
+    @Override
+    public List<Event> findEventsWithin2Days(int subspaceId){
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime nowMinusDay = now.minusDays(1);
+        LocalDateTime nowPlusDay = now.plusDays(1);
+
+        return eventRepo.findEventsWithin7Days(subspaceId, nowMinusDay, nowPlusDay);    }
+
 }

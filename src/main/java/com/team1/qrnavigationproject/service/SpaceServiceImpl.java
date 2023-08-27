@@ -62,6 +62,11 @@ public class SpaceServiceImpl implements SpaceService {
     public Space findByName(String spaceName){ return spaceRepo.findByName(spaceName);}
 
     @Override
+    public Space findByNameAndSubspaceName(String spaceName, String subspaceName) {
+        return spaceRepo.findByNameAndSubspaceName(spaceName, subspaceName);
+    }
+
+    @Override
     public List<Space> getAllSpaces() {
         return spaceRepo.findAll();
     }

@@ -54,7 +54,7 @@
             userFooter.style.backgroundColor = `${theme?.footerBackground}` ?? userFooter.style.backgroundColor;
 
             //set the home links
-            homeLinkElements.forEach(elements => elements.href = `/${organizationName}/qrnavigation/home`);
+            homeLinkElements.forEach(element => element.href = `/${theme?.name}/qrnavigation/home` ?? element.href);
 
             //set website links
             userWebsiteElements.forEach(element => element.href = `${theme?.websiteURL}` ?? element.href);
