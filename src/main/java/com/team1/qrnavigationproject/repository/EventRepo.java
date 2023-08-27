@@ -27,7 +27,7 @@ public interface EventRepo extends JpaRepository<Event, Integer> {
             "JOIN Venue v ON e.id = v.event.id " +
             "JOIN SubSpace s ON v.subspaceId = s.id " +
             "WHERE s.id = :subspaceId " +
-            "AND e.start BETWEEN :nowMinus7Days AND :nowPlus7Days")
-    List<Event> findEventsWithin7Days(int subspaceId, LocalDateTime nowMinus7Days, LocalDateTime nowPlus7Days);
+            "AND e.start BETWEEN :nowMinusDay AND :nowPlusDay")
+    List<Event> findEventsWithin7Days(int subspaceId, LocalDateTime nowMinusDay, LocalDateTime nowPlusDay);
 }
 
