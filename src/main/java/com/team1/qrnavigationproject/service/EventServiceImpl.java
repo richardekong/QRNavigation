@@ -57,11 +57,11 @@ public class EventServiceImpl implements EventService{
     }
 
     @Override
-    public List<Event> findEventsWithin7Days(int subspaceId){
+    public List<Event> findEventsWithin2Days(int subspaceId){
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime nowMinus7Days = now.minusDays(7);
-        LocalDateTime nowPlus7Days = now.plusDays(7);
+        LocalDateTime nowMinusDay = now.minusDays(1);
+        LocalDateTime nowPlusDay = now.plusDays(1);
 
-        return eventRepo.findEventsWithin7Days(subspaceId, nowMinus7Days, nowPlus7Days);    }
+        return eventRepo.findEventsWithin7Days(subspaceId, nowMinusDay, nowPlusDay);    }
 
 }

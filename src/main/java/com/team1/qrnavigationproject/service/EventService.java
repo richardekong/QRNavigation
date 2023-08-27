@@ -13,6 +13,6 @@ public interface EventService {
      void deleteEventById(int eventId);
      List<Object[]> findEventNamesAndIdsByIds(List<Integer> eventIds);
 
-     List<Event> findEventsWithin7Days(int subspaceId);
+     List<Event> findEventsWithin2Days(int subspaceId);
 
 }
