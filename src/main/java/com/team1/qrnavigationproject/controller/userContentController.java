@@ -18,6 +18,7 @@ public class userContentController {
     private AddressService addressService;
     private EventService eventService;
     private VenueService venueService;
+    private ContentService contentService;
 
     @Autowired
     public void setOrganizationService(OrganizationService organizationService){ this.organizationService = organizationService;}
@@ -31,6 +32,8 @@ public class userContentController {
     public void setEventService(EventService eventService){ this.eventService = eventService;}
     @Autowired
     public void setVenueService(VenueService venueService){ this.venueService = venueService;}
+    @Autowired
+    public void setContentService(ContentService contentService){ this.contentService = contentService; }
 
     @GetMapping("/content")
     public String viewContentPage() {
@@ -54,7 +57,7 @@ public class userContentController {
         // creating the map
         Map<Event, List<HashMap<String, String>>> eventVenueInfoMap = new HashMap<>();
 
-        List<Event> events = eventService.findEventsWithin7Days(sub.getId());
+        List<Event> events = eventService.findEventsWithin2Days(sub.getId());
         // Here loop through the event list
         for (Event event : events){
             // here getting list of venues of each event
@@ -85,11 +88,14 @@ public class userContentController {
 
         }
 
+        List<Content> contents = contentService.getContentByEventAndSpaceAndSubSpace(events,sp.getId(),sub.getId());
+
         model.addAttribute("sp", sp);
         model.addAttribute("sub", sub);
         model.addAttribute("address", address);
         model.addAttribute("events", events);
         model.addAttribute("eventVenueInfoMap", eventVenueInfoMap);
+        model.addAttribute("contents", contents);
 
         return "contentPage";
     }
