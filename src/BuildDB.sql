@@ -1,3 +1,8 @@
+create database if not exists c22106964_qrnavigation;
+
+use c22106964_qrnavigation;
+
+
 drop table if exists qrcode;
 drop table if exists content;
 drop table if exists subspace;
