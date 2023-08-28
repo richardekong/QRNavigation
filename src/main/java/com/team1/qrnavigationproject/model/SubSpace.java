@@ -34,7 +34,7 @@ public class SubSpace {
     private String photoURL;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "main_space")
     private Space space;
 
