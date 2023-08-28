@@ -16,7 +16,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.*;
 

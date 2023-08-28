@@ -8,6 +8,10 @@ import java.util.LinkedList;
 
 public interface TestData {
 
+    static Address createAddress() {
+        return new Address(1, "Abacws Building, Senghennydd Road", new Location(), "CF24 4AG", new Organization());
+    }
+
     static Content createContent() {
         return new Content(1, "open day content", "Content page for Open day"
                 , null, null, null);

@@ -45,4 +45,16 @@ public class QRCode {
 //    @Pattern(regexp = DATE_TIME_REGEX, message = "Invalid datetime value")
     private LocalDateTime createdAt;
 
+    @Override
+    public String toString() {
+        return "QRCode{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", space=" + space +
+                ", subSpace=" + subSpace +
+                ", pageURL='" + pageURL + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }

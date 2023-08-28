@@ -58,11 +58,11 @@ public class SpaceServiceTest {
         List<Space> spacesToFetch = new ArrayList<>();
         spacesToFetch.add(this.space);
 
-        given(this.spaceRepo.findAll()).willReturn(spacesToFetch);
+        given(this.spaceRepo.findAllSpaces(1)).willReturn(spacesToFetch);
 
         List<Space> resultSpaces = this.spaceService.getAllSpaces(1);
 
-        verify(this.spaceRepo, times(1)).findAll();
+        verify(this.spaceRepo, times(1)).findAllSpaces(1);
 
         assertNotNull(resultSpaces);
         assertFalse(resultSpaces.isEmpty());

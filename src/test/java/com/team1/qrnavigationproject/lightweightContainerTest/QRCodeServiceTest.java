@@ -46,7 +46,10 @@ public class QRCodeServiceTest {
     @BeforeEach
     void setUp() {
         qr = TestData.createQRCode();
-
+        var space = TestData.createSpace();
+        var subspace = TestData.createSubSpace();
+        qr.setSpace(space);
+        qr.setSubSpace(subspace);
     }
 
     @AfterEach

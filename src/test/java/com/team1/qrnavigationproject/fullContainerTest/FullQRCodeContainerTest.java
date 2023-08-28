@@ -22,16 +22,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ActiveProfiles("test-mysql")
+@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Transactional
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Sql(scripts = "/test.sql")
 public class FullQRCodeContainerTest {
 
     @Autowired
@@ -94,47 +92,50 @@ public class FullQRCodeContainerTest {
 
 //Todo: Check these commented tests latter
 
-//    @Order(4)
-//    @WithMockUser(username = "Benjamin", password = "B@55w07d", roles = "ADMIN")
-//    @DisplayName("Verify that Admin can access request the page to update mutable attributes of QRCode record")
-//    @Test
-//    void adminCanRequestToUpdateQRCodeRecord() throws Exception {
-//
-//        mockMvc.perform(get(ADMIN_QRCODES_UPDATE + "/{id}", 4)
-//                        .with(csrf())
-//                        .contentType(MediaType.TEXT_HTML))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string(containsString("Manage Your QRCodes")));
-//    }
+    @Order(4)
+    @WithMockUser(username = "Benjamin", password = "B@55w07d", roles = "ADMIN")
+    @DisplayName("Verify that Admin can request the page to update mutable attributes of QRCode record")
+    @Test
+    void adminCanRequestToUpdateQRCodeRecord() throws Exception {
 
-//    @Order(5)
-//    @WithMockUser(username = "Benjamin", password = "B@55w07d", roles = "ADMIN")
-//    @DisplayName("Verify that Admin can update mutable attributes of records associated with a QRCode")
-//    @Test
-//    void adminCanUpdateQRCodeRecord() throws Exception {
-//        String description = "A bookable room on the fifth floor. This room contains tables, chairs, whiteboards and monitors";
-//
-//        mockMvc.perform(post(ADMIN_QRCODES_UPDATE_PROCESS)
-//                        .with(csrf())
-//                        .contentType(MediaType.TEXT_HTML)
-//                        .param("description", description))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string(containsString("Manage Your QRCodes")))
-//                .andExpect(content().string(containsString("Success (200): QR code updated successfully")));
-//    }
-//
-//    @Order(6)
-//    @WithMockUser(username = "Benjamin", password = "B@55w07d", roles = "ADMIN")
-//    @DisplayName("Verify that Admin can delete a QRCode and it's record from the database and storage")
-//    @Test
-//    void adminCanDeleteQRCode() throws Exception {
-//
-//        mockMvc.perform(post(ADMIN_QRCODES)
-//                        .with(csrf())
-//                        .contentType(MediaType.TEXT_HTML)
-//                        .param("id", "1"))
-//                .andExpect(status().is3xxRedirection());
-//}
+        mockMvc.perform(get(ADMIN_QRCODES_UPDATE + "/{id}", 1)
+                        .with(csrf())
+                        .contentType(MediaType.TEXT_HTML))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("QR code for room 3.45 @ Abacws building")));
+    }
+
+    @Order(5)
+    @WithMockUser(username = "Benjamin", password = "B@55w07d", roles = "ADMIN")
+    @DisplayName("Verify that Admin can update mutable attributes of records associated with a QRCode")
+    @Test
+    void adminCanUpdateQRCodeRecord() throws Exception {
+        String description = "A bookable room on the fifth floor. This room contains tables, chairs, whiteboards and monitors";
+
+
+        mockMvc.perform(post(ADMIN_QRCODES_UPDATE_PROCESS)
+                        .with(csrf())
+                        .contentType(MediaType.TEXT_HTML)
+                        .param("id", "1")
+                        .param("description", description))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attributeExists("success"))
+                .andExpect(flash().attribute("success","Success (200): QR code updated successfully"));
+    }
+
+    @Order(6)
+    @WithMockUser(username = "Benjamin", password = "B@55w07d", roles = "ADMIN")
+    @DisplayName("Verify that Admin can delete a QRCode and it's record from the database and storage")
+    @Test
+    void adminCanDeleteQRCode() throws Exception {
+
+        mockMvc.perform(post(ADMIN_QRCODES)
+                        .with(csrf())
+                        .contentType(MediaType.TEXT_HTML)
+                        .param("id", "1"))
+                .andExpect(status().is3xxRedirection());
+}
 
 
 }
+

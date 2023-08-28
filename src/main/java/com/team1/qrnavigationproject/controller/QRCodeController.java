@@ -158,6 +158,7 @@ public class QRCodeController {
             //set the creation date
             qrcode.setCreatedAt(LocalDateTime.now());
             //save the qr code to the database
+
             QRCode savedQRCode = qrCodeService.save(qrcode);
             //pass the saved qr code information to the view for downloads at subsequent times
             if (savedQRCode != null) {
