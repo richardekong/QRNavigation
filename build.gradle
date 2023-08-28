@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'jacoco'
+    id 'com.google.cloud.tools.jib' version '3.3.1'
 }
 
 group = 'com.example'
@@ -45,7 +46,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation('io.github.bonigarcia:webdrivermanager:5.3.1')
-    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.8.1'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
+
     testImplementation 'com.h2database:h2'
 
 }
@@ -53,3 +55,55 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+//Exclude all tests associated with chrome driver and selenium during gradle build
+test{
+    exclude '**/*pages*'
+}
+
+
+//ext {
+//    qrnavigation = [
+//            docker: [
+//                    dockerImage: project.property('dockerImage'),
+//                    dockerTagName: project.property('dockerTagName'),
+//                    dockerUsername: project.property('dockerUsername'),
+//                    dockerPassword: project.property('dockerPassword'),
+//                    dockerTagVersion:project.property('dockerTagVersion')
+//            ]
+//    ]
+//}
+
+
+task incrementDockerTagVersion {
+    doLast {
+        def currentVersion = project.property('dockerTagVersion') as double
+        def newVersion = currentVersion + 0.01
+        project.properties['dockerTagVersion'] = newVersion.toString()
+        println "Docker Tag Version incremented to: $newVersion"
+    }
+}
+
+
+jib {
+/**
+ * Pass all required values as properties through the commandline, using:
+ * gradle -PdockerTagName=tagName \
+ * -PdockerImage=your-docker-repository \
+ * -PdockerUsername=your-username
+ * -PdockerPassword=your-password \
+ * jib
+ */
+    from {
+        image = "azul/zulu-openjdk:17-jre"
+    }
+    to {
+        image = "${project.property('dockerImage')}:${project.property('dockerTagName')}${project.property('dockerTagVersion')}"
+        auth {
+            username =project.property('dockerUsername')
+            password =project.property('dockerPassword')
+        }
+    }
+}
+
+build.dependsOn(incrementDockerTagVersion)

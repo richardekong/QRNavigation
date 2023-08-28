@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "qrnavigation.docker.dockerImage",
+      "type": "java.lang.String",
+      "description": "Description for qrnavigation.docker.dockerImage."
+    },
+    {
+      "name": "qrnavigation.docker.dockerTagName",
+      "type": "java.lang.String",
+      "description": "Description for qrnavigation.docker.dockerTagName."
+    },
+    {
+      "name": "qrnavigation.docker.dockerTagVersion",
+      "type": "java.lang.String",
+      "description": "Description for qrnavigation.docker.dockerTagVersion."
+    },
+    {
+      "name": "qrnavigation.docker.dockerPassword",
+      "type": "java.lang.String",
+      "description": "Description for qrnavigation.docker.dockerPassword."
+    }
+  ] }

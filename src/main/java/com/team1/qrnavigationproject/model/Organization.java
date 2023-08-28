@@ -3,6 +3,7 @@ package com.team1.qrnavigationproject.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -68,20 +69,16 @@ public class Organization {
         if (spaces == null) {
             spaces = new LinkedList<>();
         }
-//        if (!spaces.contains(space)) {
-            spaces.add(space);
-            space.setOrganization(this);
-//        }
+        spaces.add(space);
+        space.setOrganization(this);
     }
 
     public void add(Event event) {
         if (events == null) {
             events = new LinkedList<>();
         }
-//        if (!events.contains(event)) {
-            events.add(event);
-            event.setOrganizer(this);
-//        }
+        events.add(event);
+        event.setOrganizer(this);
     }
 
     public void setUser(User user) {
@@ -125,7 +122,6 @@ public class Organization {
                 ", logoURL='" + logoURL + '\'' +
                 ", websiteURL='" + websiteURL + '\'' +
                 ", spaces=" + spaces +
-                ", events=" + events +
                 ", user=" + user +
                 ", headerBackground='" + headerBackground + '\'' +
                 ", footerBackground='" + footerBackground + '\'' +

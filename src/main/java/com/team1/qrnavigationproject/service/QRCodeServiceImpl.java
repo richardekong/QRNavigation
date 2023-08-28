@@ -48,10 +48,11 @@ public class QRCodeServiceImpl implements QRCodeService {
 
     @Override
     public QRCode save(QRCode qrCode) throws WriterException, IOException {
-        int id = qrCode.getId();
-        int spaceId = qrCode.getSpace().getId();
-        int subspaceId = qrCode.getSubSpace().getId();
-        if (qrCodeRepo.existsById(qrCode.getId()) || qrCodeRepo.existsQRCodeBySpaceIdAndSubSpaceId(spaceId, subspaceId)) {
+
+        if (qrCodeRepo.existsById(qrCode.getId())
+                || qrCodeRepo.existsQRCodeBySpaceIdAndSubSpaceId(
+                qrCode.getSpace().getId(),
+                qrCode.getSubSpace().getId())) {
             throw new CustomException("This QRCode exists Already", HttpStatus.CONFLICT);
         }
 

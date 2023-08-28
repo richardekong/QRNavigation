@@ -1,3 +1,8 @@
+create database if not exists c22106964_qrnavigation;
+
+use c22106964_qrnavigation;
+
+
 drop table if exists qrcode;
 drop table if exists content;
 drop table if exists subspace;
@@ -216,7 +221,7 @@ values('Room');
 insert into space_type(name)
 values ('Park');
 
-insert into Space_type(name)
+insert into space_type(name)
 values ('Countryside trail');
 
 insert into space(name, description, photo_urls, org_id, address_id, type_id)
@@ -251,5 +256,5 @@ values (2, 2, 'QR code for reception @ Student Union building', 'qr2.png', 'http
 insert into qrcode(space_id, sub_space_id, description, image_url,page_url, created_at)
 values (3, 3, 'QR code for reception @ Senghennydd court', 'qr3.png', 'https://www.qrnavigation.com/content', '2023-05-16 10:00:00');
 
-select u.*,r.name as ROLE from app_user u right outer join Role r on u.id=r.id;
+select u.*,r.name as role from app_user u right outer join role r on u.id=r.id;
 
