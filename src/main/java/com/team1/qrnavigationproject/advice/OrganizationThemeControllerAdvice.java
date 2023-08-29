@@ -1,4 +1,4 @@
-package com.team1.qrnavigationproject.controller;
+package com.team1.qrnavigationproject.advice;
 
 import com.team1.qrnavigationproject.model.Organization;
 import com.team1.qrnavigationproject.model.OrganizationTheme;

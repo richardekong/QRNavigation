@@ -104,6 +104,9 @@
     </section>
 </main>
 <footer th:insert="adminFooter::adminFooter"></footer>
+<script th:inline="javascript">
+    const postcodeAPI = /*[[${postcodeAPI}]]*/ '';
+</script>
 <script th:src="@{/script/postcodeLookup.js}"></script>
 </body>
 

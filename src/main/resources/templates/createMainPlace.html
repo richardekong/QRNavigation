@@ -83,6 +83,9 @@
         </div>
     </div>
 </div>
+<script th:inline="javascript">
+    const postcodeAPI = /*[[${postcodeAPI}]]*/ '';
+</script>
 <script th:src="@{/script/postcodeLookup.js}"></script>
 <script th:inline="javascript">
     const spaceTypes = /*[[${spaceTypes}]]*/ [];
