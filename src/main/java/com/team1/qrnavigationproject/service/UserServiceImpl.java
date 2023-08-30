@@ -100,17 +100,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepo.findUserByUsername(username)
-                .orElseThrow(()->new UsernameNotFoundException("Wrong email or password"));
+                .orElseThrow(() -> new UsernameNotFoundException("Wrong email or password"));
 
     }
 
     private User verifyUsernameThenEncodePassword(User user) throws CustomException {
         boolean existsByUsername = userRepo.existsByUsername(user.getUsername());
         boolean existsById = userRepo.existsById(user.getId());
-        if (existsById && existsByUsername) {
-            throw new CustomException(
-                    "User already with %s already exists".format(user.getUsername()),
-                    HttpStatus.CONFLICT);
+        if (existsById || existsByUsername) {
+            String message = "Error (%d): User with %s already exists"
+                    .formatted(HttpStatus.CONFLICT.value(), user.getUsername());
+            throw new CustomException(message, HttpStatus.CONFLICT);
         }
         //encode user password
         user.setPassword(passwordEncoder.encode(user.getPassword()));

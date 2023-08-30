@@ -38,20 +38,20 @@
                                 <label for="email" class="col-sm-3 col-form-label fw-bold text-end">Email:</label>
                                 <div class="col-sm-9">
                                     <input type="email" name="username" class="form-control border border-dark rounded-2" id="email"
-                                        placeholder="Enter your email">
+                                        placeholder="Enter your email" title="A valid email is required" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="password" class="col-sm-3 col-form-label fw-bold text-end">Password:</label>
                                 <div class="col-sm-9">
                                     <input type="password" class="form-control border border-dark rounded-2" name="password"
-                                        id="password" placeholder="Enter your password">
+                                        id="password" placeholder="Enter your password" required>
                                 </div>
                             </div>
                             <div class="text-center mt-4">
                                 <button type="submit" class="btn btn-primary qr-button px-5 fw-bold shadow">Sign Up</button>
                                 <div class="my-4">
-                                    <p><a href="/qrnavigation/login" class="text-dark fw-bold">Already have an account</a></p>
+                                    <p><a th:href="@{/login}" class="text-dark fw-bold">Already have an account</a></p>
                                 </div>
                             </div>
                         </form>
