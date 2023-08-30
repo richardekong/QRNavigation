@@ -231,13 +231,13 @@ values ('Park');
 insert into space_type(name)
 values ('Countryside trail');
 
-insert into space(name, description, photo_urls, org_id, address_id, type_id)
+insert into space(name, description, photo_urls, org_id, address_id, type)
 values ('Abacws Building', 'Building for school of computer science and informatics', JSON_ARRAY(), 1, 1,  1);
 
-insert into space(name, description, photo_urls, org_id, address_id,  type_id)
+insert into space(name, description, photo_urls, org_id, address_id,  type)
 values ('Cardiff Student Union', 'Building for Cardiff University Student Union', JSON_ARRAY(), 1, 2,  1);
 
-insert into space(name, description, photo_urls, org_id, address_id, type_id)
+insert into space(name, description, photo_urls, org_id, address_id, type)
 values ('Senghennydd Court', 'Cardiff University Hostel', JSON_ARRAY(), 1, 3,  1);
 
 
