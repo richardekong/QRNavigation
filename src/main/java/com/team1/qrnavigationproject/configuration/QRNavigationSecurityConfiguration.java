@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -27,6 +27,8 @@ public class QRNavigationSecurityConfiguration {
     protected AppAuthenticationProvider appAuthenticationProvider;
     protected UserService userService;
 
+    protected AuthenticationManagerBuilder authenticationManagerBuilder;
+
 
     @Autowired
     private void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -37,30 +39,29 @@ public class QRNavigationSecurityConfiguration {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
+
     @Autowired
-    public void setAppAuthenticationProvider(AppAuthenticationProvider appAuthenticationProvider){
+    public void setAppAuthenticationProvider(AppAuthenticationProvider appAuthenticationProvider) {
         this.appAuthenticationProvider = appAuthenticationProvider;
+    }
+
+    @Autowired
+    public void setAuthenticationManagerBuilder(AuthenticationManagerBuilder authenticationManagerBuilder) {
+        this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
     @Bean
     public AppAuthenticationSuccessHandler successHandler() {
         return new AppAuthenticationSuccessHandler(userService);
     }
-
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return webSecurity -> {
-            webSecurity.ignoring().antMatchers("/css/**");
-            webSecurity.ignoring().antMatchers("/script/**");
-            webSecurity.ignoring().antMatchers("/images/**");
-            webSecurity.ignoring().antMatchers("/h2-console/**");
-        };
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public AuthenticationManager AuthenticationManager(HttpSecurity http, UserService userService) throws Exception {
-
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
+    public AuthenticationManager authenticationManager() throws Exception {
+        return authenticationManagerBuilder
                 .userDetailsService(userService)
                 .passwordEncoder(passwordEncoder)
                 .and()
@@ -68,21 +69,22 @@ public class QRNavigationSecurityConfiguration {
                 .build();
     }
 
+
     @Bean
     public SecurityFilterChain filterChainForAdmin(HttpSecurity http) throws Exception {
         // Allow unauthorized access to an array of paths
-
         // Access to other addresses requires authentication permissions
-        http.authorizeRequests()
+        http
+                .authorizeRequests()
                 .antMatchers(PERMITTED_PATHS).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .successHandler(successHandler())
                 // Username and password parameter names
                 .passwordParameter("password")
                 .usernameParameter("username")
                 .loginPage("/login")
+                .successHandler(successHandler())
                 // Login error
                 .failureUrl(LOGIN_ERROR)
                 .permitAll()
@@ -91,6 +93,7 @@ public class QRNavigationSecurityConfiguration {
                 .logout()
                 .logoutUrl(LOGOUT)
                 .logoutSuccessUrl(LOGIN);
+
 
         return http.build();
     }

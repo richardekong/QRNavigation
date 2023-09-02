@@ -24,7 +24,7 @@ public class QRCode {
     private String description;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="space_id")
+    @JoinColumn(name="space_id" )
     private Space space;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -42,7 +42,6 @@ public class QRCode {
     private String imageURL;
 
     @Column(name="created_at")
-//    @Pattern(regexp = DATE_TIME_REGEX, message = "Invalid datetime value")
     private LocalDateTime createdAt;
 
     @Override

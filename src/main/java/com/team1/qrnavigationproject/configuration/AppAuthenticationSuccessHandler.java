@@ -48,13 +48,5 @@ public class AppAuthenticationSuccessHandler implements AuthenticationSuccessHan
         }
     }
 
-    @Override
-    public void onAuthenticationSuccess(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain chain,
-            Authentication auth) throws IOException, ServletException {
 
-        AuthenticationSuccessHandler.super.onAuthenticationSuccess(request, response, chain, auth);
-    }
 }

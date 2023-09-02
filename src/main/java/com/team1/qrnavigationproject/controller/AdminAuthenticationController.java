@@ -4,19 +4,19 @@ package com.team1.qrnavigationproject.controller;
 import com.team1.qrnavigationproject.model.Role;
 import com.team1.qrnavigationproject.model.User;
 import com.team1.qrnavigationproject.model.UserType;
-import com.team1.qrnavigationproject.response.CustomException;
-import com.team1.qrnavigationproject.response.Response;
 import com.team1.qrnavigationproject.service.RoleService;
 import com.team1.qrnavigationproject.service.UserService;
 import com.team1.qrnavigationproject.service.UserTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -32,6 +32,7 @@ public class AdminAuthenticationController {
 
     private RoleService roleService;
 
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -55,7 +56,10 @@ public class AdminAuthenticationController {
 
 
     @PostMapping(AUTH_SIGN_UP)
-    public String requestSignUpPage(@ModelAttribute @Valid User userFormData, Model model) {
+    public String requestSignUpPage(
+            @ModelAttribute @Valid User userFormData,
+            Model model,
+            RedirectAttributes redirectAttributes) {
         UserType userType = userTypeService.save(new UserType("Adult"));
         Role userRole = roleService.save(new Role(ADMIN.name()));
         User savedUser;
@@ -65,20 +69,16 @@ public class AdminAuthenticationController {
                     userType,
                     userRole);
             model.addAttribute("user", savedUser);
-        } catch (CustomException e) {
-            model.addAttribute("error", e.getMessage());
-            throw new CustomException(
-                    e.getMessage(),
-                    e.getStatus()
-            );
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/login-error";
+
         }
         return "redirect:/login";
     }
 
     @GetMapping("/login")
-    public String getLoginPage(Model model) {
+    public String getLoginPage(Model model ) {
         try {
             return "loginPage";
         } catch (BadCredentialsException bce) {
@@ -93,8 +93,8 @@ public class AdminAuthenticationController {
 
     @GetMapping("/login-error")
     public String loginError(Model model) {
-        // login failed
-        model.addAttribute("error", "Error (401): Wrong username or password");
+        // login failed attempt
+        model.addAttribute("error", "Wrong username or password");
         return "loginPage";
     }
 

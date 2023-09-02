@@ -1,5 +1,6 @@
 package com.team1.qrnavigationproject.controller;
 
+import com.team1.qrnavigationproject.configuration.AuthenticatedUser;
 import com.team1.qrnavigationproject.model.*;
 import com.team1.qrnavigationproject.response.CustomException;
 import com.team1.qrnavigationproject.service.*;
@@ -32,6 +33,8 @@ public class SpaceController {
     private OrganizationService organizationService;
 
     private SpaceTypeService spaceTypeService;
+
+
 
     @Autowired
     public void setSpaceType(SpaceTypeService spaceTypeService) {
@@ -160,8 +163,33 @@ public class SpaceController {
     }
 
     @RequestMapping(value = "/admin/spaces/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
-    public String deleteSpace(@PathVariable int id) {
-        spaceService.deleteSpace(id);
+    public String deleteSpace(@PathVariable int id, Authentication auth, RedirectAttributes redirectAttributes) {
+        Optional<User> optionalAdmin;
+        optionalAdmin = Optional.of(AuthenticatedUser.requestCurrentUser(auth, userService));
+        optionalAdmin.map(User::getOrganization)
+                .ifPresent(organization -> {
+                    //get the space to be deleted
+                    Space spaceToDelete = spaceService.findById(id);
+                    if (spaceToDelete.getOrganization().getId() == organization.getId()) {
+
+                        boolean isOwner = organization
+                                .getUser()
+                                .getId() == spaceToDelete
+                                .getOrganization()
+                                .getUser()
+                                .getId();
+                        if (isOwner) {
+                            try {
+                                spaceService.deleteSpace(id);
+                            } catch (RuntimeException e) {
+                                    //Hoping this bug could be resolved properly when trying to delete a space that's associated with a QR code
+                                    redirectAttributes.addFlashAttribute("error", ("Error (%d): Sorry, you must" +
+                                            " delete all QR codes associated with this Space, before deleting %s")
+                                            .formatted(HttpStatus.BAD_REQUEST.value(), spaceToDelete.getName()));
+                            }
+                        }
+                    }
+                });
         return "redirect:/admin/places";
     }
 

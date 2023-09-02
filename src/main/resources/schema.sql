@@ -51,7 +51,7 @@ create table app_user
     is_credential_expired bit,
     is_account_locked     bit,
     is_account_enabled    bit,
-    foreign key (organization_id) references organization (id)
+    foreign key (organization_id) references organization (id) on delete cascade
 );
 
 create table role
@@ -79,7 +79,7 @@ create table event
     `start`       datetime,
     `end`         datetime,
     image_urls    json default '[]',
-    foreign key (organizer) references organization (id)
+    foreign key (organizer) references organization (id) on delete cascade
 );
 
 -- Space_type presents the type of space which could be a Building, park, or country side trail
@@ -98,7 +98,7 @@ create table space
     org_id        int default null,
     address_id    int default null,
     type       int default null,
-    foreign key (org_id) references organization (id),
+    foreign key (org_id) references organization (id) on delete cascade,
     foreign key (address_id) references address (id),
     foreign key (type) references space_type (id)
 );
@@ -111,7 +111,7 @@ create table subspace
     photo_url     text default null,
     main_space    int  default null,
     `type`      int  default null,
-    foreign key (main_space) references space (id),
+    foreign key (main_space) references space (id) on delete cascade,
     foreign key (`type`) references space_type (id)
 );
 
@@ -139,6 +139,6 @@ create table qrcode
     image_url     text,
     page_url      text,
     created_at    datetime,
-    foreign key (space_id) references space (id),
-    foreign key (sub_space_id) references subspace (id)
+    foreign key (space_id) references space (id) on delete cascade,
+    foreign key (sub_space_id) references subspace (id) on delete cascade
 );

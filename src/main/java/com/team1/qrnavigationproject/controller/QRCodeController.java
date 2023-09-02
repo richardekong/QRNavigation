@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,8 +63,8 @@ public class QRCodeController {
             User admin = currentAdmin.get();
             List<QRCode> managedQRCodes = findOrganizationManagedQRCodes(auth);
             List<Space> managedSpaces = findOrganizationManagedSpaces(admin);
-            model.addAttribute("qrcodes", managedQRCodes);
             model.addAttribute("spaces", managedSpaces);
+            model.addAttribute("qrcodes", managedQRCodes);
         } else {
             model.addAttribute("error", "Error (%d):Not Authorized".formatted(HttpStatus.UNAUTHORIZED.value()));
             return "redirect:" + LOGIN_ERROR;
@@ -112,14 +113,14 @@ public class QRCodeController {
             return "redirect:/" + LOGIN_ERROR;
         }
         LOGGER.log(Level.INFO, "Verifying if user has selected a space");
-        if (Integer.parseInt(spaceIdParam) < 1){
+        if (Integer.parseInt(spaceIdParam) < 1) {
             //redirect and prompt user to select a space
             redirectAttributes.addFlashAttribute("error", "Error (%d): A space has not been selected".formatted(HttpStatus.BAD_REQUEST.value()));
             LOGGER.log(Level.SEVERE, "Redirecting admin to select a space");
             return "redirect:%s".formatted(ADMIN_QRCODES_GENERATE);
         }
         LOGGER.log(Level.INFO, "Verifying if user has selected a subspace within a space");
-        if(Integer.parseInt(subSpaceIdParam) < 1){
+        if (Integer.parseInt(subSpaceIdParam) < 1) {
             //redirect and prompt user to select a subspace within a space
             redirectAttributes.addFlashAttribute("error", "Error (%d): A subspace has not been selected".formatted(HttpStatus.BAD_REQUEST.value()));
             LOGGER.log(Level.SEVERE, "Redirecting admin to select a subspace within a space");
@@ -258,20 +259,21 @@ public class QRCodeController {
     public String deleteQRCode(@RequestParam("id") int id, Model model, RedirectAttributes redirectAttributes, Authentication auth) {
         //check if the qr code record exists
         Optional.of(qrCodeService.findQRCodeById(id))
-                .ifPresentOrElse(
+                .ifPresent(
                         qrCode -> {
 
                             if (auth != null && auth.isAuthenticated()) {
                                 try {
                                     qrCodeService.deleteById(id);
+                                    redirectAttributes.addFlashAttribute("success", "Success (%d): QR Code %d deleted"
+                                            .formatted(HttpStatus.OK.value(), id));
+                                    model.addAttribute("qrcodes", findOrganizationManagedQRCodes(auth));
                                 } catch (Exception e) {
-                                    throw new CustomException(HttpStatus.NOT_FOUND);
+                                    redirectAttributes.addFlashAttribute("error", "Error (%d): Failed to delete this item"
+                                            .formatted(HttpStatus.NOT_FOUND.value()));
                                 }
-                                redirectAttributes.addFlashAttribute("success", "Success (%d): QR Code %d deleted".formatted(HttpStatus.OK.value(), id));
-                                model.addAttribute("qrcodes", findOrganizationManagedQRCodes(auth));
                             }
-                        },
-                        () -> redirectAttributes.addFlashAttribute("error", "Error (%d): Failed to delete this item".formatted(HttpStatus.NOT_FOUND.value()))
+                        }
                 );
         return "redirect:%s".formatted(ADMIN_QRCODES);
 

@@ -1,10 +1,11 @@
+
 const postcodeInput = document.querySelector("#postcode");
 const selectElement = document.getElementById('addresses');
 const hiddenLatitude = document.getElementById('latitude');
 const hiddenLongitude = document.getElementById('longitude');
-
+const APIKey = postcodeAPI;
 const headers = new Headers({
-    'Key': '8kP47Rng9GF2irjYDuwzmtvJsJgdSaXW3cJtoLvAXw'
+    'Key': APIKey
 });
 
 
