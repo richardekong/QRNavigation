@@ -47,7 +47,6 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation('io.github.bonigarcia:webdrivermanager:5.3.1')
     implementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
-
     testImplementation 'com.h2database:h2'
 
 }
@@ -60,20 +59,6 @@ tasks.named('test') {
 test{
     exclude '**/*pages*'
 }
-
-
-//ext {
-//    qrnavigation = [
-//            docker: [
-//                    dockerImage: project.property('dockerImage'),
-//                    dockerTagName: project.property('dockerTagName'),
-//                    dockerUsername: project.property('dockerUsername'),
-//                    dockerPassword: project.property('dockerPassword'),
-//                    dockerTagVersion:project.property('dockerTagVersion')
-//            ]
-//    ]
-//}
-
 
 task incrementDockerTagVersion {
     doLast {
