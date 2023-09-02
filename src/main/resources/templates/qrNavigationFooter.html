@@ -26,9 +26,11 @@
             if (criteriaIsMet) {
                 authSpan.textContent = 'Login';
                 headerAuthForm.action = '/login';
+                headerAuthForm.method = 'GET';
             } else {
                 authSpan.textContent = 'Logout';
                 headerAuthForm.action = '/logout';
+                headerAuthForm.method = 'POST';
             }
         };
     </script>

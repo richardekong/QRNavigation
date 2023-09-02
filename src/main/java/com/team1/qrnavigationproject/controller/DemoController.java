@@ -7,10 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DemoController {
 
 
-    @RequestMapping("/qrnavigation/welcome")
-    public String showWelcomePage() {
-        return "welcomePage";
-    }
 
 
 
