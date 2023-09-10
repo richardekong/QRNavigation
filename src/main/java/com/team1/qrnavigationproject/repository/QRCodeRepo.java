@@ -20,14 +20,22 @@ public interface QRCodeRepo extends JpaRepository<QRCode, Integer> {
 
     QRCode findQRCodeByCreatedAt(LocalDateTime dateTime);
 
-    @Query("SELECT CASE WHEN COUNT(q) > 0 THEN true ELSE false END FROM QRCode q WHERE q.space.id = :spaceId AND q.subSpace.id = :subSpaceId")
-    boolean existsQRCodeBySpaceIdAndSubSpaceId(@Param("spaceId") int spaceId,@Param("subSpaceId") int subSpaceId);
+    @Query("SELECT CASE WHEN COUNT(q) > 0 " +
+            "THEN true ELSE false END FROM QRCode q " +
+            "WHERE q.space.id = :spaceId AND q.subSpace.id = :subSpaceId")
+    boolean existsQRCodeBySpaceIdAndSubSpaceId(
+            @Param("spaceId") int spaceId,
+            @Param("subSpaceId") int subSpaceId
+    );
 
     @Query("SELECT q FROM QRCode q")
     List<QRCode> findAllQRCodes();
 
     @Query("SELECT q FROM QRCode q where  q.space.id = :spaceId and q.subSpace.id = :subspaceId")
-    Optional<QRCode> findQRCodeBySpaceIdAndSubspaceId(@Param("spaceId") int spaceId, @Param("subspaceId") int subspaceId);
+    Optional<QRCode> findQRCodeBySpaceIdAndSubspaceId(
+            @Param("spaceId") int spaceId,
+            @Param("subspaceId") int subspaceId
+    );
 
     @Query("SELECT q FROM QRCode q left join Space s on q.space.id=s.id WHERE s.organization.id = :organizationId")
     Optional<List<QRCode>> findQRCodesByOrganizationId(@Param("organizationId") int organizationId);

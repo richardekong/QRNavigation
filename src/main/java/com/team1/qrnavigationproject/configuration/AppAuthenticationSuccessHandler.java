@@ -4,6 +4,7 @@ import com.team1.qrnavigationproject.model.Organization;
 import com.team1.qrnavigationproject.model.User;
 import com.team1.qrnavigationproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -31,20 +32,23 @@ public class AppAuthenticationSuccessHandler implements AuthenticationSuccessHan
             HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
 
-        //get the current admin
-        var currentUser = new User();
+
         if (authentication != null && authentication.isAuthenticated()) {
-            currentUser = userService.findUserByUsername(authentication.getName())
-                    .orElseThrow(() -> new UsernameNotFoundException("UnAuthorized"));
-        }
-        //check if the admin has registered an organization
-        if (currentUser.getOrganization() != null) {
-            Organization organization = currentUser.getOrganization();
-            //redirect the user to the admin main page
-            response.sendRedirect("/admin/main");
-        } else {
-            //redirect the admin to the organization Registration Page
-            response.sendRedirect("/admin/organization/register");
+            //get the current admin
+            var optionalUser = userService.findUserByUsername(authentication.getName());
+            //check if the admin has registered an organization
+            if (optionalUser.isPresent()){
+                var currentUser = optionalUser.get();
+                if (currentUser.getOrganization() != null) {
+                    //redirect the user to the admin main page
+                    response.sendRedirect("/admin/main");
+                } else {
+                    //redirect the admin to the organization Registration Page
+                    response.sendRedirect("/admin/organization/register");
+                }
+            }
+        }else {
+            throw new BadCredentialsException("Wrong username or password");
         }
     }
 

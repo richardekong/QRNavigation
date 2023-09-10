@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -27,7 +28,7 @@ import java.util.logging.Logger;
 import static com.team1.qrnavigationproject.configuration.AuthenticatedUser.requestCurrentUser;
 
 @Controller
-public class OrganizationController  {
+public class OrganizationController {
 
     private OrganizationService organizationService;
 
@@ -70,7 +71,7 @@ public class OrganizationController  {
     public ModelAndView ViewOrganizationUpdatePage(Authentication auth, ModelAndView modelAndView) {
         Organization currentOrganization = new Organization();
         if (auth != null) {
-           currentOrganization = requestCurrentUser(auth,userService).getOrganization();
+            currentOrganization = requestCurrentUser(auth, userService).getOrganization();
         }
         modelAndView.setViewName("organizationUpdatePage");
         modelAndView.addObject("organization", currentOrganization);
@@ -83,6 +84,7 @@ public class OrganizationController  {
             @ModelAttribute Address address,
             @ModelAttribute Location location,
             ModelAndView modelAndView,
+            RedirectAttributes redirectAttributes,
             Authentication auth,
             BindingResult bindingResult) {
 
@@ -100,12 +102,20 @@ public class OrganizationController  {
         organization.setAddress(savedAddress);
         //associate the organization with the current user
         requestCurrentUser(auth, userService).setOrganization(organization);
-        Organization savedOrganization = organizationService.save(organization);
 
-        //pass the saved organization to the main admin page, and set the next page to main admin page after submitting the form
-        modelAndView.addObject("organization", savedOrganization);
-        modelAndView.addObject("success", "%s %s!".formatted(savedOrganization.getName(), HttpStatus.CREATED.getReasonPhrase()));
-        modelAndView.setViewName("redirect:/admin/main");
+        try {
+            Organization savedOrganization = organizationService.save(organization);
+            //pass the saved organization to the main admin page, and set the next page to main admin page after submitting the form
+            modelAndView.addObject("organization", savedOrganization);
+            modelAndView.addObject("success", "%s %s!".formatted(savedOrganization.getName(), HttpStatus.CREATED.getReasonPhrase()));
+            modelAndView.setViewName("redirect:/admin/main");
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("error", "Error (%d): %s".formatted(
+                    HttpStatus.CONFLICT.value(),
+                    e.getMessage()
+            ));
+            modelAndView.setViewName("redirect:/admin/organization/register");
+        }
         return modelAndView;
     }
 
@@ -123,7 +133,7 @@ public class OrganizationController  {
         }
 
         //updating organization detail
-        Organization orgToUpdate = requestCurrentUser(auth,userService).getOrganization();
+        Organization orgToUpdate = requestCurrentUser(auth, userService).getOrganization();
         Location updatedLocation = locationService.saveLocation(locationFormData);
         //update the address
         addressFormData.setLocation(updatedLocation);
@@ -141,13 +151,11 @@ public class OrganizationController  {
     }
 
     @GetMapping("/admin/organization")
-    public ResponseEntity<Organization> requestOrganization(Authentication auth){
-        return Optional.of(requestCurrentUser(auth,userService).getOrganization())
+    public ResponseEntity<Organization> requestOrganization(Authentication auth) {
+        return Optional.of(requestCurrentUser(auth, userService).getOrganization())
                 .map(org -> new ResponseEntity<>(org, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
-
 
 
 }

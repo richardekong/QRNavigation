@@ -9,28 +9,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
 
     private OrganizationRepo organizationRepo;
+
     @Autowired
     public void setOrganizationRepo(OrganizationRepo organizationRepo) {
         this.organizationRepo = organizationRepo;
     }
+
     @Override
     public Organization save(Organization organization) {
-//        if (organizationRepo.findOrganizationByName(organization.getName()).isPresent()) {
-//            throw new CustomException(
-//                    "%s already exists".formatted(organization.getName()),
-//                    HttpStatus.CONFLICT
-//            );
-//        }
-        return organizationRepo.save(organization);
+        AtomicReference<Organization> savedOrganization = new AtomicReference<>(null);
+        organizationRepo.findOrganizationByName(organization.getName()).ifPresentOrElse(org -> {
+            throw new CustomException(
+                    "%s already exists".formatted(org.getName()),
+                    HttpStatus.CONFLICT
+            );
+        }, () -> savedOrganization.set(organizationRepo.save(organization)));
+        return savedOrganization.get();
     }
 
     @Override
@@ -65,8 +68,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public Organization update(Organization organization) {
-        if (!organizationRepo.existsById(organization.getId())){
-            throw  new CustomException(
+        if (!organizationRepo.existsById(organization.getId())) {
+            throw new CustomException(
                     HttpStatus.NOT_FOUND.getReasonPhrase(),
                     HttpStatus.NOT_FOUND
             );
