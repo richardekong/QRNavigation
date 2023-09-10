@@ -69,6 +69,7 @@ public class AdminAuthenticationController {
                     userType,
                     userRole);
             model.addAttribute("user", savedUser);
+            redirectAttributes.addFlashAttribute("success","Sign up successful.\n You can now login!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/login-error";

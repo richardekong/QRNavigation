@@ -22,32 +22,11 @@ import static com.team1.qrnavigationproject.configuration.QRNavigationPaths.*;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class QRNavigationSecurityConfiguration {
 
-    protected PasswordEncoder passwordEncoder;
-
-    protected AppAuthenticationProvider appAuthenticationProvider;
     protected UserService userService;
-
-    protected AuthenticationManagerBuilder authenticationManagerBuilder;
-
-
-    @Autowired
-    private void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
-    }
-
-    @Autowired
-    public void setAppAuthenticationProvider(AppAuthenticationProvider appAuthenticationProvider) {
-        this.appAuthenticationProvider = appAuthenticationProvider;
-    }
-
-    @Autowired
-    public void setAuthenticationManagerBuilder(AuthenticationManagerBuilder authenticationManagerBuilder) {
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
     @Bean
@@ -58,17 +37,6 @@ public class QRNavigationSecurityConfiguration {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-    @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return authenticationManagerBuilder
-                .userDetailsService(userService)
-                .passwordEncoder(passwordEncoder)
-                .and()
-                .authenticationProvider(appAuthenticationProvider)
-                .build();
-    }
-
 
     @Bean
     public SecurityFilterChain filterChainForAdmin(HttpSecurity http) throws Exception {
