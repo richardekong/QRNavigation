@@ -4,6 +4,7 @@ package com.team1.qrnavigationproject.controller;
 import com.team1.qrnavigationproject.model.Role;
 import com.team1.qrnavigationproject.model.User;
 import com.team1.qrnavigationproject.model.UserType;
+import com.team1.qrnavigationproject.response.CustomException;
 import com.team1.qrnavigationproject.service.RoleService;
 import com.team1.qrnavigationproject.service.UserService;
 import com.team1.qrnavigationproject.service.UserTypeService;
@@ -71,8 +72,12 @@ public class AdminAuthenticationController {
             model.addAttribute("user", savedUser);
             redirectAttributes.addFlashAttribute("success","Sign up successful.\n You can now login!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
-            return "redirect:/login-error";
+            if (e instanceof CustomException && ((CustomException)e).getStatus().equals(HttpStatus.CONFLICT)){
+                redirectAttributes.addFlashAttribute("error", e.getMessage());
+            }else {
+                redirectAttributes.addFlashAttribute("error", e.getMessage());
+            }
+            return "redirect:/qrnavigation/signup";
 
         }
         return "redirect:/login";
