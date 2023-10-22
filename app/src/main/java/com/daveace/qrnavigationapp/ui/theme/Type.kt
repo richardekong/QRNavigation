@@ -1,4 +1,4 @@
-package com.example.qrnavigationapp.ui.theme
+package com.daveace.qrnavigationapp.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

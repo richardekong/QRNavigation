@@ -1,4 +1,4 @@
-package com.example.qrnavigationapp.screen
+package com.daveace.qrnavigationapp.screen
 
 import androidx.compose.runtime.Composable
 

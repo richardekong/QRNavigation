@@ -1,4 +1,4 @@
-package com.example.qrnavigationapp.screen
+package com.daveace.qrnavigationapp.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -35,7 +35,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.qrnavigationapp.R
+import com.daveace.qrnavigationapp.R
 
 @Composable
 fun SignUp(modifier: Modifier = Modifier){

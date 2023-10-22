@@ -1,4 +1,4 @@
-package com.example.qrnavigationapp
+package com.daveace.qrnavigationapp
 
 import org.junit.Test
 
