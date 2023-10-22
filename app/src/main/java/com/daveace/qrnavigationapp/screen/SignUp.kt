@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardOptions
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Card
@@ -38,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import com.daveace.qrnavigationapp.R
 
 @Composable
-fun SignUp(modifier: Modifier = Modifier){
+fun SignUp(modifier: Modifier = Modifier) {
     Column {
         Card(
             modifier = modifier
@@ -78,7 +79,7 @@ fun SignUp(modifier: Modifier = Modifier){
             shape = MaterialTheme.shapes.small,
             elevation = 4.dp
         ) {
-            Column{
+            Column {
                 OutlinedTextField(
                     value = "",
                     onValueChange = {},
@@ -141,13 +142,74 @@ fun SignUp(modifier: Modifier = Modifier){
                         .padding(top = 8.dp, bottom = 8.dp)
                 )
             }
+        }
+        Spacer(modifier = modifier.height(2.dp))
+        Card(
+            modifier = modifier
+                .wrapContentWidth()
+                .align(Alignment.CenterHorizontally)
+                .padding(16.dp)
+                .background(color = Color.White),
+            shape = MaterialTheme.shapes.small,
+            elevation = 4.dp
+        ) {
+            Column(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp, bottom = 16.dp)
+            ) {
 
+                val columnAlignment = modifier.align(Alignment.CenterHorizontally)
+
+                Text(
+                    text = stringResource(R.string.alternatively_sign_up),
+                    modifier = modifier.align(Alignment.CenterHorizontally)
+                )
+                Row(modifier = modifier.align(Alignment.CenterHorizontally)) {
+                    Column() {
+                        Image(
+                            painter = painterResource(id = R.drawable.google_icon),
+                            contentDescription = stringResource(R.string.google_icon),
+                            modifier = columnAlignment
+                        )
+                        Text(
+                            text = stringResource(R.string.google),
+                            modifier = columnAlignment
+                        )
+                    }
+                    Spacer(modifier = modifier.width(10.dp))
+                    Column() {
+                        Image(
+                            painter = painterResource(id = R.drawable.facebook_icon),
+                            contentDescription = stringResource(R.string.facebook_icon),
+                            modifier = columnAlignment
+                        )
+                        Text(
+                            text = stringResource(R.string.facebook),
+                            modifier = columnAlignment
+                        )
+                    }
+                    Spacer(modifier = modifier.width(10.dp))
+                    Column() {
+                        Image(
+                            painter = painterResource(id = R.drawable.linkedin_icon),
+                            contentDescription = stringResource(R.string.linkedin_icon),
+                            modifier = columnAlignment
+                        )
+                        Text(
+                            text = stringResource(R.string.linkedin),
+                            modifier = columnAlignment
+                        )
+                    }
+                }
+
+            }
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun SignUpPreview(){
+fun SignUpPreview() {
     SignUp()
 }
