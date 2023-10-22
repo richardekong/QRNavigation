@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">QRNavigationApp</string>
+    <string name="signUp_instruction">Sign up to your account</string>
+    <string name="login_instruction">Login to your account</string>
+    <string name="signUp_link1">Don\'t have an account? Sign Up</string>
+    <string name="login_link1">Already have an account? Login</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="login_label">Login</string>
+    <string name="signUp_label">Sign Up</string>
+    <string name="qr_code_image">QR Code image</string>
+    <string name="email_leading_icon">Email leading Icon</string>
+    <string name="lock_leading_icon">Lock leading icon</string>
+    <string name="password_hint">Provide your password</string>
+    <string name="email_hint">Provide your email</string>
+</resources>
