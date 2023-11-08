@@ -3,6 +3,7 @@ package com.daveace.qrnavigationapp.screen
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -81,9 +82,7 @@ fun Home(modifier: Modifier = Modifier, context: Context = LocalContext.current)
 fun HomeTopSection(modifier: Modifier) {
     Column {
         Card(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(4.dp),
+            modifier = modifier.fillMaxWidth().padding(4.dp),
             shape = MaterialTheme.shapes.extraSmall,
             colors = cardTheme(),
             elevation = CardDefaults.cardElevation(4.dp),
@@ -123,15 +122,12 @@ fun WelcomeNotesPager(modifier: Modifier, notes: List<WelcomeNote> = listOf()) {
     })
     LaunchedEffect(Unit) {
         while (true) {
-            delay(5000)
             val currentPage = (pagerState.currentPage + 1) % pagerState.pageCount
-            pagerState.animateScrollToPage(currentPage)
+            pagerState.animateScrollToPage(currentPage, animationSpec = tween(durationMillis = 5000))
         }
     }
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(4.dp),
+        modifier = modifier.fillMaxWidth().padding(4.dp),
         shape = MaterialTheme.shapes.extraSmall,
         colors = cardTheme(),
         elevation = CardDefaults.cardElevation(4.dp),
@@ -214,6 +210,24 @@ fun OrganizationsSection(
             },
             modifier = modifier.padding(4.dp)
         )
+
+        Button(
+            onClick = { /*TODO*/ },
+            colors = buttonTheme(),
+            shape = MaterialTheme.shapes.extraSmall,
+            contentPadding = PaddingValues(0.dp),
+            modifier = modifier
+                .padding(end = 4.dp, bottom = 4.dp)
+                .size(width = 40.dp, height = 20.dp)
+                .align(Alignment.End)
+        ) {
+            Text(
+                text = stringResource(id = R.string.more_label),
+                fontSize = TextUnit(8F, TextUnitType.Sp)
+            )
+        }
+
+
     }
 }
 
