@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.daveace.qrnavigationapp.screen.Home
-import com.daveace.qrnavigationapp.screen.SignUp
 import com.daveace.qrnavigationapp.ui.theme.QRNavigationAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +12,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             QRNavigationAppTheme {
                 Home()
-
             }
         }
     }

@@ -31,4 +31,8 @@
     <string name="get_general_information_about_venues">Get general information about venues.</string>
     <string name="pick_an_organization">Pick an organization</string>
     <string name="more_label">More</string>
+    <string name="app_name_text">QR Navigation</string>
+    <string name="location_marker_icon">Location Marker icon</string>
+    <string name="splash_wave_background">splash wave background</string>
+    <string name="threeD_qr_code">3d qr code</string>
 </resources>
