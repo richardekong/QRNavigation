@@ -21,7 +21,7 @@
     <string name="facebook">Facebook</string>
     <string name="linkedin_icon">LinkedIn icon</string>
     <string name="linkedin">LinkedIn</string>
-    <string name="welecome_text">Welcome to QR Navigation</string>
+    <string name="welcome_text">Welcome to QR Navigation</string>
     <string name="welcome_note_icon">welcome note icon</string>
     <string name="connect_to_organization">Connect to Organization.</string>
     <string name="read_qr_codes">Read QR codes.</string>
@@ -35,4 +35,13 @@
     <string name="location_marker_icon">Location Marker icon</string>
     <string name="splash_wave_background">splash wave background</string>
     <string name="threeD_qr_code">3d qr code</string>
+    <string name="org_logo">organization logo</string>
+    <string name="explore">Explore %1$s</string>
+    <string name="loading">Loading …</string>
+    <string name="main_spaces">Main Spaces</string>
+    <string name="sub_spaces">Subspaces</string>
+    <string name="reset">Reset</string>
+    <string name="read_qr">Read QR</string>
+    <string name="pick_spaces_and_read_qr_code">Pick spaces and read QR Code</string>
+    <string name="info_icon">info icon</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.daveace.qrnavigationapp.model
+package com.daveace.qrnavigationapp.data
 
 import android.content.Context
 import androidx.annotation.DrawableRes

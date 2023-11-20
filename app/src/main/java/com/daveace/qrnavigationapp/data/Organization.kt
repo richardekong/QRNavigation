@@ -1,4 +1,4 @@
-package com.daveace.qrnavigationapp.model
+package com.daveace.qrnavigationapp.data
 
 //The property of this class will be updated latter to reflect resource from the server
 data class Organization(

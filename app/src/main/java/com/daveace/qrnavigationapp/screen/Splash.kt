@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.daveace.qrnavigationapp.R
 
+
 @Composable
 fun Splash(modifier: Modifier = Modifier) {
 
@@ -132,7 +133,7 @@ private fun ColumnScope.MidSection() {
 }
 
 @Composable
-fun rotation() = rememberInfiniteTransition(label = "")
+private fun rotation() = rememberInfiniteTransition(label = "")
     .animateFloat(
         initialValue = 0F,
         targetValue = 360F,

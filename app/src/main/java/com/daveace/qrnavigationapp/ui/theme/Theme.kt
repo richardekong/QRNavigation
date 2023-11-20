@@ -138,6 +138,12 @@ fun buttonTheme() = ButtonDefaults.buttonColors(
 )
 
 @Composable
+fun alternateButtonTheme() = ButtonDefaults.buttonColors(
+    containerColor = colorResource(id = R.color.md_theme_light_onPrimary),
+    contentColor = colorResource(id = R.color.md_theme_light_onSecondaryContainer)
+)
+
+@Composable
 fun iconTint() = colorResource(id = R.color.md_theme_light_onSecondaryContainer)
 
 
