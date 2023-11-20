@@ -10,7 +10,6 @@ import com.daveace.qrnavigationapp.screen.SpacesExplorer
 import com.daveace.qrnavigationapp.ui.theme.QRNavigationAppTheme
 
 class MainActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
