@@ -1,4 +1,4 @@
-package com.daveace.qrnavigationapp.screen
+package com.daveace.qrnavigationapp.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -41,7 +41,6 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.daveace.qrnavigationapp.R
 import com.daveace.qrnavigationapp.data.Organization
-import com.daveace.qrnavigationapp.data.organizations
 import com.daveace.qrnavigationapp.ui.theme.buttonTheme
 import com.daveace.qrnavigationapp.ui.theme.cardTheme
 import com.daveace.qrnavigationapp.ui.theme.iconTint
@@ -55,13 +54,15 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.daveace.qrnavigationapp.model.ViewModel
 
 
 @Composable
 fun SpacesExplorer(modifier: Modifier = Modifier) {
 
+    val viewModel = ViewModel()
     val currentOrganization by remember {
-        mutableStateOf(organizations()[1])
+        mutableStateOf(viewModel.organizations()[1])
     }
 
     Column() {
@@ -87,7 +88,7 @@ private fun TopSection(modifier: Modifier, org: Organization) {
             .background(color = colorResource(id = background))
             .padding(all = 4.dp)
     ) {
-        if (org.logo.isEmpty()) {
+        if (org.logoURL.isEmpty()) {
             //set default image if current organization's logo is not present
             Image(
                 painter = painterResource(id = R.drawable.baseline_business_24),
@@ -96,10 +97,10 @@ private fun TopSection(modifier: Modifier, org: Organization) {
         } else {
             //get current organization logo
             GlideImage(
-                model = org.logo,
+                model = org.logoURL,
                 contentDescription = "${org.name}'s logo",
                 modifier = modifier.size(60.dp)
-            ) { it.load(org.logo) }
+            ) { it.load(org.logoURL) }
         }
         //current organization name and trailing text
         val alignment = Alignment.CenterVertically

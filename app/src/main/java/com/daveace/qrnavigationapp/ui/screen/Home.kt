@@ -1,4 +1,4 @@
-package com.daveace.qrnavigationapp.screen
+package com.daveace.qrnavigationapp.ui.screen
 
 import android.content.Context
 import androidx.compose.animation.core.tween
@@ -45,19 +45,19 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.daveace.qrnavigationapp.R
 import com.daveace.qrnavigationapp.data.Organization
-import com.daveace.qrnavigationapp.data.WelcomeNote
-import com.daveace.qrnavigationapp.data.organizations
-import com.daveace.qrnavigationapp.data.welcomeNotes
+import com.daveace.qrnavigationapp.data.Note
+import com.daveace.qrnavigationapp.model.ViewModel
 import com.daveace.qrnavigationapp.ui.theme.buttonTheme
 import com.daveace.qrnavigationapp.ui.theme.cardTheme
 import com.daveace.qrnavigationapp.ui.theme.iconTint
 
 @Composable
 fun Home(modifier: Modifier = Modifier, context: Context = LocalContext.current) {
+    val viewModel = ViewModel()
     Column {
         HomeTopSection(modifier = modifier)
-        WelcomeNotesPager(modifier = modifier, welcomeNotes(context))
-        OrganizationsSection(modifier = modifier, organizations = organizations())
+        WelcomeNotesPager(modifier = modifier, viewModel.welcomeNotes(context))
+        OrganizationsSection(modifier = modifier, organizations = viewModel.organizations())
     }
 }
 
@@ -98,7 +98,7 @@ fun HomeTopSection(modifier: Modifier) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun WelcomeNotesPager(modifier: Modifier, notes: List<WelcomeNote> = listOf()) {
+fun WelcomeNotesPager(modifier: Modifier, notes: List<Note> = listOf()) {
 
     val pagerState = rememberPagerState(pageCount = {
         notes.size
@@ -124,7 +124,7 @@ fun WelcomeNotesPager(modifier: Modifier, notes: List<WelcomeNote> = listOf()) {
 }
 
 @Composable
-fun WelcomeNoteUI(modifier: Modifier, welcomeNote: WelcomeNote) {
+fun WelcomeNoteUI(modifier: Modifier, welcomeNote: Note) {
     Column(modifier = modifier.height(120.dp)) {
         val style = ParagraphStyle(textIndent = TextIndent(restLine = 12.sp))
 
@@ -230,11 +230,11 @@ fun OrganizationItemUI(modifier: Modifier, org: Organization) {
         border = CardDefaults.outlinedCardBorder(enabled = true)
     ) {
         GlideImage(
-            model = org.logo,
+            model = org.logoURL,
             contentDescription = "${org.name} logo",
             modifier = modifier.size(width = 120.dp, height = 120.dp)
         ) { request ->
-            request.load(org.logo)
+            request.load(org.logoURL)
 
         }
         Text(
