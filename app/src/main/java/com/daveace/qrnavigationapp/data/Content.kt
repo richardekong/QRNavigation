@@ -9,9 +9,9 @@ data class Content(
     val id: Int = 0,
     val name: String = "",
     val description: String = "",
-    val event: Event = newInstance(Event::class) as Event,
-    val space: Space = newInstance(Space::class) as Space,
-    val subspace: Subspace = newInstance(Subspace::class) as Subspace
+    val event: Event = newInstance(Event::class),
+    val space: Space = newInstance(Space::class),
+    val subspace: Subspace = newInstance(Subspace::class)
 )
 
 

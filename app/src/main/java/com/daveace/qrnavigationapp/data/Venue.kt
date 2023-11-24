@@ -7,7 +7,7 @@ import com.daveace.qrnavigationapp.data.DefaultInstance.Companion.newInstance
 @RequiresApi(O)
 data class Venue(
     val id:Int = 0,
-    val event:Event = newInstance(Event::class) as Event,
+    val event:Event = newInstance(Event::class),
     val spaceId :Int = 0,
     val subspaceId:Int = 0
 )

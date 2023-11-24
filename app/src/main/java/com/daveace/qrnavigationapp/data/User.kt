@@ -7,12 +7,12 @@ data class User(
     val username:String = "",
     val password:String = "",
     val age:Int = 0,
-    val organization: Organization = newInstance(Organization::class) as Organization,
-    val roles:List<Role> = listOf(),
-    val types:List<UserType> = listOf(),
+    val organization: Organization = newInstance(Organization::class),
+    val roles:List<Role> = emptyList(),
+    val types:List<UserType> = emptyList(),
     var isAccountExpired:Boolean = false,
     var isCredentialExpired:Boolean = false,
     var isAccountLocked:Boolean = false,
-    var isAccountEnabled:Boolean = false,
+    var isAccountEnabled:Boolean = true
 )
 

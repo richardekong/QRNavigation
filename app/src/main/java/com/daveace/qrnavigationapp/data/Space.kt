@@ -7,8 +7,8 @@ data class Space(
     val name:String = "",
     val description:String = "",
     val photoURL:String = "",
-    val organization: Organization = newInstance(Organization::class) as Organization,
+    val organization: Organization = newInstance(Organization::class),
     val addressId:Int = 0,
     val typeId:Int = 0,
-    val subspaces:List<Subspace> = listOf()
+    val subspaces:List<Subspace> = emptyList()
 )

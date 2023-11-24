@@ -9,8 +9,8 @@ import java.time.LocalDateTime
 data class QRCode(
     val id:Int = 0,
     val description:String = "",
-    val space: Space = newInstance(Space::class) as Space,
-    val subspace: Subspace = newInstance(Subspace::class) as Subspace,
+    val space: Space = newInstance(Space::class),
+    val subspace: Subspace = newInstance(Subspace::class),
     val pageURL:String = "",
     val imageURL:String = "",
     val createdAt:LocalDateTime = LocalDateTime.now()

@@ -4,5 +4,7 @@ import androidx.annotation.DrawableRes
 
 
 data class Note(
-    @DrawableRes val icon: Int, val texts: List<String>
+    @DrawableRes
+    val icon: Int = 0,
+    val texts: List<String> = emptyList()
 )

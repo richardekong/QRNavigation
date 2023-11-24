@@ -5,7 +5,7 @@ import com.daveace.qrnavigationapp.data.DefaultInstance.Companion.newInstance
 data class Role(
     val id: Int = 0,
     val name: String = "",
-    val user: User = newInstance(User::class) as User
+    val user: User = newInstance(User::class)
 ) {
     enum class RoleType(private val role: String) {
         SUPER_ADMIN("SUPER_ADMIN"),

@@ -7,6 +7,6 @@ data class Subspace(
     val name:String = "",
     val description:String ="",
     val photoURL:String = "",
-    val space: Space = newInstance(Space::class) as Space,
+    val space: Space = newInstance(Space::class),
     val typeId:Int = 0
 )

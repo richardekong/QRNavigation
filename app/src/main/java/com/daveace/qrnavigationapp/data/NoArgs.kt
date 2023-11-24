@@ -5,6 +5,6 @@ import kotlin.reflect.KClass
 interface DefaultInstance {
 
     companion object {
-        fun  newInstance(what: KClass<*>): Any = what::class.java.getConstructor().newInstance()
+        fun<T:Any> newInstance(what: KClass<T>): T = what.java.getConstructor().newInstance()
     }
 }
