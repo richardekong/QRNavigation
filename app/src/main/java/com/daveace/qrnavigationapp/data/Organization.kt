@@ -1,12 +1,10 @@
 package com.daveace.qrnavigationapp.data
 
-import com.daveace.qrnavigationapp.data.NoArgs.Companion.newInstance
-
 data class Organization(
     val id: Int = 0,
     val name: String = "",
-    val address: Address = newInstance(Address::class),
-    val user: User = newInstance(User::class),
+    val address: Address? = null,
+    val user: User? = null,
     val logoURL: String = "",
     val websiteURL: String = "",
     val headerBackground: String = "",
