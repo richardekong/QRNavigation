@@ -1,6 +1,6 @@
 package com.daveace.qrnavigationapp.data
 
-import com.daveace.qrnavigationapp.data.DefaultInstance.Companion.newInstance
+import com.daveace.qrnavigationapp.data.NoArgs.Companion.newInstance
 
 data class Location (
     val id:Int = 0,

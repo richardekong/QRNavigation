@@ -2,7 +2,7 @@ package com.daveace.qrnavigationapp.data
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.daveace.qrnavigationapp.data.DefaultInstance.Companion.newInstance
+import com.daveace.qrnavigationapp.data.NoArgs.Companion.newInstance
 import java.time.LocalDateTime
 @RequiresApi(Build.VERSION_CODES.O)
 data class Event(

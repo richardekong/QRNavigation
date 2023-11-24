@@ -2,7 +2,7 @@ package com.daveace.qrnavigationapp.data
 
 import android.os.Build.VERSION_CODES.O
 import androidx.annotation.RequiresApi
-import com.daveace.qrnavigationapp.data.DefaultInstance.Companion.newInstance
+import com.daveace.qrnavigationapp.data.NoArgs.Companion.newInstance
 
 @RequiresApi(O)
 data class Content(
