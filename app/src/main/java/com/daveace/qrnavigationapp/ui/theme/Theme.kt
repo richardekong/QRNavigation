@@ -5,8 +5,11 @@ import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -149,3 +152,14 @@ fun iconTint() = colorResource(id = R.color.md_theme_light_onSecondaryContainer)
 
 @Composable
 fun background() = colorResource(id = R.color.md_theme_light_background)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun topAppBarTheme() = TopAppBarDefaults.topAppBarColors(
+    containerColor = colorResource(id = R.color.md_theme_light_onSecondaryContainer),
+    titleContentColor = colorResource(id = R.color.md_theme_light_onPrimary)
+)
+
+
+
+

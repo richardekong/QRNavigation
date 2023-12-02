@@ -36,6 +36,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.daveace.qrnavigationapp.R
 import com.daveace.qrnavigationapp.ui.theme.QRNavigationAppTheme
 import com.daveace.qrnavigationapp.ui.theme.buttonTheme
@@ -45,7 +47,9 @@ import com.daveace.qrnavigationapp.ui.theme.textFieldTheme
 
 
 @Composable
-fun Login(modifier: Modifier = Modifier) {
+fun Login(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController()) {
     Column {
         TopSection(modifier)
         Spacer(modifier = modifier.height(2.dp))

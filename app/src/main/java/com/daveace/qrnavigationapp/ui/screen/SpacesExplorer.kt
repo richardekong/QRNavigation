@@ -37,6 +37,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.daveace.qrnavigationapp.R
@@ -54,19 +56,22 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.daveace.qrnavigationapp.model.ViewModel
+import com.daveace.qrnavigationapp.model.QRNavigationViewModel
 
 
 @Composable
-fun SpacesExplorer(modifier: Modifier = Modifier) {
+fun SpacesExplorer(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController()
+) {
 
-    val viewModel = ViewModel()
+    val viewModel = QRNavigationViewModel()
     val currentOrganization by remember {
         mutableStateOf(viewModel.organizations()[1])
     }
 
     Column() {
-        TopSection(modifier, currentOrganization)
+//        TopSection(modifier, currentOrganization)
         MidSection(modifier)
         BottomSection(modifier)
     }

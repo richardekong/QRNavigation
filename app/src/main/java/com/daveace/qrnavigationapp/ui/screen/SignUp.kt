@@ -33,6 +33,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.daveace.qrnavigationapp.R
 import com.daveace.qrnavigationapp.ui.theme.background
 import com.daveace.qrnavigationapp.ui.theme.buttonTheme
@@ -41,7 +43,10 @@ import com.daveace.qrnavigationapp.ui.theme.iconTint
 import com.daveace.qrnavigationapp.ui.theme.textFieldTheme
 
 @Composable
-fun SignUp(modifier: Modifier = Modifier) {
+fun SignUp(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController()
+) {
 
     Column(modifier = modifier.background(color= background())) {
         TopSection(modifier)

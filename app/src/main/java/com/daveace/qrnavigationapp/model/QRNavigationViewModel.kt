@@ -7,7 +7,7 @@ import com.daveace.qrnavigationapp.data.Note
 import com.daveace.qrnavigationapp.data.Organization
 import com.daveace.qrnavigationapp.data.User
 
-class ViewModel():ViewModel(){
+class QRNavigationViewModel():ViewModel(){
 
     //This will be replace by an elaborate api call
     fun organizations() = listOf(

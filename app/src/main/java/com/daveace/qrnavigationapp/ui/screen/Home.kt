@@ -41,19 +41,25 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.daveace.qrnavigationapp.R
 import com.daveace.qrnavigationapp.data.Organization
 import com.daveace.qrnavigationapp.data.Note
-import com.daveace.qrnavigationapp.model.ViewModel
+import com.daveace.qrnavigationapp.model.QRNavigationViewModel
 import com.daveace.qrnavigationapp.ui.theme.buttonTheme
 import com.daveace.qrnavigationapp.ui.theme.cardTheme
 import com.daveace.qrnavigationapp.ui.theme.iconTint
 
 @Composable
-fun Home(modifier: Modifier = Modifier, context: Context = LocalContext.current) {
-    val viewModel = ViewModel()
+fun Home(
+    modifier: Modifier = Modifier,
+    navController:NavHostController = rememberNavController(),
+    context: Context = LocalContext.current
+) {
+    val viewModel = QRNavigationViewModel()
     Column {
         HomeTopSection(modifier = modifier)
         WelcomeNotesPager(modifier = modifier, viewModel.welcomeNotes(context))
@@ -65,7 +71,9 @@ fun Home(modifier: Modifier = Modifier, context: Context = LocalContext.current)
 fun HomeTopSection(modifier: Modifier) {
     Column {
         Card(
-            modifier = modifier.fillMaxWidth().padding(4.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(4.dp),
             shape = MaterialTheme.shapes.extraSmall,
             colors = cardTheme(),
             elevation = CardDefaults.cardElevation(4.dp),
@@ -110,7 +118,9 @@ fun WelcomeNotesPager(modifier: Modifier, notes: List<Note> = listOf()) {
         }
     }
     Card(
-        modifier = modifier.fillMaxWidth().padding(4.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(4.dp),
         shape = MaterialTheme.shapes.extraSmall,
         colors = cardTheme(),
         elevation = CardDefaults.cardElevation(4.dp),
