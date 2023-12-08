@@ -3,7 +3,6 @@ package com.daveace.qrnavigationapp.data
 import android.os.Build.VERSION_CODES.O
 import androidx.annotation.RequiresApi
 
-@RequiresApi(O)
 data class Content(
     val id: Int = 0,
     val name: String = "",

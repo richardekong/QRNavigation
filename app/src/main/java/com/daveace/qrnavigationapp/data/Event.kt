@@ -3,7 +3,6 @@ package com.daveace.qrnavigationapp.data
 import android.os.Build
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
-@RequiresApi(Build.VERSION_CODES.O)
 data class Event(
     val id: Int = 0,
     val name: String = "",
